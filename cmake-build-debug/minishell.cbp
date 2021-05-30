@@ -78,22 +78,34 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/rboldini/Desktop/minishell/executor.c">
+		<Unit filename="/Users/rboldini/Desktop/minishell/includes/color.h">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/main.c">
+		<Unit filename="/Users/rboldini/Desktop/minishell/includes/minishell.h">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/minishell.h">
+		<Unit filename="/Users/rboldini/Desktop/minishell/includes/parser.h">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/parser.c">
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/builtin/ft_echo.c">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/parser.h">
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/command.c">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/subsystem.c">
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/executor.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/lexar.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/main.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/parser.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/subsystem.c">
 			<Option target="minishell"/>
 		</Unit>
 		<Unit filename="/Users/rboldini/Desktop/minishell/CMakeLists.txt">

@@ -6,4 +6,4 @@
 ** standard output, and standard error if there are any redirections.
 */
 
-#include "minishell.h"
+#include "../includes/minishell.h"

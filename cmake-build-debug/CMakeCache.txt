@@ -139,7 +139,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=minishell
+CMAKE_PROJECT_NAME:STATIC=minishell ciao
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
@@ -205,6 +205,12 @@ CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Path to a program.
 ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
+
+//Value Computed by CMake
+minishell ciao_BINARY_DIR:STATIC=/Users/rboldini/Desktop/minishell/cmake-build-debug
+
+//Value Computed by CMake
+minishell ciao_SOURCE_DIR:STATIC=/Users/rboldini/Desktop/minishell
 
 //Value Computed by CMake
 minishell_BINARY_DIR:STATIC=/Users/rboldini/Desktop/minishell/cmake-build-debug

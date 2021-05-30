@@ -4,10 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/rboldini/Desktop/minishell/executor.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/executor.c.o"
-  "/Users/rboldini/Desktop/minishell/main.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/main.c.o"
-  "/Users/rboldini/Desktop/minishell/parser.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/parser.c.o"
-  "/Users/rboldini/Desktop/minishell/subsystem.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/subsystem.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/builtin/ft_echo.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/command.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/command.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/executor.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/executor.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/lexar.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/lexar.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/main.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/main.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/parser.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/parser.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/subsystem.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/subsystem.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

@@ -10,4 +10,4 @@
 **		output is sent as input to the shell.
 */
 
-#include "minishell.h"
+#include "../includes/minishell.h"

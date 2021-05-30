@@ -142,113 +142,194 @@ minishell/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/build
 .PHONY : minishell/fast
 
-executor.o: executor.c.o
+srcs/builtin/ft_echo.o: srcs/builtin/ft_echo.c.o
 
-.PHONY : executor.o
-
-# target to build an object file
-executor.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/executor.c.o
-.PHONY : executor.c.o
-
-executor.i: executor.c.i
-
-.PHONY : executor.i
-
-# target to preprocess a source file
-executor.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/executor.c.i
-.PHONY : executor.c.i
-
-executor.s: executor.c.s
-
-.PHONY : executor.s
-
-# target to generate assembly for a file
-executor.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/executor.c.s
-.PHONY : executor.c.s
-
-main.o: main.c.o
-
-.PHONY : main.o
+.PHONY : srcs/builtin/ft_echo.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/main.c.o
-.PHONY : main.c.o
+srcs/builtin/ft_echo.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.o
+.PHONY : srcs/builtin/ft_echo.c.o
 
-main.i: main.c.i
+srcs/builtin/ft_echo.i: srcs/builtin/ft_echo.c.i
 
-.PHONY : main.i
+.PHONY : srcs/builtin/ft_echo.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/main.c.i
-.PHONY : main.c.i
+srcs/builtin/ft_echo.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.i
+.PHONY : srcs/builtin/ft_echo.c.i
 
-main.s: main.c.s
+srcs/builtin/ft_echo.s: srcs/builtin/ft_echo.c.s
 
-.PHONY : main.s
+.PHONY : srcs/builtin/ft_echo.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/main.c.s
-.PHONY : main.c.s
+srcs/builtin/ft_echo.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.s
+.PHONY : srcs/builtin/ft_echo.c.s
 
-parser.o: parser.c.o
+srcs/command.o: srcs/command.c.o
 
-.PHONY : parser.o
+.PHONY : srcs/command.o
 
 # target to build an object file
-parser.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/parser.c.o
-.PHONY : parser.c.o
+srcs/command.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/command.c.o
+.PHONY : srcs/command.c.o
 
-parser.i: parser.c.i
+srcs/command.i: srcs/command.c.i
 
-.PHONY : parser.i
+.PHONY : srcs/command.i
 
 # target to preprocess a source file
-parser.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/parser.c.i
-.PHONY : parser.c.i
+srcs/command.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/command.c.i
+.PHONY : srcs/command.c.i
 
-parser.s: parser.c.s
+srcs/command.s: srcs/command.c.s
 
-.PHONY : parser.s
+.PHONY : srcs/command.s
 
 # target to generate assembly for a file
-parser.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/parser.c.s
-.PHONY : parser.c.s
+srcs/command.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/command.c.s
+.PHONY : srcs/command.c.s
 
-subsystem.o: subsystem.c.o
+srcs/executor.o: srcs/executor.c.o
 
-.PHONY : subsystem.o
+.PHONY : srcs/executor.o
 
 # target to build an object file
-subsystem.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/subsystem.c.o
-.PHONY : subsystem.c.o
+srcs/executor.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/executor.c.o
+.PHONY : srcs/executor.c.o
 
-subsystem.i: subsystem.c.i
+srcs/executor.i: srcs/executor.c.i
 
-.PHONY : subsystem.i
+.PHONY : srcs/executor.i
 
 # target to preprocess a source file
-subsystem.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/subsystem.c.i
-.PHONY : subsystem.c.i
+srcs/executor.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/executor.c.i
+.PHONY : srcs/executor.c.i
 
-subsystem.s: subsystem.c.s
+srcs/executor.s: srcs/executor.c.s
 
-.PHONY : subsystem.s
+.PHONY : srcs/executor.s
 
 # target to generate assembly for a file
-subsystem.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/subsystem.c.s
-.PHONY : subsystem.c.s
+srcs/executor.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/executor.c.s
+.PHONY : srcs/executor.c.s
+
+srcs/lexar.o: srcs/lexar.c.o
+
+.PHONY : srcs/lexar.o
+
+# target to build an object file
+srcs/lexar.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/lexar.c.o
+.PHONY : srcs/lexar.c.o
+
+srcs/lexar.i: srcs/lexar.c.i
+
+.PHONY : srcs/lexar.i
+
+# target to preprocess a source file
+srcs/lexar.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/lexar.c.i
+.PHONY : srcs/lexar.c.i
+
+srcs/lexar.s: srcs/lexar.c.s
+
+.PHONY : srcs/lexar.s
+
+# target to generate assembly for a file
+srcs/lexar.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/lexar.c.s
+.PHONY : srcs/lexar.c.s
+
+srcs/main.o: srcs/main.c.o
+
+.PHONY : srcs/main.o
+
+# target to build an object file
+srcs/main.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/main.c.o
+.PHONY : srcs/main.c.o
+
+srcs/main.i: srcs/main.c.i
+
+.PHONY : srcs/main.i
+
+# target to preprocess a source file
+srcs/main.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/main.c.i
+.PHONY : srcs/main.c.i
+
+srcs/main.s: srcs/main.c.s
+
+.PHONY : srcs/main.s
+
+# target to generate assembly for a file
+srcs/main.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/main.c.s
+.PHONY : srcs/main.c.s
+
+srcs/parser.o: srcs/parser.c.o
+
+.PHONY : srcs/parser.o
+
+# target to build an object file
+srcs/parser.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/parser.c.o
+.PHONY : srcs/parser.c.o
+
+srcs/parser.i: srcs/parser.c.i
+
+.PHONY : srcs/parser.i
+
+# target to preprocess a source file
+srcs/parser.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/parser.c.i
+.PHONY : srcs/parser.c.i
+
+srcs/parser.s: srcs/parser.c.s
+
+.PHONY : srcs/parser.s
+
+# target to generate assembly for a file
+srcs/parser.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/parser.c.s
+.PHONY : srcs/parser.c.s
+
+srcs/subsystem.o: srcs/subsystem.c.o
+
+.PHONY : srcs/subsystem.o
+
+# target to build an object file
+srcs/subsystem.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/subsystem.c.o
+.PHONY : srcs/subsystem.c.o
+
+srcs/subsystem.i: srcs/subsystem.c.i
+
+.PHONY : srcs/subsystem.i
+
+# target to preprocess a source file
+srcs/subsystem.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/subsystem.c.i
+.PHONY : srcs/subsystem.c.i
+
+srcs/subsystem.s: srcs/subsystem.c.s
+
+.PHONY : srcs/subsystem.s
+
+# target to generate assembly for a file
+srcs/subsystem.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/subsystem.c.s
+.PHONY : srcs/subsystem.c.s
 
 # Help Target
 help:
@@ -259,18 +340,27 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... minishell"
-	@echo "... executor.o"
-	@echo "... executor.i"
-	@echo "... executor.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
-	@echo "... parser.o"
-	@echo "... parser.i"
-	@echo "... parser.s"
-	@echo "... subsystem.o"
-	@echo "... subsystem.i"
-	@echo "... subsystem.s"
+	@echo "... srcs/builtin/ft_echo.o"
+	@echo "... srcs/builtin/ft_echo.i"
+	@echo "... srcs/builtin/ft_echo.s"
+	@echo "... srcs/command.o"
+	@echo "... srcs/command.i"
+	@echo "... srcs/command.s"
+	@echo "... srcs/executor.o"
+	@echo "... srcs/executor.i"
+	@echo "... srcs/executor.s"
+	@echo "... srcs/lexar.o"
+	@echo "... srcs/lexar.i"
+	@echo "... srcs/lexar.s"
+	@echo "... srcs/main.o"
+	@echo "... srcs/main.i"
+	@echo "... srcs/main.s"
+	@echo "... srcs/parser.o"
+	@echo "... srcs/parser.i"
+	@echo "... srcs/parser.s"
+	@echo "... srcs/subsystem.o"
+	@echo "... srcs/subsystem.i"
+	@echo "... srcs/subsystem.s"
 .PHONY : help
 
 
