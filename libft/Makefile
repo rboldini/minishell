@@ -52,24 +52,24 @@ OBJS	= ${SRCS:.c=.o}
 OBJSBONUS = ${BONUS:.c=.o}
 
 %.o: %.c
-			gcc -Wall -Wextra -Werror -c -g $< 
+			@gcc -Wall -Wextra -Werror -c -g $<
 
 HEADERS = libft.h
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-			ar -rc $(NAME) $(OBJS)
-			ranlib $(NAME)
+			@ar -rc $(NAME) $(OBJS)
+			@ranlib $(NAME)
 
 bonus: $(OBJS) $(OBJSBONUS)
-			ar -rc $(NAME) $(OBJS) $(OBJSBONUS)
-			ranlib $(NAME)
+			@ar -rc $(NAME) $(OBJS) $(OBJSBONUS)
+			@ranlib $(NAME)
 clean:
-			rm -f $(OBJS) $(OBJSBONUS)
+			@rm -f $(OBJS) $(OBJSBONUS)
 
 fclean: clean
-			rm -f $(NAME) $(OBJS) $(OBJSBONUS)
+			@rm -f $(NAME) $(OBJS) $(OBJSBONUS)
 
 re: fclean all
 

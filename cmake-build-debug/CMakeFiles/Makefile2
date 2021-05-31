@@ -93,12 +93,12 @@ clean: CMakeFiles/minishell.dir/clean
 CMakeFiles/minishell.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target minishell"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target minishell"
 .PHONY : CMakeFiles/minishell.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/minishell.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles 9
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/minishell.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/minishell.dir/rule

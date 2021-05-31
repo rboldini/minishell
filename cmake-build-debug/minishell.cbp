@@ -87,13 +87,16 @@
 		<Unit filename="/Users/rboldini/Desktop/minishell/includes/parser.h">
 			<Option target="minishell"/>
 		</Unit>
-		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/builtin/ft_echo.c">
-			<Option target="minishell"/>
-		</Unit>
 		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/command.c">
 			<Option target="minishell"/>
 		</Unit>
 		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/executor.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/ft_echo.c">
+			<Option target="minishell"/>
+		</Unit>
+		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/ft_pwd.c">
 			<Option target="minishell"/>
 		</Unit>
 		<Unit filename="/Users/rboldini/Desktop/minishell/srcs/lexar.c">

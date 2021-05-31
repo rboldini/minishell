@@ -31,7 +31,7 @@ int main()
 		fflush(stdout);
 		lexar(minishell);
 		command_handle(minishell->splitted[0], minishell);
-		//printf("%s", minishell ciao->line);
+		//printf("%s", minishell->line);
 	}
 	exit (0);
 }

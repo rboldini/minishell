@@ -142,33 +142,6 @@ minishell/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/build
 .PHONY : minishell/fast
 
-srcs/builtin/ft_echo.o: srcs/builtin/ft_echo.c.o
-
-.PHONY : srcs/builtin/ft_echo.o
-
-# target to build an object file
-srcs/builtin/ft_echo.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.o
-.PHONY : srcs/builtin/ft_echo.c.o
-
-srcs/builtin/ft_echo.i: srcs/builtin/ft_echo.c.i
-
-.PHONY : srcs/builtin/ft_echo.i
-
-# target to preprocess a source file
-srcs/builtin/ft_echo.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.i
-.PHONY : srcs/builtin/ft_echo.c.i
-
-srcs/builtin/ft_echo.s: srcs/builtin/ft_echo.c.s
-
-.PHONY : srcs/builtin/ft_echo.s
-
-# target to generate assembly for a file
-srcs/builtin/ft_echo.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.s
-.PHONY : srcs/builtin/ft_echo.c.s
-
 srcs/command.o: srcs/command.c.o
 
 .PHONY : srcs/command.o
@@ -222,6 +195,60 @@ srcs/executor.s: srcs/executor.c.s
 srcs/executor.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/executor.c.s
 .PHONY : srcs/executor.c.s
+
+srcs/ft_echo.o: srcs/ft_echo.c.o
+
+.PHONY : srcs/ft_echo.o
+
+# target to build an object file
+srcs/ft_echo.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_echo.c.o
+.PHONY : srcs/ft_echo.c.o
+
+srcs/ft_echo.i: srcs/ft_echo.c.i
+
+.PHONY : srcs/ft_echo.i
+
+# target to preprocess a source file
+srcs/ft_echo.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_echo.c.i
+.PHONY : srcs/ft_echo.c.i
+
+srcs/ft_echo.s: srcs/ft_echo.c.s
+
+.PHONY : srcs/ft_echo.s
+
+# target to generate assembly for a file
+srcs/ft_echo.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_echo.c.s
+.PHONY : srcs/ft_echo.c.s
+
+srcs/ft_pwd.o: srcs/ft_pwd.c.o
+
+.PHONY : srcs/ft_pwd.o
+
+# target to build an object file
+srcs/ft_pwd.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_pwd.c.o
+.PHONY : srcs/ft_pwd.c.o
+
+srcs/ft_pwd.i: srcs/ft_pwd.c.i
+
+.PHONY : srcs/ft_pwd.i
+
+# target to preprocess a source file
+srcs/ft_pwd.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_pwd.c.i
+.PHONY : srcs/ft_pwd.c.i
+
+srcs/ft_pwd.s: srcs/ft_pwd.c.s
+
+.PHONY : srcs/ft_pwd.s
+
+# target to generate assembly for a file
+srcs/ft_pwd.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/minishell.dir/build.make CMakeFiles/minishell.dir/srcs/ft_pwd.c.s
+.PHONY : srcs/ft_pwd.c.s
 
 srcs/lexar.o: srcs/lexar.c.o
 
@@ -340,15 +367,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... minishell"
-	@echo "... srcs/builtin/ft_echo.o"
-	@echo "... srcs/builtin/ft_echo.i"
-	@echo "... srcs/builtin/ft_echo.s"
 	@echo "... srcs/command.o"
 	@echo "... srcs/command.i"
 	@echo "... srcs/command.s"
 	@echo "... srcs/executor.o"
 	@echo "... srcs/executor.i"
 	@echo "... srcs/executor.s"
+	@echo "... srcs/ft_echo.o"
+	@echo "... srcs/ft_echo.i"
+	@echo "... srcs/ft_echo.s"
+	@echo "... srcs/ft_pwd.o"
+	@echo "... srcs/ft_pwd.i"
+	@echo "... srcs/ft_pwd.s"
 	@echo "... srcs/lexar.o"
 	@echo "... srcs/lexar.i"
 	@echo "... srcs/lexar.s"

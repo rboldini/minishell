@@ -1,65 +1,19 @@
-#Name
-NAME =			minishell
+all:
+	@make -s --makefile=./run_it
+	@echo "\033[0;35mClosing Minishell..."
 
-#Compiler
-CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror
-
-#Norm
-NORM =			norminette
-
-#Shell
-MKDIR =			mkdir -p
-RM =			rm -rf
-
-#Directories
-SRCDIR = 		./srcs
-OBJDIR =  		./objs
-INCDIR = 		./includes
-
-#Files
-FILES =			main.c		\
-				parser.c	\
-				lexar.c		\
-				ft_echo.c	\
-				ft_pwd.c	\
-				command.c
-
-LIBFT_DIR =		./libft
-
-#Srcs
-SRCS = 			$(foreach FILE, $(FILES), $(shell find $(SRCDIR) -name $(FILE)))
-
-#Objs
-OBJS = 			$(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRCS:.c=.o))
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@$(MKDIR) $(@D)
-	@$(CC) $(CFLAGS) -I $(INCDIR) -c -o $@ $<
-
-all: $(NAME) run
-
-$(NAME): libft $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
-
-libft:
-	make bonus -C $(LIBFT_DIR)
-
-norminette:
-	@$(NORM)
+run: all
 
 clean:
-	@$(RM) $(OBJDIR) $(OBJS)
-	make clean -C $(LIBFT_DIR)
+	@make -s --makefile=./run_it clean
+	@echo "\033[0;35mCleaning Minishell..."
 
-fclean: clean
-	@$(RM) $(NAME)
-	make fclean -C $(LIBFT_DIR)
+fclean:
+	@make -s --makefile=./run_it fclean
+	@echo "\033[0;35mFully cleaning Minishell..."
 
-run:
-	clear -c
-	@./minishell
+re:
+	@make -s --makefile=./run_it fclean
+	@echo "\033[0;35mRe-compiling Minishell..."
 
-re: fclean all
-
-.PHONY: all norminette libft clean fclean run re
+.PHONY: all run clean fclean re

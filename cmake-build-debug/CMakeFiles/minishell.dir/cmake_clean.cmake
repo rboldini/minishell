@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.o"
   "CMakeFiles/minishell.dir/srcs/command.c.o"
   "CMakeFiles/minishell.dir/srcs/executor.c.o"
+  "CMakeFiles/minishell.dir/srcs/ft_echo.c.o"
+  "CMakeFiles/minishell.dir/srcs/ft_pwd.c.o"
   "CMakeFiles/minishell.dir/srcs/lexar.c.o"
   "CMakeFiles/minishell.dir/srcs/main.c.o"
   "CMakeFiles/minishell.dir/srcs/parser.c.o"

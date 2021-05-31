@@ -1,10 +1,4 @@
 "/Users/rboldini/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/211.7142.21/CLion.app/Contents/bin/cmake/mac/bin/cmake" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /Users/rboldini/Desktop/minishell
-CMake Error at CMakeLists.txt:6 (add_executable):
-  The target name "minishell ciao" is reserved or not valid for certain CMake
-  features, such as generator expressions, and may result in undefined
-  behavior.
-
-
--- Configuring incomplete, errors occurred!
-See also "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/CMakeOutput.log".
-See also "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/CMakeError.log".
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/rboldini/Desktop/minishell/cmake-build-debug

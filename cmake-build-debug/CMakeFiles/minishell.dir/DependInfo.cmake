@@ -4,9 +4,10 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/Users/rboldini/Desktop/minishell/srcs/builtin/ft_echo.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/builtin/ft_echo.c.o"
   "/Users/rboldini/Desktop/minishell/srcs/command.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/command.c.o"
   "/Users/rboldini/Desktop/minishell/srcs/executor.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/executor.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/ft_echo.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/ft_echo.c.o"
+  "/Users/rboldini/Desktop/minishell/srcs/ft_pwd.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/ft_pwd.c.o"
   "/Users/rboldini/Desktop/minishell/srcs/lexar.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/lexar.c.o"
   "/Users/rboldini/Desktop/minishell/srcs/main.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/main.c.o"
   "/Users/rboldini/Desktop/minishell/srcs/parser.c" "/Users/rboldini/Desktop/minishell/cmake-build-debug/CMakeFiles/minishell.dir/srcs/parser.c.o"
