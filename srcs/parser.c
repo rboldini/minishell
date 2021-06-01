@@ -5,3 +5,24 @@
 */
 
 #include "../includes/parser.h"
+#inlcude "../includes/minishell.h"
+
+int	ft_hook_char(void)
+{
+	struct termios	before;
+	struct termios	after;
+	char			c;
+	int				ret;
+
+	tcgetattr (0, &before);
+	ft_memcpy(&after, &before, sizeof(struct termios));
+	after.c_lflag &= ~(ICANON | ECHO);
+	after.c_cc[VMIN] = 1;
+	after.c_cc[VTIME] = 0;
+	tcsetattr (0, TCSANOW, &after);
+	ret = read (0, &c, sizeof(char));
+	tcsetattr (0, TCSANOW, &before);
+	if (ret == -1)
+		ft_exit(1);
+	return (c);
+}
