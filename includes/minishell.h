@@ -33,7 +33,7 @@ typedef struct	s_cmd
 }				t_cmd;
 
 
-#define ECHO "echo"
+#define CMD_ECHO "echo"
 #define CD "cd"
 #define PWD "pwd"
 #define EXPORT "export"
@@ -53,14 +53,27 @@ enum e_token
 
 typedef struct	s_scmd
 {
-
+	int cmd;
+	char **arg;
 }				t_scmd;
+
+typedef struct s_cmdt
+{
+	t_scmd	*table;
+	int		n_sep;
+}				t_cmdt;
+
+typedef struct s_history
+{
+	char	*row;
+	struct	s_history *prev;
+	struct	s_history *next;
+}				t_history;
 
 typedef struct	s_shell
 {
 	char *prompt;
-	char *line;
-	char **splitted;
+	t_history *current;
 }				t_shell;
 
 /*
@@ -71,7 +84,7 @@ typedef struct	s_shell
 ** LEXAR
 */
 
-char *lexar(t_shell *minishell);
+void	lexar(t_shell *minishell);
 
 /*
 ** PROMPT
@@ -89,4 +102,6 @@ void	ft_echo(t_shell *minishell);
 void	ft_pwd(t_shell *minishell);
 void	ft_cd(t_shell *minishell);
 
+int	ft_hook_char(void);
+int ft_process_del(char c);
 #endif //MINISHELL_MINISHELL_H

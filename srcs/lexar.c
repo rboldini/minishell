@@ -2,54 +2,60 @@
 #include "../libft/libft.h"
 #include <stdio.h>
 
-void	quotes(t_shell *minishell)
+int 	ft_process_del(char c)
 {
-	int		i;
-	int		j;
-	int		itmp;
-	char	*tmp;
-
-	i = 1;
-	itmp = 0;
-	while (minishell->splitted[i])
+	if (c == 127)
 	{
-		j = (int)ft_strlen(minishell->splitted[i]) - 1;
-		if(minishell->splitted[i][0] == 34 && minishell->splitted[i][j] == 34)
-		{
-			tmp = malloc(sizeof(char) * j);
-			j = -1;
-			while(minishell->splitted[i][j++])
-			{
-				if(minishell->splitted[i][j] == 92 && minishell->splitted[i][j] == 'n')
-				{
-					tmp[itmp] = '\n';
-					itmp++;
-					continue ;
-				}
-				else if(minishell->splitted[i][j] == 34)
-					continue ;
-				else
-				{
-					tmp[itmp] = minishell->splitted[i][j];
-					itmp++;
-				}
-			}
-			free(minishell->splitted[i]);
-			minishell->splitted[i] = tmp;
-			printf("%s\n", tmp);
-			tmp = NULL;
-		}
-		i++;
+		printf("\b \b");
+		fflush(stdout);
+		return (0);
 	}
+	return (1);
 }
 
-char *lexar(t_shell *minishell)
+void ft_fill_row(t_history *curr, char c)
 {
-	char	*line;
+	size_t len;
+	char *tmp;
 
-	if (get_next_line(STDIN_FILENO, &line) == 1)
-		;
-	minishell->splitted = ft_split(line, ' ');
-	quotes(minishell);
-	return (line);
+	len = 0;
+	if (curr->row)
+		len = ft_strlen(curr->row);
+	if (len)
+		tmp = ft_strdup(curr->row);
+	free(curr->row);
+	curr->row = malloc(sizeof(char) * len + 1);
+	ft_strlcpy(curr->row, tmp, len);
+	curr->row[len - 1] = c;
+	curr->row[len] = '\0';
+}
+
+void ft_clipboard(t_shell *minishell)
+{
+	(void)minishell;
+}
+
+void lexar(t_shell *minishell)
+{
+	int i;
+
+	i = 0;
+	char c = (char)ft_hook_char();
+
+	minishell->current = malloc(sizeof(t_history));
+	minishell->current->row = malloc(0);
+	while (c != '\n')
+	{
+		ft_fill_row(minishell->current, c);
+		if (ft_process_del(c))
+		{
+			printf("%c", c);
+			fflush(stdout);
+		}
+		c = (char)ft_hook_char();
+	}
+	printf("\n");
+	//minishell->splitted = ft_split(line, ' ');
+	//quotes(minishell);
+	//return (line);
 }

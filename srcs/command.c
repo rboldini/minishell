@@ -17,7 +17,7 @@ char* getprompt(t_shell *minishell)
 
 void	command_handle(char *command, t_shell *minishell)
 {
-	if (!ft_strcmp(command, ECHO))
+	if (!ft_strcmp(command, CMD_ECHO))
 		ft_echo(minishell);
 	else if (!ft_strcmp(command, EXIT))
 	{

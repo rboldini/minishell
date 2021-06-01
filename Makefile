@@ -3,7 +3,7 @@ NAME =			minishell
 
 #Compiler
 CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror
+CFLAGS = 		-Wall -Wextra -Werror -g
 
 #Norm
 NORM =			norminette
