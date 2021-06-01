@@ -103,5 +103,5 @@ void	ft_pwd(t_shell *minishell);
 void	ft_cd(t_shell *minishell);
 
 int	ft_hook_char(void);
-int ft_process_del(char c);
+int ft_process_del(char c, t_shell *minishell);
 #endif //MINISHELL_MINISHELL_H

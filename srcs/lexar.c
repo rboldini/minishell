@@ -2,13 +2,20 @@
 #include "../libft/libft.h"
 #include <stdio.h>
 
-int 	ft_process_del(char c)
+int 	ft_process_del(char c, t_shell *minishell)
 {
+	size_t len;
+
 	if (c == 127)
 	{
-		printf("\b \b");
-		fflush(stdout);
-		return (0);
+		len = ft_strlen(minishell->current->row);
+		if (len > 0)
+		{
+			minishell->current->row[len - 1] = '\0';
+			printf("\b \b");
+			fflush(stdout);
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -24,10 +31,11 @@ void ft_fill_row(t_history *curr, char c)
 	if (len)
 		tmp = ft_strdup(curr->row);
 	free(curr->row);
-	curr->row = malloc(sizeof(char) * len + 1);
+	curr->row = malloc(sizeof(char) * len + 2);
+	len += 2;
 	ft_strlcpy(curr->row, tmp, len);
-	curr->row[len - 1] = c;
-	curr->row[len] = '\0';
+	curr->row[len - 2] = c;
+	curr->row[len - 1] = '\0';
 }
 
 void ft_clipboard(t_shell *minishell)
@@ -47,7 +55,7 @@ void lexar(t_shell *minishell)
 	while (c != '\n')
 	{
 		ft_fill_row(minishell->current, c);
-		if (ft_process_del(c))
+		if (ft_process_del(c, minishell))
 		{
 			printf("%c", c);
 			fflush(stdout);
