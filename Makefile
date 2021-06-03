@@ -39,11 +39,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 all: $(NAME) run
 
-$(NAME): libft $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a -o $(NAME)
+$(NAME): libft printf $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a ./ft_printf_fd/ft_printf_fd.a -o $(NAME)
 
 libft:
 	@make -s bonus --quiet -C $(LIBFT_DIR)
+
+printf:
+	@make -s -C ./ft_printf_fd
 
 norminette:
 	@$(NORM)
@@ -51,10 +54,12 @@ norminette:
 clean:
 	@$(RM) $(OBJDIR) $(OBJS)
 	@make clean --quiet -C $(LIBFT_DIR)
+	@make fclean --quiet -C ./ft_printf_fd
 
 fclean: clean
 	@$(RM) $(NAME)
 	@make fclean --quiet -C $(LIBFT_DIR)
+	@make fclean --quiet -C ./ft_printf_fd
 
 run:
 	@clear -c
