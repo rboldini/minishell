@@ -1,6 +1,4 @@
 #include "../includes/minishell.h"
-#include "../libft/libft.h"
-#include <stdio.h>
 
 int 	ft_process_del(char c, t_shell *minishell)
 {
@@ -45,31 +43,6 @@ void	ft_clipboard(t_shell *minishell)
 	(void)minishell;
 }
 
-void	lexar(t_shell *minishell)
-{
-	int		i;
-	char	c;
-
-	i = 0;
-	c = (char)ft_hook_char();
-	minishell->current = malloc(sizeof(t_history));
-	minishell->current->row = calloc(1024, sizeof(char));
-	while (c != '\n')
-	{
-		ft_fill_row(minishell->current, c);
-		if (ft_process_del(c, minishell))
-		{
-			printf("%c", c);
-			fflush(stdout);
-		}
-		c = (char)ft_hook_char();
-	}
-	printf("\n");
-	//minishell->splitted = ft_split(line, ' ');
-	//quotes(minishell);
-	//return (line);
-}
-
 int	ft_hook_char(void)
 {
 	struct termios	before;
@@ -88,4 +61,50 @@ int	ft_hook_char(void)
 	if (ret == -1)
 		exit(1);
 	return (c);
+}
+
+int	ft_check_special_keys(void)
+{
+	int x;
+
+	x = ft_hook_char();
+	if (x == 27)
+	{
+		x = ft_hook_char();
+		if (x == 91)
+		{
+			x = ft_hook_char();
+			if (x == 65)
+			else if (x == 66)
+			else if (x == 67)
+			else if (x == 68)
+			else if (x == 51)
+			else
+				return (x);
+		}
+		return (x)
+	}
+	return (x);
+}
+void	hook_line(t_shell *minishell)
+{
+	char	c;
+
+	c = (char)ft_hook_char();
+	minishell->current = malloc(sizeof(t_history));
+	minishell->current->row = calloc(1024, sizeof(char));
+	while (c != '\n')
+	{
+		printf("%i\n", (int)c);
+//		ft_fill_row(minishell->current, c);
+//		ft_check_special_keys();
+//		if (ft_process_del(c, minishell)) //TODO: check for -> escape char (int)27	,	arrow  (int) up > 27,91,65; down > 27,91,66; right > 27,91,67; left > 27,91,68; delete = 27,91,51,126
+//		{
+//			printf("%c", c);
+//			fflush(stdout);
+//		}
+		c = (char)ft_hook_char();
+	}
+	//TODO: create a new instance of t_history
+	printf("\n");
 }

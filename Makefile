@@ -17,9 +17,11 @@ SRCDIR = 		./srcs
 OBJDIR =  		./objs
 INCDIR = 		./includes
 
+
+
 #Files
+#				parser.c
 FILES =			main.c		\
-				parser.c	\
 				keyhook.c		\
 				ft_echo.c	\
 				ft_pwd.c	\

@@ -31,7 +31,7 @@ int main()
 		printf(CC_BMAG"%s"CC_RESET, getprompt(minishell));
 		//printf("%d", '[');
 		fflush(stdout);
-		lexar(minishell);
+		hook_line(minishell);
 		//command_handle(minishell->splitted[0], minishell);
 		//printf("%s", minishell->line);
 	}

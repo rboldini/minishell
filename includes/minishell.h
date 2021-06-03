@@ -85,7 +85,7 @@ typedef struct	s_shell
 ** LEXAR
 */
 
-void	lexar(t_shell *minishell);
+void	hook_line(t_shell *minishell);
 
 /*
 ** PROMPT
