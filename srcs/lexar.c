@@ -4,14 +4,12 @@
 
 int 	ft_process_del(char c, t_shell *minishell)
 {
-	size_t len;
-
 	if (c == 127)
-	{
-		len = ft_strlen(minishell->current->row);
-		if (len > 0)
+	{	
+		if (minishell->current->index > (int)ft_strlen(minishell->prompt))
 		{
-			minishell->current->row[len - 1] = '\0';
+			minishell->current->row[minishell->current->index - 1] = '\0';
+			minishell->current->index--;
 			printf("\b \b");
 			fflush(stdout);
 			return (0);
@@ -37,6 +35,9 @@ void ft_fill_row(t_history *curr, char c)
 		free(tmp);
 	}
 	curr->row[len] = c;
+	//if(c != 127 && curr->index != 0)
+	curr->index++;
+	//printf("%d", curr->index);
 }
 
 void ft_clipboard(t_shell *minishell)

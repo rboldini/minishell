@@ -66,6 +66,7 @@ typedef struct s_cmdt
 typedef struct s_history
 {
 	char	*row;
+	int		index;
 	struct	s_history *prev;
 	struct	s_history *next;
 }				t_history;
