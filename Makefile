@@ -20,7 +20,7 @@ INCDIR = 		./includes
 #Files
 FILES =			main.c		\
 				parser.c	\
-				lexar.c		\
+				keyhook.c		\
 				ft_echo.c	\
 				ft_pwd.c	\
 				command.c

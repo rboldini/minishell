@@ -18,10 +18,10 @@ int 	ft_process_del(char c, t_shell *minishell)
 	return (1);
 }
 
-void ft_fill_row(t_history *curr, char c)
+void	ft_fill_row(t_history *curr, char c)
 {
-	size_t len;
-	char *tmp;
+	size_t	len;
+	char	*tmp;
 
 	len = 0;
 	if ((*curr).row)
@@ -40,18 +40,18 @@ void ft_fill_row(t_history *curr, char c)
 	//printf("%d", curr->index);
 }
 
-void ft_clipboard(t_shell *minishell)
+void	ft_clipboard(t_shell *minishell)
 {
 	(void)minishell;
 }
 
-void lexar(t_shell *minishell)
+void	lexar(t_shell *minishell)
 {
-	int i;
+	int		i;
+	char	c;
 
 	i = 0;
-	char c = (char)ft_hook_char();
-
+	c = (char)ft_hook_char();
 	minishell->current = malloc(sizeof(t_history));
 	minishell->current->row = calloc(1024, sizeof(char));
 	while (c != '\n')
@@ -68,4 +68,24 @@ void lexar(t_shell *minishell)
 	//minishell->splitted = ft_split(line, ' ');
 	//quotes(minishell);
 	//return (line);
+}
+
+int	ft_hook_char(void)
+{
+	struct termios	before;
+	struct termios	after;
+	char			c;
+	int				ret;
+
+	tcgetattr (0, &before);
+	ft_memcpy(&after, &before, sizeof(struct termios));
+	after.c_lflag &= ~(ICANON | ECHO);
+	after.c_cc[VMIN] = 1;
+	after.c_cc[VTIME] = 0;
+	tcsetattr (0, TCSANOW, &after);
+	ret = (int)read (0, &c, sizeof(char));
+	tcsetattr (0, TCSANOW, &before);
+	if (ret == -1)
+		exit(1);
+	return (c);
 }

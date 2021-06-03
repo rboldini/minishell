@@ -7,22 +7,39 @@
 #include "../includes/parser.h"
 #include "../includes/minishell.h"
 
-int	ft_hook_char(void)
-{
-	struct termios	before;
-	struct termios	after;
-	char			c;
-	int				ret;
+#include <stdio.h>
 
-	tcgetattr (0, &before);
-	ft_memcpy(&after, &before, sizeof(struct termios));
-	after.c_lflag &= ~(ICANON | ECHO);
-	after.c_cc[VMIN] = 1;
-	after.c_cc[VTIME] = 0;
-	tcsetattr (0, TCSANOW, &after);
-	ret = (int)read (0, &c, sizeof(char));
-	tcsetattr (0, TCSANOW, &before);
-	if (ret == -1)
-		exit(1);
-	return (c);
+typedef struct	s_cmd
+{
+	char			**arr;
+	int				len;
+	struct s_cmd	*next;
+	int				next_type;
+	FILE			*file_in;
+}				t_cmd;
+
+void	start_parsing(char *cmd)
+{
+	t_cmd	*cmd_table;
+	char	**tmp;
+
+	
 }
+
+int	main(int argv, char **argc)
+{
+	start_parsing(argc[1]);
+	return (0);
+}
+
+
+/*
+
+cmd > file1 > file2 > file3
+cmd1 | cmd2 < file_in
+cmd > file_out
+cmd >> file_app
+cmd < file_in
+cmd1 ; cmd2
+
+*/
