@@ -63,29 +63,29 @@ int	ft_hook_char(void)
 	return (c);
 }
 
-int	ft_check_special_keys(void)
-{
-	int x;
-
-	x = ft_hook_char();
-	if (x == 27)
-	{
-		x = ft_hook_char();
-		if (x == 91)
-		{
-			x = ft_hook_char();
-			if (x == 65)
-			else if (x == 66)
-			else if (x == 67)
-			else if (x == 68)
-			else if (x == 51)
-			else
-				return (x);
-		}
-		return (x)
-	}
-	return (x);
-}
+//int	ft_check_special_keys(void)
+//{
+//	int x;
+//
+//	x = ft_hook_char();
+//	if (x == 27)
+//	{
+//		x = ft_hook_char();
+//		if (x == 91)
+//		{
+//			x = ft_hook_char();
+//			if (x == 65)
+//			else if (x == 66)
+//			else if (x == 67)
+//			else if (x == 68)
+//			else if (x == 51)
+//			else
+//				return (x);
+//		}
+//		return (x)
+//	}
+//	return (x);
+//}
 void	hook_line(t_shell *minishell)
 {
 	char	c;
