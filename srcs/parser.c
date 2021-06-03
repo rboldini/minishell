@@ -44,7 +44,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	return (tmp);
 }
 
-typedef struct	s_flags
+typedef struct s_flags
 {
 	int		in_dquote;
 	int		in_quote;
