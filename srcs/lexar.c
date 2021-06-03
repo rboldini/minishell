@@ -26,16 +26,19 @@ void ft_fill_row(t_history *curr, char c)
 	char *tmp;
 
 	len = 0;
-	if (curr->row)
+	if ((*curr).row)
 		len = ft_strlen(curr->row);
-	if (len)
+	if (len % 1023 == 0)
+	{
 		tmp = ft_strdup(curr->row);
-	free(curr->row);
-	curr->row = malloc(sizeof(char) * len + 2);
-	len += 2;
+		free(curr->row);
+		curr->row = malloc(sizeof(char) * len + 1024);
+		len += 1024;
+		ft_strlcpy(curr->row, tmp, len);
+	}
 	ft_strlcpy(curr->row, tmp, len);
-	curr->row[len - 2] = c;
-	curr->row[len - 1] = '\0';
+	curr->row[len] = c;
+	curr->row[len + 1] = '\0';
 }
 
 void ft_clipboard(t_shell *minishell)
@@ -51,7 +54,7 @@ void lexar(t_shell *minishell)
 	char c = (char)ft_hook_char();
 
 	minishell->current = malloc(sizeof(t_history));
-	minishell->current->row = malloc(0);
+	minishell->current->row = calloc(1024, sizeof(char));
 	while (c != '\n')
 	{
 		ft_fill_row(minishell->current, c);
