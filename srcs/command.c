@@ -3,9 +3,8 @@
 
 void set_prompt(t_shell *minishell, char *str)
 {
-	if (minishell->prompt != NULL)
+	if (minishell->prompt)
 		free(minishell->prompt);
-
 	minishell->prompt = malloc(strlen(str) + 1);
 	strcpy(minishell->prompt, str);
 }

@@ -32,13 +32,11 @@ void ft_fill_row(t_history *curr, char c)
 	{
 		tmp = ft_strdup(curr->row);
 		free(curr->row);
-		curr->row = malloc(sizeof(char) * len + 1024);
-		len += 1024;
+		curr->row = malloc(len + 1024 * sizeof(char));
 		ft_strlcpy(curr->row, tmp, len);
+		free(tmp);
 	}
-	ft_strlcpy(curr->row, tmp, len);
 	curr->row[len] = c;
-	curr->row[len + 1] = '\0';
 }
 
 void ft_clipboard(t_shell *minishell)

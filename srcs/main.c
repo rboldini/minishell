@@ -23,6 +23,7 @@ int main()
 
 	minishell = malloc(sizeof(t_shell));
 	watermark();
+	minishell->prompt = malloc(0);
 	while (1)
 	{
 		//sig_init();
