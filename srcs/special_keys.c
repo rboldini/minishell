@@ -22,7 +22,7 @@ void	ft_arrow_ud()
 }
 
 void	ft_arrow_lr()
-{
+{	
 	/*
 	 *	I know they are actually BONUS but without them debug it's a mess.
 	 *	Let it to me. Or do it for fun.
