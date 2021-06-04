@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+.DS_Store
+.idea
+.vsc
 
 # Object files
 *.o
