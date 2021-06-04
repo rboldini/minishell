@@ -77,6 +77,13 @@ typedef struct	s_shell
 	t_history *current;
 }				t_shell;
 
+typedef struct s_env
+{
+	char	*env_name;
+	char	*env_value;
+	struct	s_env *next_env;
+}				t_env;
+
 /*
  *
  */
@@ -99,7 +106,7 @@ char* getprompt(t_shell *minishell);
 */
 
 void	command_handle(char *command, t_shell *minishell);
-void	ft_echo(t_shell *minishell);
+void	ft_echo(int ac, char **av, int fd);
 void	ft_pwd(t_shell *minishell);
 void	ft_cd(t_shell *minishell);
 
