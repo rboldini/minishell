@@ -1,15 +1,32 @@
 #include "../includes/minishell.h"
 
-void	ft_process_delete()
+void	ft_process_delete(t_history *curr)
 {
-	/*
-	 * just check if here is something to delete at cursor posix, if not
-	 * reproduce the bell sound.
-	 * Else delete writing ' '.
-	 */
+	int	i;
+	int	len;
+
+	i = curr->index;
+	len = ft_strlen(curr->row);
+	if (curr->index != len)
+	{
+		while (i < (int)ft_strlen(curr->row))
+		{
+			curr->row[i] = curr->row[i + 1];
+			write(1, &curr->row[i], 1);
+			i++;
+		}
+		curr->row[i] = 0;
+		write(1, " ", 1);
+		i = 0;
+		while (i < len - curr->index)
+		{
+			write(1, "\b", 1);
+			i++;
+		}
+	}
 }
 
-void	ft_arrow_ud()
+void	ft_arrow_ud(/*int x, t_history *curr*/)
 {
 	/*
 	 * UP will duplicate the curr->previous->row to a new row, if it's pressed more
@@ -21,30 +38,59 @@ void	ft_arrow_ud()
 	 */
 }
 
-void	ft_arrow_lr()
-{	
-	/*
-	 *	I know they are actually BONUS but without them debug it's a mess.
-	 *	Let it to me. Or do it for fun.
-	 *	Behavior is mixed from delete and backspace control for end_line
-	 *	or beginning of the line. Work on it with minishell->curr->index.
-	 *	HINT: Do we prefer to rename index to posix?
-	 */
+void	ft_arrow_lr(int x, t_history *curr)
+{
+	if (x == 68 && curr->index > 0)//sinistra
+	{
+		write(1, "\b", 1);
+		curr->index--;
+	}
+	else if(x == 67 && curr->index != (int)ft_strlen(curr->row))
+	{
+		write(1, "\033[C", 3);
+		curr->index++;
+	}
 }
 
-int 	ft_process_backspace(char c, t_shell *minishell)
+int 	ft_process_backspace(t_history *curr)
 {
-	if (c == 127)
+	int	i;
+	int len;
+
+	i = curr->index;
+	len = ft_strlen(curr->row);
+	// printf("\ncurr->row %s\n", curr->row);
+	// printf("curr->index %i\n", curr->index);
+	// printf("len %i\n", len);
+
+
+	if (i > 0 && i < (int)ft_strlen(curr->row))
 	{
-		if (minishell->current->index > (int)ft_strlen(minishell->prompt))
+		write(1, "\b", 1);
+		while (i < (int)ft_strlen(curr->row))
 		{
-			minishell->current->row[minishell->current->index - 1] = '\0';
-			minishell->current->index--;
-			printf("\b \b");
-			fflush(stdout);
-			return (0);
+			curr->row[i - 1] = curr->row[i];
+			//printf("non sono alla fine\n");
+			write(1, &curr->row[i - 1], 1);
+			i++;
 		}
-		//TODO: check if before cursor posix is something to delete, if not reproduce the bell sound.
+		curr->index--;
+		curr->row[ft_strlen(curr->row) - 1] = 0;
+		write(1, " \b", 2);
+		i = 0;
+		while (i <= (int)ft_strlen(curr->row) - curr->index)
+		{
+			write(1, "\b", 1);
+			i++;
+		}
+		//curr->index--;
+	}
+	else if (i == (int)ft_strlen(curr->row) && i > 0)
+	{
+		curr->row[i - 1] = 0;
+		//printf("mi trovo alla fine\n");
+		write(1, "\b \b", 3);
+		curr->index--;
 	}
 	return (1);
 }

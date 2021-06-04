@@ -45,7 +45,7 @@ int	ft_hook_char(void)
 	return (c);
 }
 
-int	ft_check_special_keys(char c)
+int	ft_special_keys(char c, t_history *curr)
 {
 	int x;
 
@@ -56,17 +56,19 @@ int	ft_check_special_keys(char c)
 		{
 			x = ft_hook_char();
 			if (x == 65 || x == 66)
-				ft_arrow_ud();
+				ft_arrow_ud(x, curr);
 			else if (x == 67 || x == 68)
-				ft_arrow_lr();
+				ft_arrow_lr(x, curr);
 			else if (x == 51)
 			{
 				x = ft_hook_char();
 				if (x == 126)
-			 		ft_process_del();
+			 		ft_process_delete(curr);
 			}
 		}
 	}
+	else if(c == 127)
+		ft_process_backspace(curr);
 	else
 		return (c);
 	write(1, "\a", 1);
@@ -108,10 +110,12 @@ void	hook_line(t_shell *minishell)
  	minishell->current->row = calloc(1024, sizeof(char));
  	while (c != '\n')
  	{
-//		printf("%i\n", (int)c);
-		ft_fill_row(minishell->current, c);
-	 	if (ft_check_special_keys(c))
+//		printf("%i\n", (int)c);	
+	 	if (ft_special_keys(c, minishell->current))
+		{
+			ft_fill_row(minishell->current, c);
 			write(1, &c, 1);
+		}
 		c = (char)ft_hook_char();
 
 	}

@@ -104,5 +104,8 @@ void	ft_pwd(t_shell *minishell);
 void	ft_cd(t_shell *minishell);
 
 int	ft_hook_char(void);
-int ft_process_del(char c, t_shell *minishell);
+void	ft_arrow_ud(/*int x, t_history *curr*/);
+void	ft_arrow_lr(int x, t_history *curr);
+int 	ft_process_backspace(t_history *curr);
+void	ft_process_delete(t_history *curr);
 #endif //MINISHELL_MINISHELL_H
