@@ -27,12 +27,10 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 {
 	char	**tmp;
 	int		i;
-	int		n;
 
-	n = *len;
-	tmp = malloc(sizeof(char *) * (n + 1));
+	tmp = malloc(sizeof(char *) * (*len + 1));
 	i = 0;
-	while (i < n)
+	while (i < *len)
 	{
 		tmp[i] = arr[i];
 		i++;
@@ -43,7 +41,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	(*len)++;
 	return (tmp);
 }
-
+/*
 typedef struct s_flags
 {
 	int		in_dquote;
@@ -60,26 +58,159 @@ void	expand_env(char *str)
 	is_quote = 0;
 }
 
+*/
+
+char	*app_char(const char *cmd, int *i, char *buff)
+{
+	char	*cc;
+	char	*tmp;
+
+	cc = malloc(sizeof(char) * 2);
+	cc[0] = *(cmd + *i);
+	cc[1] = 0;
+	tmp = ft_strjoin(buff, cc);
+	free(cc);
+	free(buff);
+	(*i)++;
+	return (tmp);
+}
+
+char	*elab_dollar(const char *src, int *i, char *dst)
+{
+	char	c;
+	char	*var_name;
+	char	*var_value;
+	char	*tmp;
+
+	var_name = malloc(sizeof(char));
+	var_name[0] = 0;
+	c = *(src + *i + 1);
+	if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'))
+	{
+		dst = app_char(src, i, dst);
+	}
+	else
+	{
+		(*i)++;
+		c = *(src + *i);
+		while ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
+		{
+			var_name = app_char(src, i, var_name);
+			c = *(src + *i);
+		}
+		printf("var_name %s\n", var_name);
+		var_value = getenv(var_name);
+		printf("var_value %s\n", var_value);
+		if (var_value)
+		{
+			tmp = ft_strjoin(dst, var_value);
+			free(dst);
+			dst = tmp;
+		}
+	}
+	free(var_name);
+	return (dst);
+}
+
+char	*elab_quote(const char *src, int *i, char *dst)
+{
+	int		valid;
+
+	valid = 0;
+	(*i)++;
+	while (*(src + *i))
+	{
+		if (*(src + *i) == '\'')
+		{
+			(*i)++;
+			valid = 1;
+			break ;
+		}
+		dst = app_char(src, i, dst);
+	}
+	return (dst);
+}
+
+char	*elab_dquote(const char *src, int *i, char *dst)
+{
+	int		valid;
+
+	valid = 0;
+	(*i)++;
+	while (*(src + *i))
+	{
+		if (*(src + *i) == '"')
+		{
+			(*i)++;
+			valid = 1;
+			break ;
+		}
+		else if (*(src + *i) == '$')
+			dst = elab_dollar(src, i, dst);
+		else
+			dst = app_char(src, i, dst);
+	}
+	return (dst);
+}
+
+int		next_char(char *str, char c, int start)
+{
+	while (*(str + start))
+	{
+		if (*(str + start) == c)
+			return (start);
+		start++;
+	}
+	return (-1);
+}
+
 void	start_parsing(const char *cmd)
 {
-	t_comm	*cmd_table;
+	t_comm	*comm;
 	char	**arr;
-	int		*to_expand;
 	int		len;
-	char	**spc_spl;
+	int		i;
+	char	*buff;
 
+	comm = malloc(sizeof(t_comm));
 	arr = malloc(0);
 	len = 0;
-	spc_spl = ft_split(cmd, ' ');
-
+	i = 0;
+	while (*(cmd + i))
+	{
+		buff = malloc(sizeof(char));
+		buff[0] = 0;
+		while (*(cmd + i) != ' ' && *(cmd + i) != 0)
+		{
+			if (*(cmd + i) == '\'')
+				buff = elab_quote(cmd, &i, buff);
+			else if (*(cmd + i) == '"')
+				buff = elab_dquote(cmd, &i, buff);
+			else if (*(cmd + i) == '$')
+				buff = elab_dollar(cmd, &i, buff);
+			else
+				buff = app_char(cmd, &i, buff);
+		}
+		if (ft_strlen(buff))
+			arr = append_to_arr(buff, &len, arr);
+		if (*(cmd + i) != 0)
+			i++;
+	}
+	for (int k = 0; k < len; k++)
+	{
+		printf("%s\n", arr[k]);
+	}
 }
 
 int	main(int argv, char **argc)
 {
-	start_parsing(argc[1]);
+	/*for (int i = 1; i < argv; i++)
+		start_parsing(argc[i]);*/
+	char *str = "prima $VAR dopo 'in $VAR single' \"in $VAR double\"";
+	printf("input: %s\n", str);
+	start_parsing(str);
 	return (0);
 }
-
 
 /*
 
@@ -101,4 +232,17 @@ bash-3.2$ echo "\'"
 
 bash-3.2$ echo '\"'
 \"
+
+bash-3.2$ echo "ciao   test"
+ciao   test
+
+bash-3.2$ echo ciao   test
+ciao test
+
+bash-3.2$ echo 'ciao   test'
+ciao   test
+
+bash-3.2$ ARG="ciao   test"
+bash-3.2$ echo $ARG
+ciao test
 */
