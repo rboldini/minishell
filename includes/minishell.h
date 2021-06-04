@@ -100,7 +100,7 @@ char* getprompt(t_shell *minishell);
 
 void	command_handle(char *command, t_shell *minishell);
 void	ft_echo(t_shell *minishell);
-void	ft_pwd(t_shell *minishell);
+int 	ft_pwd(void);
 void	ft_cd(t_shell *minishell);
 
 int	ft_hook_char(void);

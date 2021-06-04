@@ -1,5 +1,30 @@
 #include "../includes/minishell.h"
 
+# define PATH_MAX 4096
+
+int ft_pwd(void)
+{
+	char cwd[PATH_MAX];
+
+	if (getcwd(cwd, PATH_MAX) != NULL)
+	{
+		ft_putendl_fd(cwd, 1);
+	}
+	else
+	{
+		perror("Error\n");
+		return (1);
+	}
+	return (0);
+}
+
+// int main()
+// {
+// 	ft_pwd();
+// 	return (0);
+// }
+
+
 //void	ft_pwd(t_shell *minishell)
 //{
 //	char *s;
