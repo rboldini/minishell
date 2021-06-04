@@ -45,35 +45,33 @@ int	ft_hook_char(void)
 	return (c);
 }
 
-//int	ft_check_special_keys(char c)
-//{
-//	int x;
+int	ft_check_special_keys(char c)
+{
+	int x;
 
-//	if (c == 27)
-//	{
-//		x = ft_hook_char();
-//		if (x == 91)
-//		{
-//			x = ft_hook_char();
-//			if (x == 65 || x == 66)
-//				ft_arrow_ud();
-//			else if (x == 67 || x == 68)
-//				ft_arrow_lr();
-//			else if (x == 51)
-//				{
-//					x = ft_hook_char();
-//					if (x == 126)
-//						ft_process_del();
-//					else
-//						return (x);
-//				}
-//			else
-//				return (x);
-//		}
-//		return (x)
-//	}
-//	return (c);
-//}
+	if (c == 27)
+	{
+		x = ft_hook_char();
+		if (x == 91)
+		{
+			x = ft_hook_char();
+			if (x == 65 || x == 66)
+				ft_arrow_ud();
+			else if (x == 67 || x == 68)
+				ft_arrow_lr();
+			else if (x == 51)
+			{
+				x = ft_hook_char();
+				if (x == 126)
+			 		ft_process_del();
+			}
+		}
+	}
+	else
+		return (c);
+	write(1, "\a", 1);
+	return (0);
+}
 
 /*
 **TODO:	instead of a single char check for special keys, just take all values
@@ -91,7 +89,6 @@ int	ft_hook_char(void)
 
 /*
 **TODO:	check	special:
-**						escape = 27
 **						backspace = 127
 **						delete = 27, 91, 51, 126
 **						ctrl + u = 21 (clean line)
@@ -107,18 +104,16 @@ void	hook_line(t_shell *minishell)
 	char	c;
 
 	c = (char)ft_hook_char();
-	minishell->current = malloc(sizeof(t_history));
-	minishell->current->row = calloc(1024, sizeof(char));
-	while (c != '\n')
-	{
+ 	minishell->current = malloc(sizeof(t_history));
+ 	minishell->current->row = calloc(1024, sizeof(char));
+ 	while (c != '\n')
+ 	{
 //		printf("%i\n", (int)c);
 		ft_fill_row(minishell->current, c);
-//		if (!ft_check_special_keys(c))
-//		{
-			printf("%c", c);
-			fflush(stdout);
-//		}
+	 	if (ft_check_special_keys(c))
+			write(1, &c, 1);
 		c = (char)ft_hook_char();
+
 	}
 //	printf("%c", '\a');
 //	TODO: create a new instance of t_history HINT: ft_new_history_row();
