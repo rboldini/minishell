@@ -3,6 +3,7 @@
 .DS_Store
 .idea
 .vsc
+.vscode
 
 # Object files
 *.o
