@@ -15,9 +15,11 @@ typedef struct	s_comm
 {
 	char			**arr;
 	int				len;
-	struct s_cmd	*next;
+	//struct s_cmd	*next;
 	int				next_type;
-	FILE			*file_in;
+	FILE			*file_in;	//0
+	FILE			*file_out;	//1
+	FILE			*err_out;	//2
 }				t_comm;
 
 char	**append_to_arr(const char *str, int *len, char **arr)
@@ -64,6 +66,22 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 	var_name = malloc(sizeof(char));
 	var_name[0] = 0;
 	c = *(src + *i + 1);
+	/*
+	if (c == '?')
+	{
+		(*i)++;
+		var_value = getenv("?");
+		if (var_value)
+		{
+			tmp = ft_strjoin(dst, var_value);
+			free(dst);
+			dst = tmp;
+		}
+		free(var_name);
+		(*i)++;
+		return (dst);
+	}
+	*/
 	if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'))
 	{
 		dst = app_char(src, i, dst);
@@ -77,9 +95,7 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 			var_name = app_char(src, i, var_name);
 			c = *(src + *i);
 		}
-		printf("var_name %s\n", var_name);
 		var_value = getenv(var_name);
-		printf("var_value %s\n", var_value);
 		if (var_value)
 		{
 			tmp = ft_strjoin(dst, var_value);
@@ -143,6 +159,13 @@ int		next_char(char *str, char c, int start)
 	return (-1);
 }
 
+int		is_break(char c)
+{
+	if (c == ' ' || c == 0 || c == '|' || c == '>' || c == '<')
+		return (1);
+	return (0);
+}
+
 void	start_parsing(const char *cmd)
 {
 	t_comm	*comm;
@@ -159,7 +182,7 @@ void	start_parsing(const char *cmd)
 	{
 		buff = malloc(sizeof(char));
 		buff[0] = 0;
-		while (*(cmd + i) != ' ' && *(cmd + i) != 0)
+		while (!is_break(*(cmd + i)))
 		{
 			if (*(cmd + i) == '\'')
 				buff = elab_quote(cmd, &i, buff);
@@ -169,6 +192,11 @@ void	start_parsing(const char *cmd)
 				buff = elab_dollar(cmd, &i, buff);
 			else
 				buff = app_char(cmd, &i, buff);
+		}
+		if (*(cmd + i) == '|')
+		{
+			buff = app_char(cmd, &i, buff);
+			break ;
 		}
 		if (ft_strlen(buff))
 			arr = append_to_arr(buff, &len, arr);
@@ -185,7 +213,7 @@ int	main(int argv, char **argc)
 {
 	/*for (int i = 1; i < argv; i++)
 		start_parsing(argc[i]);*/
-	char *str = "prima $VAR dopo 'in $VAR single' \"in $VAR double\"";
+	char *str = "qui|quo|stocazzo $? ciao";
 	printf("input: %s\n", str);
 	start_parsing(str);
 	return (0);
