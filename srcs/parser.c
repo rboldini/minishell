@@ -16,7 +16,7 @@ typedef struct	s_comm
 	char			**arr;
 	int				len;
 	//struct s_cmd	*next;
-	int				next_type;
+	int				out_append;
 	FILE			*file_in;	//0
 	FILE			*file_out;	//1
 	FILE			*err_out;	//2
@@ -56,6 +56,26 @@ char	*app_char(const char *cmd, int *i, char *buff)
 	return (tmp);
 }
 
+char	*escape_slash(const char *src, int *i, char *dst)
+{
+	char	c;
+	int		k;
+
+	k = 0;
+	c = *(src + *i + 1);
+	if (c == '\\' || c == '"' || c == '\'' || c == '?')
+	{
+		dst = app_char(&c, &k, dst);
+		(*i)++;
+		(*i)++;
+	}
+	else
+	{
+		dst = app_char(src, i, dst);
+	}
+	return (dst);
+}
+
 char	*elab_dollar(const char *src, int *i, char *dst)
 {
 	char	c;
@@ -66,11 +86,10 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 	var_name = malloc(sizeof(char));
 	var_name[0] = 0;
 	c = *(src + *i + 1);
-	/*
 	if (c == '?')
 	{
 		(*i)++;
-		var_value = getenv("?");
+		var_value = ft_itoa(errno);
 		if (var_value)
 		{
 			tmp = ft_strjoin(dst, var_value);
@@ -81,7 +100,6 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 		(*i)++;
 		return (dst);
 	}
-	*/
 	if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'))
 	{
 		dst = app_char(src, i, dst);
@@ -175,6 +193,7 @@ void	start_parsing(const char *cmd)
 	char	*buff;
 
 	comm = malloc(sizeof(t_comm));
+	comm->out_append = 0;
 	arr = malloc(0);
 	len = 0;
 	i = 0;
@@ -190,6 +209,8 @@ void	start_parsing(const char *cmd)
 				buff = elab_dquote(cmd, &i, buff);
 			else if (*(cmd + i) == '$')
 				buff = elab_dollar(cmd, &i, buff);
+			else if (*(cmd + i) == '\\' && i < ft_strlen(cmd) - 1)
+				buff = escape_slash(cmd, &i, buff);
 			else
 				buff = app_char(cmd, &i, buff);
 		}
@@ -213,7 +234,7 @@ int	main(int argv, char **argc)
 {
 	/*for (int i = 1; i < argv; i++)
 		start_parsing(argc[i]);*/
-	char *str = "qui|quo|stocazzo $? ciao";
+	char *str = "ciao\\\"test  |   t   $?  o    ";
 	printf("input: %s\n", str);
 	start_parsing(str);
 	return (0);
