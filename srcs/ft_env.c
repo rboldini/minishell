@@ -61,17 +61,17 @@ t_env *init_env(char **env)
 	return(env);
 }
 
-void ft_env(t_env *env, int fd)
+void ft_env(t_env *env)
 {
 	t_env *tmp;
 	
 	tmp = env;
 	while(tmp)
 	{
-		ft_printf_fd(fd, "%s", tmp->env_name);
-		ft_printf_fd(fd, "=");
-		ft_printf_fd(fd, "%s", tmp->env_value);
-		ft_printf_fd(fd, "\n");
+		ft_printf_fd(1, "%s", tmp->env_name);
+		ft_printf_fd(1, "=");
+		ft_printf_fd(1, "%s", tmp->env_value);
+		ft_printf_fd(1, "\n");
 		tmp = tmp->next_env;
 	}
 }

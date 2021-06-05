@@ -3,13 +3,20 @@
 void ft_echo(int ac, char **av, int fd)
 {
 	int i;
+	int n_flag;
 	
+	n_flag = 0;
 	i = 0;
+	while(ft_strcmp(av[i], "-n") == 0)
+	{
+		i++;
+		n_flag = 1;
+	}
 	while(i < ac)
 	{
 		ft_printf_df(fd, "%s", av[i]);
 		i++;
 	}
-	if(ft_strcmp(av[0], "-n") == 0)
+	if(!n_flag)
 		ft_printf_fd(fd, "\n");
 }

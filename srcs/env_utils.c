@@ -21,8 +21,8 @@ void ft_free_env(t_env *env)
 
 	while(env)
 	{
-		free(env->env_name)
-		free(env->env_value)
+		free(env->env_name);
+		free(env->env_value);
 		env = env->next_env;
 	}
 	free(tmp);
@@ -44,15 +44,20 @@ void ft_addback_env(t_env **env, t_env *new_env)
 	tmp->next_env = new_env;
 }
 
-t_env *create_new_env(char *env)
+t_env *create_new_env(t_env *env, char *raw_env) //to_do with stefano (da fare funzione is_env che chiama create_new_env)
 {
 	int i;
+	t_env *new;
 
 	i = 1;
-	while(env[i] != '=')
+	while(raw_env[i] != '=')
 		i++;
-	env[i] = 0;
-	//to_do with stefano
+	raw_env[i] = 0;
+	new = malloc(sizeof(t_env));
+	new->env_name = ft_strdup(raw_env);
+	raw_env += i + 1;
+	new->env_value = ft_strdup(raw_env);
+	ft_addback_env(env, new);
 }
 
 void edit_env(t_env **env,char *name, char *new_value)
@@ -60,14 +65,28 @@ void edit_env(t_env **env,char *name, char *new_value)
 	t_env *tmp;
 
 	tmp = *env;
-	while(tmp)
+	while (tmp)
 	{
-		if(!ft_strcmp(tmp->env_name, name))
+		if (!ft_strcmp(tmp->env_name, name))
 		{
 			free(tmp->env_value);
-			tmp->env_value = ft_strdup(new_value);
+			tmp->env_value = new_value;
 		}
 		else
 			tmp = tmp->next_env;
 	}
+}
+
+char *ft_getenv(t_env *env, char *name)
+{
+	t_env *tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->env_name, name) == 0)
+			return (tmp->env_value);
+		tmp = tmp->next_env;
+	}
+	return (NULL);
 }
