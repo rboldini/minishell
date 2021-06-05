@@ -11,9 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define IN_QUOTE 1
-#define IN_DQUOTE 2
-
 typedef struct	s_comm
 {
 	char			**arr;
@@ -41,24 +38,6 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	(*len)++;
 	return (tmp);
 }
-/*
-typedef struct s_flags
-{
-	int		in_dquote;
-	int		in_quote;
-	int		is_var;
-}				t_flags;
-
-void	expand_env(char *str)
-{
-	int	is_quote;
-	int	is_dquote;
-
-	is_dquote = 0;
-	is_quote = 0;
-}
-
-*/
 
 char	*app_char(const char *cmd, int *i, char *buff)
 {
