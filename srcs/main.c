@@ -31,6 +31,7 @@ int main(int n, char **arg, char **envp)
 {
 	t_shell *minishell;
 	t_env	*enva;
+	//int i = 0;
 
 	(void)n;
 	(void)arg;
@@ -38,7 +39,11 @@ int main(int n, char **arg, char **envp)
 	init_minishell(&minishell);
 	minishell->prompt = malloc(0);
 	enva = init_env(envp);
-	printf("%s", envp[0]);
+	//while (envp[i])
+	//{
+	//	printf("%s\n", envp[i]);
+	//	i++;
+	//}
 	ft_env(enva);
 	while (1)
 	{
