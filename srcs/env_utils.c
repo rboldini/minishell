@@ -1,11 +1,11 @@
 #include "../includes/minishell.h"
 
-void ft_free_matrix(char **matrix)
+void	ft_free_matrix(char **matrix)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(matrix[i])
+	while (matrix[i])
 	{
 		free(matrix[i]);
 		matrix[i] = NULL;
@@ -15,11 +15,11 @@ void ft_free_matrix(char **matrix)
 	matrix = NULL;
 }
 
-void ft_free_env(t_env *env)
+void	ft_free_env(t_env *env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
-	while(env)
+	while (env)
 	{
 		free(env->env_name);
 		free(env->env_value);
@@ -29,28 +29,28 @@ void ft_free_env(t_env *env)
 	tmp = NULL;
 }
 
-void ft_addback_env(t_env **env, t_env *new_env)
+void	ft_addback_env(t_env **env, t_env *new_env)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
-	if(*env == NULL)
+	if (*env == NULL)
 	{
 		*env = new_env;
 		(*env)->next_env = NULL;
 	}
-	while(tmp->next_env)
+	while (tmp->next_env)
 		tmp = tmp->next_env;
 	tmp->next_env = new_env;
 }
 
 void create_new_env(t_env *env, char *raw_env, int export) //to_do with stefano (da fare funzione is_env che chiama create_new_env)
 {
-	int i;
-	t_env *new;
+	int		i;
+	t_env	*new;
 
 	i = 1;
-	while(raw_env[i] != '=')
+	while (raw_env[i] != '=')
 		i++;
 	raw_env[i] = 0;
 	new = malloc(sizeof(t_env));
@@ -61,9 +61,9 @@ void create_new_env(t_env *env, char *raw_env, int export) //to_do with stefano 
 	ft_addback_env(env, new);
 }
 
-void edit_env(t_env **env,char *name, char *new_value)
+void	edit_env(t_env **env,char *name, char *new_value)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = *env;
 	while (tmp)
@@ -78,9 +78,9 @@ void edit_env(t_env **env,char *name, char *new_value)
 	}
 }
 
-char *ft_getenv(t_env *env, char *name)
+char	*ft_getenv(t_env *env, char *name)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
@@ -92,15 +92,15 @@ char *ft_getenv(t_env *env, char *name)
 	return (NULL);
 }
 
-void unset_env(t_env *env, char* name)
+void	unset_env(t_env *env, char* name)
 {
-	int i;
-	t_env *tmp;
+	int		i;
+	t_env	*tmp;
 
 	tmp = env;
-	while(tmp)
+	while (tmp)
 	{
-		if(ft_strcmp(tmp->env_name, name))
+		if (ft_strcmp(tmp->env_name, name))
 			tmp->exp = 0;
 		tmp = tmp->next_env;
 	}

@@ -107,9 +107,7 @@ char* getprompt(t_shell *minishell);
 */
 
 void	command_handle(char *command, t_shell *minishell);
-void	ft_echo(int ac, char **av, int fd);
-void	ft_pwd(t_shell *minishell);
-void	ft_cd(t_shell *minishell);
+void	ft_echo(int ac, char **av);
 
 int	ft_hook_char(void);
 int ft_process_del(char c, t_shell *minishell);
