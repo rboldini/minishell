@@ -25,7 +25,8 @@ FILES =			main.c		\
 				keyhook.c		\
 				ft_echo.c	\
 				ft_pwd.c	\
-				command.c
+				command.c	\
+				special_keys.c
 
 LIBFT_DIR =		libft
 

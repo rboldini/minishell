@@ -14,7 +14,7 @@ void	ft_echo(int ac, char **av)
 	}
 	while (i < ac)
 	{
-		ft_printf_df(1, "%s", av[i]);
+		ft_printf_fd(fd, "%s", av[i]);
 		i++;
 	}
 	if (!n_flag)

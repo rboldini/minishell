@@ -8,7 +8,9 @@
 void	ft_fill_row(t_history *curr, char c)
 {
 	size_t	len;
+	int		i;
 	char	*tmp;
+	char	temp;
 
 	len = 0;
 	if ((*curr).row)
@@ -21,8 +23,26 @@ void	ft_fill_row(t_history *curr, char c)
 		ft_strlcpy(curr->row, tmp, len);
 		free(tmp);
 	}
-	curr->row[len] = c;
-	curr->index++;
+	i = curr->index;
+	if (curr->index < (int)ft_strlen(curr->row))
+	{
+		temp = curr->row[i];
+		curr->row[i] = c;
+		write(1, &c, 1);
+		while (curr->row[(++i) - 1])
+		{
+			c = curr->row[i];
+			curr->row[i] = temp;
+			temp = c;
+			write(1, &curr->row[i], 1);
+		}
+		i = -1;
+		while (++i < (int)ft_strlen(curr->row) - curr->index)
+			write(1, "\b", 1);
+		curr->index++;
+	}
+	else
+		curr->row[curr->index++] = c;
 }
 
 int	ft_hook_char(void)
@@ -45,35 +65,43 @@ int	ft_hook_char(void)
 	return (c);
 }
 
-//int	ft_check_special_keys(char c)
-//{
-//	int x;
-
-//	if (c == 27)
-//	{
-//		x = ft_hook_char();
-//		if (x == 91)
-//		{
-//			x = ft_hook_char();
-//			if (x == 65 || x == 66)
-//				ft_arrow_ud();
-//			else if (x == 67 || x == 68)
-//				ft_arrow_lr();
-//			else if (x == 51)
-//				{
-//					x = ft_hook_char();
-//					if (x == 126)
-//						ft_process_del();
-//					else
-//						return (x);
-//				}
-//			else
-//				return (x);
-//		}
-//		return (x)
-//	}
-//	return (c);
-//}
+int	ft_special_keys(char c, t_shell *minishell)
+{
+	if (c == 27)
+	{
+		c = (char)ft_hook_char();
+		if (c == 91)
+		{
+			c = (char)ft_hook_char();
+			if (c == 65 || c == 66)
+				ft_arrow_ud(c, minishell);
+			else if (c == 67 || c == 68)
+				ft_arrow_lr(c, minishell->current);
+			else if (c == 51)
+			{
+				c = (char)ft_hook_char();
+				if (c == 126)
+					ft_process_delete(minishell->current);
+			}
+			else
+				write(1, "\a", 1);
+		}
+	}
+	else if(c == 127)
+		ft_process_backspace(minishell->current);
+	else if(c == 21) //line clear utility
+	{
+		int i = 0;
+		while(i < (int)ft_strlen(minishell->current->row))
+			minishell->current->row[i] = 0;
+		write(1, "\r\033[2K", 5);
+		write (1, minishell->prompt, ft_strlen(minishell->prompt));
+		minishell->current->index = 0;
+	}
+	else
+		return (c);
+	return (0);
+}
 
 /*
 **TODO:	instead of a single char check for special keys, just take all values
@@ -91,7 +119,6 @@ int	ft_hook_char(void)
 
 /*
 **TODO:	check	special:
-**						escape = 27
 **						backspace = 127
 **						delete = 27, 91, 51, 126
 **						ctrl + u = 21 (clean line)
@@ -102,26 +129,43 @@ int	ft_hook_char(void)
 **						left = 27, 91, 68
 */
 
+void	ft_new_history(t_history **curr)
+{
+	t_history *new;
+
+	new = ft_calloc(1, sizeof(t_history));
+	ft_memset(new, 0, sizeof(t_history));
+	if ((*curr))
+		(*curr)->next = new;
+	new->next = NULL;
+	new->index = 0;
+	if ((*curr))
+		new->prev = *curr;
+	*curr = new;
+}
+
 void	hook_line(t_shell *minishell)
 {
 	char	c;
 
 	c = (char)ft_hook_char();
-	minishell->current = malloc(sizeof(t_history));
 	minishell->current->row = calloc(1024, sizeof(char));
 	while (c != '\n')
 	{
 //		printf("%i\n", (int)c);
-		ft_fill_row(minishell->current, c);
-//		if (!ft_check_special_keys(c))
-//		{
-			printf("%c", c);
-			fflush(stdout);
-//		}
+		if (ft_special_keys(c, minishell))
+		{
+			ft_fill_row(minishell->current, c);
+			write(1, &c, 1);
+		}
 		c = (char)ft_hook_char();
 	}
-//	printf("%c", '\a');
 //	TODO: create a new instance of t_history HINT: ft_new_history_row();
+//	printf("\n%s", minishell->current->row);
+	minishell->n_up = 0;
+	if (ft_strlen(minishell->current->row))
+		ft_new_history(&minishell->current);
+//	printf("\n%p", minishell->current);
 	printf("\n");
 }
 

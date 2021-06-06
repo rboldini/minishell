@@ -16,24 +16,31 @@ void	watermark(void)
 CC_WHT " and " CC_CYN "smenna" CC_RESET "\n");
 }
 
+void	init_minishell(t_shell **minishell)
+{
+	*minishell = malloc(sizeof(t_shell));
+	(*minishell)->current = NULL;
+	(*minishell)->tmp = malloc(sizeof(t_shell));
+	ft_new_history(&(*minishell)->current);
+	(*minishell)->current->index = 0;
+	(*minishell)->n_up = 0;
+	(*minishell)->n_down = 0;
+}
+
 int main()
 {
 	t_shell *minishell;
 
-
-	minishell = malloc(sizeof(t_shell));
 	watermark();
+	init_minishell(&minishell);
 	minishell->prompt = malloc(0);
 	while (1)
 	{
 		//sig_init();
-		set_prompt(minishell, "TEST -> % ");
-		printf(CC_BMAG"%s"CC_RESET, getprompt(minishell));
-		//printf("%d", '[');
+		set_prompt(minishell, "\e[1;35mTEST -> % \e[0m");
+		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
-		//command_handle(minishell->splitted[0], minishell);
-		//printf("%s", minishell->line);
 	}
 	exit (0);
 }
