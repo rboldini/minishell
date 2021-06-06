@@ -257,14 +257,10 @@ t_comm	*start_parsing(const char *cmd)
 	}
 	return (orig_comm);
 }
-
+/*
 int	main(int argv, char **argc)
 {
 	t_comm *comm_list;
-	/*
-	for (int i = 1; i < argv; i++)
-		start_parsing(argc[i]);
-	*/
 	char *str = "ciao domani come | pwd | echo | wc";
 	printf("input: %s\n", str);
 	comm_list = start_parsing(str);
@@ -277,6 +273,7 @@ int	main(int argv, char **argc)
 	
 	return (0);
 }
+*/
 
 /*
 
