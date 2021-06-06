@@ -15,11 +15,11 @@ typedef struct	s_comm
 {
 	char			**arr;
 	int				len;
-	//struct s_cmd	*next;
-	int				out_append;
-	FILE			*file_in;	//0
-	FILE			*file_out;	//1
-	FILE			*err_out;	//2
+	struct s_comm	*next;
+	//int				out_append;
+	int				file_in;	//0
+	int				file_out;	//1
+	int				err_out;	//2
 }				t_comm;
 
 char	**append_to_arr(const char *str, int *len, char **arr)
@@ -179,21 +179,30 @@ int		next_char(char *str, char c, int start)
 
 int		is_break(char c)
 {
-	if (c == ' ' || c == 0 || c == '|' || c == '>' || c == '<')
+	if (c == ' ' || c == '|')
 		return (1);
+	if (c == 0 || c == '>' || c == '<')
+		return (2);
 	return (0);
 }
 
-void	start_parsing(const char *cmd)
+t_comm	*start_parsing(const char *cmd)
 {
 	t_comm	*comm;
+	t_comm	*tmp_comm;
+	t_comm	*orig_comm;
 	char	**arr;
 	int		len;
 	int		i;
 	char	*buff;
+	int		fds[2];
 
 	comm = malloc(sizeof(t_comm));
-	comm->out_append = 0;
+	comm->file_in = 0;
+	comm->file_out = 1;
+	comm->err_out = 2;
+	comm->next = 0;
+	orig_comm = comm;
 	arr = malloc(0);
 	len = 0;
 	i = 0;
@@ -216,27 +225,56 @@ void	start_parsing(const char *cmd)
 		}
 		if (*(cmd + i) == '|')
 		{
-			buff = app_char(cmd, &i, buff);
-			break ;
+			if (ft_strlen(buff))
+				arr = append_to_arr(buff, &len, arr);
+			tmp_comm = malloc(sizeof(t_comm));
+			comm->next = tmp_comm;
+			comm->arr = arr;
+			comm->len = len;
+			pipe(fds);
+			comm->file_out = fds[1];
+			tmp_comm->file_in = fds[0];
+			tmp_comm->file_out = 1;
+			tmp_comm->err_out = 2;
+			tmp_comm->next = 0;
+			comm = comm->next;
+			i++;
+			arr = malloc(0);
+			len = 0;
+			continue ;
+			//buff = app_char(cmd, &i, buff);
+			//break ;
 		}
 		if (ft_strlen(buff))
 			arr = append_to_arr(buff, &len, arr);
 		if (*(cmd + i) != 0)
 			i++;
 	}
+	comm->arr = arr;
 	for (int k = 0; k < len; k++)
 	{
 		printf("%s\n", arr[k]);
 	}
+	return (orig_comm);
 }
 
 int	main(int argv, char **argc)
 {
-	/*for (int i = 1; i < argv; i++)
-		start_parsing(argc[i]);*/
-	char *str = "ciao\\\"test  |   t   $?  o    ";
+	t_comm *comm_list;
+	/*
+	for (int i = 1; i < argv; i++)
+		start_parsing(argc[i]);
+	*/
+	char *str = "ciao domani come | pwd | echo | wc";
 	printf("input: %s\n", str);
-	start_parsing(str);
+	comm_list = start_parsing(str);
+	while (comm_list)
+	{
+		printf("%s\n", comm_list->arr[0]);
+		printf("in: %d out: %d\n", comm_list->file_in, comm_list->file_out);
+		comm_list = comm_list->next;
+	}
+	
 	return (0);
 }
 
@@ -273,4 +311,5 @@ ciao   test
 bash-3.2$ ARG="ciao   test"
 bash-3.2$ echo $ARG
 ciao test
+
 */
