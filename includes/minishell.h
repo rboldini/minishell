@@ -81,6 +81,7 @@ typedef struct s_env
 {
 	char	*env_name;
 	char	*env_value;
+	int		exp; // 0 = not_exported 	1 = exported
 	struct	s_env *next_env;
 }				t_env;
 

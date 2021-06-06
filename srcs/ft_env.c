@@ -39,6 +39,7 @@ t_env *ft_parse_env(char **env)
 		parsed_env->env_name = ft_strdup(*tmp);
 		*tmp += i + 1;
 		parsed_env->env_value = ft_strdup(*tmp);
+		parsed_env->exp = 1;
 		tmp++;
 		if(*tmp)
 		{
@@ -68,10 +69,13 @@ void ft_env(t_env *env)
 	tmp = env;
 	while(tmp)
 	{
-		ft_printf_fd(1, "%s", tmp->env_name);
-		ft_printf_fd(1, "=");
-		ft_printf_fd(1, "%s", tmp->env_value);
-		ft_printf_fd(1, "\n");
+		if(tmp->exp == 1)
+		{
+			ft_printf_fd(1, "%s", tmp->env_name);
+			ft_printf_fd(1, "=");
+			ft_printf_fd(1, "%s", tmp->env_value);
+			ft_printf_fd(1, "\n");
+		}
 		tmp = tmp->next_env;
 	}
 }

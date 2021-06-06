@@ -44,7 +44,7 @@ void ft_addback_env(t_env **env, t_env *new_env)
 	tmp->next_env = new_env;
 }
 
-t_env *create_new_env(t_env *env, char *raw_env) //to_do with stefano (da fare funzione is_env che chiama create_new_env)
+void create_new_env(t_env *env, char *raw_env, int export) //to_do with stefano (da fare funzione is_env che chiama create_new_env)
 {
 	int i;
 	t_env *new;
@@ -57,6 +57,7 @@ t_env *create_new_env(t_env *env, char *raw_env) //to_do with stefano (da fare f
 	new->env_name = ft_strdup(raw_env);
 	raw_env += i + 1;
 	new->env_value = ft_strdup(raw_env);
+	new->exp = export;
 	ft_addback_env(env, new);
 }
 
@@ -89,4 +90,18 @@ char *ft_getenv(t_env *env, char *name)
 		tmp = tmp->next_env;
 	}
 	return (NULL);
+}
+
+void unset_env(t_env *env, char* name)
+{
+	int i;
+	t_env *tmp;
+
+	tmp = env;
+	while(tmp)
+	{
+		if(ft_strcmp(tmp->env_name, name))
+			tmp->exp = 0;
+		tmp = tmp->next_env;
+	}
 }
