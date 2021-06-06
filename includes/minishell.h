@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include "../libft/libft.h"
+#include "../ft_printf_fd/ft_printf.h"
 #include "color.h"
 # include <curses.h>
 # include <ncurses.h>
@@ -75,6 +76,9 @@ typedef struct	s_shell
 {
 	char *prompt;
 	t_history *current;
+	t_history	*tmp;
+	int			n_up;
+	int			n_down;
 }				t_shell;
 
 typedef struct s_env
@@ -116,4 +120,5 @@ void	ft_arrow_ud(/*int x, t_history *curr*/);
 void	ft_arrow_lr(int x, t_history *curr);
 int 	ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
+void	ft_new_history(t_history **curr);
 #endif //MINISHELL_MINISHELL_H
