@@ -27,20 +27,26 @@ void	init_minishell(t_shell **minishell)
 	(*minishell)->n_down = 0;
 }
 
-int main()
+int main(int n, char **arg, char **envp)
 {
 	t_shell *minishell;
+	t_env	*enva;
 
+	(void)n;
+	(void)arg;
 	watermark();
 	init_minishell(&minishell);
 	minishell->prompt = malloc(0);
+	enva = init_env(envp);
+	printf("%s", envp[0]);
+	ft_env(enva);
 	while (1)
 	{
-		//sig_init();
 		set_prompt(minishell, "\e[1;35mTEST -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
+		start_parsing(minishell->current->prev->row);
 	}
 	exit (0);
 }

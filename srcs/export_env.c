@@ -5,6 +5,7 @@ int	env_lst_size(t_env *env)
 	t_env *tmp;
 	int res;
 
+	tmp = env;
 	res = 0;
 	while(tmp)
 	{
@@ -22,7 +23,7 @@ void	ft_export_env(t_env *env, char *str)
 
 	i = 0;
 	tmp = env;
-	str_tmp = ft_strdup(tmp);
+	str_tmp = ft_strdup(str);
 	while (str_tmp[i])
 	{
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)

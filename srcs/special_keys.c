@@ -54,11 +54,8 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			write (1, "\r\033[2K", 5);
 			write (1, minishell->prompt, ft_strlen(minishell->prompt));
 			while (element->prev && i++ < minishell->n_up)
-			{
 				element = element->prev;
-			}
-			if (element)
-				minishell->current->row = ft_strdup(element->row);
+			minishell->current->row = ft_strdup(element->row);
 			minishell->current->index = (int) ft_strlen(minishell->current->row);
 			write (1, minishell->current->row, ft_strlen(minishell->current->row));
 			minishell->n_up++;

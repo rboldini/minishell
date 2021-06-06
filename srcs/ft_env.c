@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-t_env	**duplicate_env(char **env)
+char	**duplicate_env(char **env)
 {
 	char	**dup;
 	int		i;
@@ -11,31 +11,29 @@ t_env	**duplicate_env(char **env)
 	tmp = env;
 	while (*tmp)
 	{
-		dup[i] = ft_strdup(env);
+		dup[i] = ft_strdup(*tmp);
 		i++;
-		*tmp++;
+		(*tmp)++;
 	}
+	dup[i] = 0;
 	return (dup);
 }
 
 t_env	*ft_parse_env(char **env)
 {
 	char	**tmp;
-	char	curr_env;
 	int		i;
 	t_env	*parsed_env;
-	t_env	*tmp_env;
-	
+
 	parsed_env = malloc(sizeof(t_env));
 	tmp = duplicate_env(env);
 	i = 0;
-	tmp_env = parsed_env;
 	while (*tmp)
 	{
 		
-		while (tmp[i] != '=')
+		while (*tmp[i] || *tmp[i] != '=')
 			i++;
-		tmp[i] = 0;
+		*tmp[i] = 0;
 		parsed_env->env_name = ft_strdup(*tmp);
 		*tmp += i + 1;
 		parsed_env->env_value = ft_strdup(*tmp);
@@ -55,11 +53,11 @@ t_env	*ft_parse_env(char **env)
 
 t_env	*init_env(char **env)
 {
-	t_env	*env;
+	t_env	*enva;
 
-	env = malloc(sizeof(env));
-	env = ft_parse_env(env);
-	return (env);
+	//env = malloc(sizeof(env));
+	enva = ft_parse_env(env);
+	return (enva);
 }
 
 void	ft_env(t_env *env)

@@ -52,7 +52,7 @@ OBJS	= ${SRCS:.c=.o}
 OBJSBONUS = ${BONUS:.c=.o}
 
 %.o: %.c
-			@gcc -Wall -Wextra -Werror -c -g $<
+			@gcc -Wall -Wextra -Werror -c $<
 
 HEADERS = libft.h
 
