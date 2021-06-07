@@ -24,7 +24,7 @@ void	ft_fill_row(t_history *curr, t_shell *minishell, char c)
 		free(tmp);
 	}
 	i = curr->index;
-	if (minishell->n_up)
+	if (!curr->old && minishell->n_up)
 		curr->old = ft_strdup(curr->row); //crea un duplicato praticamente
 	if (curr->index < (int)ft_strlen(curr->row))
 	{
@@ -163,17 +163,24 @@ void	hook_line(t_shell *minishell)
 		}
 		c = (char)ft_hook_char();
 	}
-	if (minishell->n_up)
+	if (minishell->current->old && minishell->n_up)
 	{
+		free(minishell->current->row);
+		printf("wewew sono entrata\ncurrent row sarebbe %s\n", minishell->current->row);
 		free(minishell->tmp->row);
 		minishell->tmp->row = ft_strdup(minishell->current->row);
 		minishell->tmp->index = (int)ft_strlen(minishell->current->row);
+		printf("cursore sta a %i\n", minishell->tmp->index);
 		free(minishell->current->row);
+		printf("old è %s\n", minishell->current->old);
 		minishell->current->row = minishell->current->old;
+		minishell->current->old = NULL;
 		minishell->current->index = (int)ft_strlen(minishell->current->row);
 		minishell->current = minishell->tmp;
 		//printf("%s\n", minishell->current->prev->row);
 	}
+//	while (minishell->current->next->next)
+//		minishell->current = minishell->current->next;
 	minishell->n_up = 0;
 	if (minishell->current->row && ft_strlen(minishell->current->row))
 		ft_new_history(&minishell->current);

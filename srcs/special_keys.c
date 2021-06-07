@@ -72,6 +72,14 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			minishell->n_up++;
 		}
 	}
+	/*
+	 * TODO:
+	 * 	fix:
+	 * 		1) se inivii senza modificare, si perde il penultimo
+	 * 		2) modificato (senza inviare) un elemento della lista,
+	 * 		e premuto invio sulla modifica di un altro,ma stampa celle di memoria a caso
+	 * 		3) modificato solo un elemento della history
+	 */
 	else
 	{
 		if (minishell->current->next)
