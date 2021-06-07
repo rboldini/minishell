@@ -7,10 +7,13 @@ void	ft_echo(int ac, char **av)
 	
 	n_flag = 0;
 	i = 0;
-	while (ft_strcmp(av[i], "-n") == 0)
+	if(ft_strcmp(av[i], "-n") == 0)
 	{
-		i++;
-		n_flag = 1;
+		while (ft_strcmp(av[i], "-n") == 0)
+		{
+			i++;
+			n_flag = 1;
+		}
 	}
 	while (i < ac)
 	{

@@ -89,7 +89,11 @@ void	unset_env(t_env **env, char* name);
 void	set_env(t_env **env, char* name);
 char	*ft_getenv(t_env *env, char *name);
 
+/*
+** CD
+*/
 
+void	ft_cd(int ac, char **av, t_env *env);
 
 
 /*

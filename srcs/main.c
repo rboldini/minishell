@@ -44,11 +44,10 @@ int main(int n, char **arg, char **envp)
 	create_new_env(&enva, "GIOVANNI=uhuhuh", 1);
 	set_env(&enva, "GIOVANNI");
 	printf("%s\n", ft_getenv(enva, "LOGNAME"));
-
 	ft_env(enva);
 	while (1)
 	{
-		set_prompt(minishell, "\e[1;35mTEST -> % \e[0m");
+		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
