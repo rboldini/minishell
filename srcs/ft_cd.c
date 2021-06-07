@@ -44,7 +44,7 @@ void ft_absolute_path(t_env *env, char *absolute_path)
 {
 	if (chdir(absolute_path) == -1)
 	{
-		ft_printf_fd(stderr, "Error: %s\n", strerror(errno));
+		ft_printf_fd(stderr, "%s: %s\n", absolute_path, strerror(errno));
 		return ;
 	}
 	ft_edit_env(env, "OLDPWD", ft_getenv(env, "PWD"));
@@ -70,7 +70,7 @@ void	ft_relative_path(t_env *env, char *relative_path)
 void	ft_cd(int ac, char **av, t_env *env)
 {
 	char	*curr_path;
-	int len;
+	int		len;
 
 	curr_path = ft_getenv(env, "PWD");
 	if (!ft_strcmp(av[0], ".") || !av[0])
