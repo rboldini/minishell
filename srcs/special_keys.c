@@ -28,49 +28,56 @@ void	ft_process_delete(t_history *curr)
 		write(1, "\a", 1);
 }
 
-void	ft_arrow_ud(int x, t_shell *minishell)
-{
-	t_history	*element;
-	t_history	*tmp;
-	int			i;
-
-	i = 0;
-	if (x == 65)
-	{
-		fflush(stdout);
-		if (minishell->current->prev)
+/*
+		if (minishell->current->prev) //se esiste un precedente
 		{
-			fflush(stdout);
 			element = malloc(sizeof(t_history));
 			if (!element)
 				exit (-1);
-			ft_memcpy(element, minishell->current->prev, sizeof(t_history));
-			tmp = element;
-			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
+			ft_memcpy(element, minishell->current->prev, sizeof(t_history)); //copia il precedente dentro element 
+			free_tmp = element;
+			if (ft_strlen(minishell->current->row) && minishell->n_up == 0) //se ho scritto qualcosa e non ho premuto freccia su
 			{
-				minishell->tmp->row = minishell->current->row;
+				minishell->tmp->row = minishell->current->row; //assegna a tmp il valore di ció che stavamo scrivendo e anche l'indice
 				minishell->tmp->index = minishell->current->index;
 			}
-			write (1, "\r\033[2K", 5);
-			write (1, minishell->prompt, ft_strlen(minishell->prompt));
+			write (1, "\r\033[2K", 5); //il cursore torna alla fine
+			write (1, minishell->prompt, ft_strlen(minishell->prompt)); //???
 			while (element->prev && i++ < minishell->n_up)
-			{
 				element = element->prev;
-			}
-			if (element)
-				minishell->current->row = ft_strdup(element->row);
+			minishell->current->row = ft_strdup(element->row);
 			minishell->current->index = (int) ft_strlen(minishell->current->row);
 			write (1, minishell->current->row, ft_strlen(minishell->current->row));
 			minishell->n_up++;
-			free(tmp);
+			free(free_tmp);
+		}
+*/
+
+
+void	ft_arrow_ud(int x, t_shell *minishell)
+{
+	if (x == 65)
+	{
+		if (minishell->current->prev)
+		{
+		//	printf("sono qui\n");
+			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
+				minishell->tmp = minishell->current;
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			//while (minishell->current->prev && i++ < minishell->n_up)
+			minishell->current = minishell->current->prev;
+		//	printf("%s\n", minishell->current->row);
+			write(1, minishell->current->row, ft_strlen(minishell->current->row));
+			minishell->n_up++;
 		}
 	}
-//	else
-//	{
-//		if (minishell->current->next)
-//			printf("\n%s", minishell->current->next->row);
-//		fflush(stdout);
-//	}
+	// else
+	// {
+	// 	if (minishell->current->next)
+	// 		printf("\n%s", minishell->current->next->row);
+	// 	fflush(stdout);
+	// }
 	/*
 	 * UP will duplicate the curr->previous->row to a new row, if it's pressed more
 	 * times, without an 'Enter' press, it will free(curr->row) and duplicate the

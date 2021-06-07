@@ -5,7 +5,7 @@
 **	just adds the char c to the row that will go to the parser
 */
 
-void	ft_fill_row(t_history *curr, char c)
+void	ft_fill_row(t_history *curr, t_shell *minishell, char c)
 {
 	size_t	len;
 	int		i;
@@ -24,6 +24,8 @@ void	ft_fill_row(t_history *curr, char c)
 		free(tmp);
 	}
 	i = curr->index;
+	if (minishell->n_up)
+		curr->old = ft_strdup(curr->row); //crea un duplicato praticamente
 	if (curr->index < (int)ft_strlen(curr->row))
 	{
 		temp = curr->row[i];
@@ -150,22 +152,26 @@ void	hook_line(t_shell *minishell)
 
 	c = (char)ft_hook_char();
 	minishell->current->row = calloc(1024, sizeof(char));
-	while (c != '\n')
+	while (c != '\n') //fino a che non premo invio
 	{
-//		printf("%i\n", (int)c);
 		if (ft_special_keys(c, minishell))
 		{
-			ft_fill_row(minishell->current, c);
+			ft_fill_row(minishell->current, minishell, c);
 			write(1, &c, 1);
 		}
 		c = (char)ft_hook_char();
 	}
-//	TODO: create a new instance of t_history HINT: ft_new_history_row();
-//	printf("\n%s", minishell->current->row);
+	if (minishell->n_up)
+	{
+		free(minishell->tmp->row);
+		minishell->tmp->row = ft_strdup(minishell->current->row);
+		free(minishell->current->row);
+		minishell->current->row = minishell->current->old;
+		minishell->current = minishell->tmp;
+	}
 	minishell->n_up = 0;
-	if (ft_strlen(minishell->current->row))
+	if (minishell->current->row && ft_strlen(minishell->current->row))
 		ft_new_history(&minishell->current);
-//	printf("\n%p", minishell->current);
 	printf("\n");
 }
 

@@ -36,10 +36,8 @@ int main()
 	minishell->prompt = malloc(0);
 	while (1)
 	{
-		//sig_init();
 		set_prompt(minishell, "\e[1;35mTEST -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
-		fflush(stdout);
 		hook_line(minishell);
 	}
 	exit (0);

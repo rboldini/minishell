@@ -67,6 +67,7 @@ typedef struct s_cmdt
 typedef struct s_history
 {
 	char	*row;
+	char	*old;
 	int		index;
 	struct	s_history *prev;
 	struct	s_history *next;
@@ -88,10 +89,6 @@ typedef struct s_env
 	int		exp; // 0 = not_exported 	1 = exported
 	struct	s_env *next_env;
 }				t_env;
-
-/*
- *
- */
 
 /*
 ** LEXAR
