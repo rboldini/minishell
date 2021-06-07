@@ -57,7 +57,7 @@ typedef struct	s_cmd
 {
 	char			**arr;
 	int				len;
-	struct s_comm	*next;
+	struct s_cmd	*next;
 	//int				out_append;
 	int				file_in;	//0
 	int				file_out;	//1

@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:38:05 by scilla            #+#    #+#             */
-/*   Updated: 2021/06/07 17:48:43 by scilla           ###   ########.fr       */
+/*   Updated: 2021/06/07 17:52:23 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ char	*next_token(const char *cmd, int *i, int *isb)
 			buff = elab_dquote(cmd, i, buff);
 		else if (*(cmd + *i) == '$')
 			buff = elab_dollar(cmd, i, buff);
-		else if (*(cmd + *i) == '\\' && *i < ft_strlen(cmd) - 1)
+		else if (*(cmd + *i) == '\\' && *i < (int)ft_strlen(cmd) - 1)
 			buff = escape_slash(cmd, i, buff);
 		else
 			buff = app_char(cmd, i, buff);
@@ -290,7 +290,7 @@ t_cmd	*start_parsing(const char *cmd)
 	comm->arr = arr;
 	return (orig_comm);
 }
-
+/*
 int	main(int argv, char **argc)
 {
 	t_cmd	*comm_list;
@@ -306,7 +306,7 @@ int	main(int argv, char **argc)
 	return (0);
 }
 
-
+*/
 /*
 
 cmd > file1 > file2 > file3
