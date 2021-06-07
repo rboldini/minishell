@@ -75,9 +75,21 @@ void	hook_line(t_shell *minishell);
 t_cmd	*start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
+
+/*
+** ENV - EXPORT
+*/
+
 void	ft_free_env(t_env *env);
 void	ft_addback_env(t_env **env, t_env *new_env);
+void	create_new_env(t_env **env, char *raw_env, int export);
 void	ft_env(t_env *env);
+void	ft_export_env(t_env *env, char *str);
+void	unset_env(t_env **env, char* name);
+void	set_env(t_env **env, char* name);
+char	*ft_getenv(t_env *env, char *name);
+
+
 
 
 /*

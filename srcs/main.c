@@ -39,11 +39,12 @@ int main(int n, char **arg, char **envp)
 	init_minishell(&minishell);
 	minishell->prompt = malloc(0);
 	enva = init_env(envp);
-	//while (envp[i])
-	//{
-	//	printf("%s\n", envp[i]);
-	//	i++;
-	//}
+	create_new_env(&enva, "GIOVANNI=ciao ciao ciao", 1);
+	unset_env(&enva, "GIOVANNI");
+	create_new_env(&enva, "GIOVANNI=uhuhuh", 1);
+	set_env(&enva, "GIOVANNI");
+	printf("%s\n", ft_getenv(enva, "LOGNAME"));
+
 	ft_env(enva);
 	while (1)
 	{
