@@ -28,42 +28,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-typedef struct	s_cmd
-{
-	char		**cmd_table;
-}				t_cmd;
-
-
-#define CMD_ECHO "echo"
-#define CD "cd"
-#define PWD "pwd"
-#define EXPORT "export"
-#define UNSET "unset"
-#define ENV "env"
-#define EXIT "exit"
-
-enum e_token
-{
-	CHAR_GENERAL=	-1,
-	CMD			=	0,
-	INFILE		=	'<',
-	OUTFILE		=	'>',
-	PIPE		=	'|',
-
-};
-
-typedef struct	s_scmd
-{
-	int cmd;
-	char **arg;
-}				t_scmd;
-
-typedef struct s_cmdt
-{
-	t_scmd	*table;
-	int		n_sep;
-}				t_cmdt;
-
 typedef struct s_history
 {
 	char	*row;
@@ -89,15 +53,49 @@ typedef struct s_env
 	struct	s_env *next_env;
 }				t_env;
 
+typedef struct	s_cmd
+{
+	char			**arr;
+	int				len;
+	struct s_comm	*next;
+	//int				out_append;
+	int				file_in;	//0
+	int				file_out;	//1
+	int				file_out_app;	//1
+	int				err_out;	//2
+	char			*filename_in;
+	char			*filename_out;
+	char			*filename_out_app;
+}				t_cmd;
+
 /*
  *
  */
 
 /*
-** LEXAR
+** Parser
 */
 
 void	hook_line(t_shell *minishell);
+t_cmd	*start_parsing(const char *cmd);
+t_env	*init_env(char **env);
+void	ft_free_matrix(char **matrix);
+
+/*
+** ENV - EXPORT
+*/
+
+void	ft_free_env(t_env *env);
+void	ft_addback_env(t_env **env, t_env *new_env);
+void	create_new_env(t_env **env, char *raw_env, int export);
+void	ft_env(t_env *env);
+void	ft_export_env(t_env *env, char *str);
+void	unset_env(t_env **env, char* name);
+void	set_env(t_env **env, char* name);
+char	*ft_getenv(t_env *env, char *name);
+
+
+
 
 /*
 ** PROMPT

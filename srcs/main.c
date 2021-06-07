@@ -27,20 +27,32 @@ void	init_minishell(t_shell **minishell)
 	(*minishell)->n_down = 0;
 }
 
-int main()
+int main(int n, char **arg, char **envp)
 {
 	t_shell *minishell;
+	t_env	*enva;
+	//int i = 0;
 
+	(void)n;
+	(void)arg;
 	watermark();
 	init_minishell(&minishell);
 	minishell->prompt = malloc(0);
+	enva = init_env(envp);
+	create_new_env(&enva, "GIOVANNI=ciao ciao ciao", 1);
+	unset_env(&enva, "GIOVANNI");
+	create_new_env(&enva, "GIOVANNI=uhuhuh", 1);
+	set_env(&enva, "GIOVANNI");
+	printf("%s\n", ft_getenv(enva, "LOGNAME"));
+
+	ft_env(enva);
 	while (1)
 	{
-		//sig_init();
 		set_prompt(minishell, "\e[1;35mTEST -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
+		start_parsing(minishell->current->prev->row);
 	}
 	exit (0);
 }

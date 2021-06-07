@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:38:05 by scilla            #+#    #+#             */
-/*   Updated: 2021/06/07 17:41:23 by scilla           ###   ########.fr       */
+/*   Updated: 2021/06/07 17:48:43 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct	s_comm
-{
-	char			**arr;
-	int				len;
-	struct s_comm	*next;
-	//int				out_append;
-	int				file_in;	//0
-	int				file_out;	//1
-	int				file_out_app;	//1
-	int				err_out;	//2
-	char			*filename_in;
-	char			*filename_out;
-	char			*filename_out_app;
-}				t_comm;
 
 char	**append_to_arr(const char *str, int *len, char **arr)
 {
@@ -138,16 +123,12 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 
 char	*elab_quote(const char *src, int *i, char *dst)
 {
-	int		valid;
-
-	valid = 0;
 	(*i)++;
 	while (*(src + *i))
 	{
 		if (*(src + *i) == '\'')
 		{
 			(*i)++;
-			valid = 1;
 			break ;
 		}
 		dst = app_char(src, i, dst);
@@ -157,16 +138,12 @@ char	*elab_quote(const char *src, int *i, char *dst)
 
 char	*elab_dquote(const char *src, int *i, char *dst)
 {
-	int		valid;
-
-	valid = 0;
 	(*i)++;
 	while (*(src + *i))
 	{
 		if (*(src + *i) == '"')
 		{
 			(*i)++;
-			valid = 1;
 			break ;
 		}
 		else if (*(src + *i) == '$')
@@ -231,11 +208,11 @@ char	*next_token(const char *cmd, int *i, int *isb)
 	return (buff);
 }
 
-t_comm	*start_parsing(const char *cmd)
+t_cmd	*start_parsing(const char *cmd)
 {
-	t_comm	*comm;
-	t_comm	*tmp_comm;
-	t_comm	*orig_comm;
+	t_cmd	*comm;
+	t_cmd	*tmp_comm;
+	t_cmd	*orig_comm;
 	char	**arr;
 	int		len;
 	int		i;
@@ -243,7 +220,7 @@ t_comm	*start_parsing(const char *cmd)
 	int		stage;
 	int		isb;
 
-	comm = malloc(sizeof(t_comm));	
+	comm = malloc(sizeof(t_cmd));	
 	comm->file_in = 0;
 	comm->file_out = 0;
 	comm->file_out_app = 0;
@@ -262,7 +239,7 @@ t_comm	*start_parsing(const char *cmd)
 			arr = append_to_arr(buff, &len, arr);
 		if (!stage && isb == 2)
 		{
-			tmp_comm = malloc(sizeof(t_comm));
+			tmp_comm = malloc(sizeof(t_cmd));
 			comm->next = tmp_comm;
 			comm->arr = arr;
 			comm->len = len;
@@ -316,8 +293,8 @@ t_comm	*start_parsing(const char *cmd)
 
 int	main(int argv, char **argc)
 {
-	t_comm *comm_list;
-	char *str = "ciao | pwd > wooo < fregnaaa | wc >> appp";
+	t_cmd	*comm_list;
+	char	*str = "ciao | pwd > wooo < fregnaaa | wc >> appp";
 	printf("input: %s\n", str);
 	comm_list = start_parsing(str);
 	while (comm_list)

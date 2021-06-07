@@ -103,32 +103,6 @@ int	ft_special_keys(char c, t_shell *minishell)
 	return (0);
 }
 
-/*
-**TODO:	instead of a single char check for special keys, just take all values
-**		and check after ft_fill_row() if the last 1/3/4 char/rs belong to
-**		special keys ASCII sequences.
-**		In case delete them from row and call the right KEY_FUNCTION().
-**		That involve to print the char after ft_fill_row() and
-**		ft_check_special_keys() and parse row at every instance of line_hook().
-*/
-
-/*
-**TODO:	FOR FUN!Reproduce the bell sound when pressing an invalid key like 'ESC'
-**		GUESS HOW. (Some hint above/below, search with LOVE).
-*/
-
-/*
-**TODO:	check	special:
-**						backspace = 127
-**						delete = 27, 91, 51, 126
-**						ctrl + u = 21 (clean line)
-**		check	arrows:
-**						up = 27, 91, 65
-**						down = 27, 91, 66
-**						right = 27, 91, 67
-**						left = 27, 91, 68
-*/
-
 void	ft_new_history(t_history **curr)
 {
 	t_history *new;
@@ -160,12 +134,9 @@ void	hook_line(t_shell *minishell)
 		}
 		c = (char)ft_hook_char();
 	}
-//	TODO: create a new instance of t_history HINT: ft_new_history_row();
-//	printf("\n%s", minishell->current->row);
 	minishell->n_up = 0;
 	if (ft_strlen(minishell->current->row))
 		ft_new_history(&minishell->current);
-//	printf("\n%p", minishell->current);
 	printf("\n");
 }
 
@@ -189,4 +160,17 @@ void	hook_line(t_shell *minishell)
 **
 **	Clear line regardless cursor posix
 **		printf("%c[2K", 27);
+*/
+
+
+/*
+**TODO:	check	special:
+**						backspace = 127
+**						delete = 27, 91, 51, 126
+**						ctrl + u = 21 (clean line)
+**		check	arrows:
+**						up = 27, 91, 65
+**						down = 27, 91, 66
+**						right = 27, 91, 67
+**						left = 27, 91, 68
 */
