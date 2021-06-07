@@ -11,17 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct	s_comm
-{
-	char			**arr;
-	int				len;
-	struct s_comm	*next;
-	//int				out_append;
-	int				file_in;	//0
-	int				file_out;	//1
-	int				err_out;	//2
-}				t_comm;
-
 char	**append_to_arr(const char *str, int *len, char **arr)
 {
 	char	**tmp;
@@ -127,16 +116,12 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 
 char	*elab_quote(const char *src, int *i, char *dst)
 {
-	int		valid;
-
-	valid = 0;
 	(*i)++;
 	while (*(src + *i))
 	{
 		if (*(src + *i) == '\'')
 		{
 			(*i)++;
-			valid = 1;
 			break ;
 		}
 		dst = app_char(src, i, dst);
@@ -146,16 +131,12 @@ char	*elab_quote(const char *src, int *i, char *dst)
 
 char	*elab_dquote(const char *src, int *i, char *dst)
 {
-	int		valid;
-
-	valid = 0;
 	(*i)++;
 	while (*(src + *i))
 	{
 		if (*(src + *i) == '"')
 		{
 			(*i)++;
-			valid = 1;
 			break ;
 		}
 		else if (*(src + *i) == '$')
@@ -186,18 +167,18 @@ int		is_break(char c)
 	return (0);
 }
 
-t_comm	*start_parsing(const char *cmd)
+t_cmd	*start_parsing(const char *cmd)
 {
-	t_comm	*comm;
-	t_comm	*tmp_comm;
-	t_comm	*orig_comm;
+	t_cmd	*comm;
+	t_cmd	*tmp_comm;
+	t_cmd	*orig_comm;
 	char	**arr;
 	int		len;
 	int		i;
 	char	*buff;
 	int		fds[2];
 
-	comm = malloc(sizeof(t_comm));
+	comm = malloc(sizeof(t_cmd));
 	comm->file_in = 0;
 	comm->file_out = 1;
 	comm->err_out = 2;
@@ -218,7 +199,7 @@ t_comm	*start_parsing(const char *cmd)
 				buff = elab_dquote(cmd, &i, buff);
 			else if (*(cmd + i) == '$')
 				buff = elab_dollar(cmd, &i, buff);
-			else if (*(cmd + i) == '\\' && i < ft_strlen(cmd) - 1)
+			else if (*(cmd + i) == '\\' && i < (int)ft_strlen(cmd) - 1)
 				buff = escape_slash(cmd, &i, buff);
 			else
 				buff = app_char(cmd, &i, buff);
@@ -227,7 +208,7 @@ t_comm	*start_parsing(const char *cmd)
 		{
 			if (ft_strlen(buff))
 				arr = append_to_arr(buff, &len, arr);
-			tmp_comm = malloc(sizeof(t_comm));
+			tmp_comm = malloc(sizeof(t_cmd));
 			comm->next = tmp_comm;
 			comm->arr = arr;
 			comm->len = len;
@@ -260,7 +241,7 @@ t_comm	*start_parsing(const char *cmd)
 /*
 int	main(int argv, char **argc)
 {
-	t_comm *comm_list;
+	t_cmd *comm_list;
 	char *str = "ciao domani come | pwd | echo | wc";
 	printf("input: %s\n", str);
 	comm_list = start_parsing(str);
