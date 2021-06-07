@@ -1,8 +1,14 @@
-/*
-**	The Parser is the software component that reads the command line such as
-**	“ls -al” and puts it into a data structure called Command Table that will
-**	store the commands that will be executed.
-*/
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/06/07 17:38:05 by scilla            #+#    #+#             */
+/*   Updated: 2021/06/07 17:41:23 by scilla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 // #include "../includes/parser.h"
 #include "../includes/minishell.h"
@@ -19,7 +25,11 @@ typedef struct	s_comm
 	//int				out_append;
 	int				file_in;	//0
 	int				file_out;	//1
+	int				file_out_app;	//1
 	int				err_out;	//2
+	char			*filename_in;
+	char			*filename_out;
+	char			*filename_out_app;
 }				t_comm;
 
 char	**append_to_arr(const char *str, int *len, char **arr)
@@ -35,7 +45,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 		i++;
 	}
 	// remove system strdup
-	tmp[i] = strdup(str);
+	tmp[i] = ft_strdup(str);
 	free(arr);
 	(*len)++;
 	return (tmp);
@@ -108,7 +118,8 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 	{
 		(*i)++;
 		c = *(src + *i);
-		while ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
+		while ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+			|| (c >= '0' && c <= '9') || c == '_')
 		{
 			var_name = app_char(src, i, var_name);
 			c = *(src + *i);
@@ -177,13 +188,47 @@ int		next_char(char *str, char c, int start)
 	return (-1);
 }
 
-int		is_break(char c)
+int		is_break(const char *cmd, int i)
 {
-	if (c == ' ' || c == '|')
+	char	c;
+
+	c = *(cmd + i);
+	if (c == ' ' || c == 0)
 		return (1);
-	if (c == 0 || c == '>' || c == '<')
+	if (c == '>' && *(cmd + i + 1) == '>')
+		return (4);
+	if (c == '>')
+		return (3);
+	if (c == '<')
+		return (5);
+	if (c == '|')
 		return (2);
 	return (0);
+}
+
+char	*next_token(const char *cmd, int *i, int *isb)
+{
+	char	*buff;
+
+	buff = malloc(sizeof(char));
+	buff[0] = 0;
+	while (1)
+	{
+		*isb = is_break(cmd, *i);
+		if (*isb)
+			break ;
+		if (*(cmd + *i) == '\'')
+			buff = elab_quote(cmd, i, buff);
+		else if (*(cmd + *i) == '"')
+			buff = elab_dquote(cmd, i, buff);
+		else if (*(cmd + *i) == '$')
+			buff = elab_dollar(cmd, i, buff);
+		else if (*(cmd + *i) == '\\' && *i < ft_strlen(cmd) - 1)
+			buff = escape_slash(cmd, i, buff);
+		else
+			buff = app_char(cmd, i, buff);
+	}
+	return (buff);
 }
 
 t_comm	*start_parsing(const char *cmd)
@@ -195,85 +240,95 @@ t_comm	*start_parsing(const char *cmd)
 	int		len;
 	int		i;
 	char	*buff;
-	int		fds[2];
+	int		stage;
+	int		isb;
 
-	comm = malloc(sizeof(t_comm));
+	comm = malloc(sizeof(t_comm));	
 	comm->file_in = 0;
-	comm->file_out = 1;
-	comm->err_out = 2;
+	comm->file_out = 0;
+	comm->file_out_app = 0;
+	comm->err_out = 0;
 	comm->next = 0;
 	orig_comm = comm;
 	arr = malloc(0);
 	len = 0;
 	i = 0;
+	stage = 0;
+	isb = 0;
 	while (*(cmd + i))
 	{
-		buff = malloc(sizeof(char));
-		buff[0] = 0;
-		while (!is_break(*(cmd + i)))
+		buff = next_token(cmd, &i, &isb);
+		if (!stage && ft_strlen(buff))
+			arr = append_to_arr(buff, &len, arr);
+		if (!stage && isb == 2)
 		{
-			if (*(cmd + i) == '\'')
-				buff = elab_quote(cmd, &i, buff);
-			else if (*(cmd + i) == '"')
-				buff = elab_dquote(cmd, &i, buff);
-			else if (*(cmd + i) == '$')
-				buff = elab_dollar(cmd, &i, buff);
-			else if (*(cmd + i) == '\\' && i < ft_strlen(cmd) - 1)
-				buff = escape_slash(cmd, &i, buff);
-			else
-				buff = app_char(cmd, &i, buff);
-		}
-		if (*(cmd + i) == '|')
-		{
-			if (ft_strlen(buff))
-				arr = append_to_arr(buff, &len, arr);
 			tmp_comm = malloc(sizeof(t_comm));
 			comm->next = tmp_comm;
 			comm->arr = arr;
 			comm->len = len;
-			pipe(fds);
-			comm->file_out = fds[1];
-			tmp_comm->file_in = fds[0];
-			tmp_comm->file_out = 1;
-			tmp_comm->err_out = 2;
 			tmp_comm->next = 0;
 			comm = comm->next;
+			comm->file_in = 0;
+			comm->file_out = 0;
+			comm->file_out_app = 0;
+			comm->err_out = 0;
 			i++;
 			arr = malloc(0);
 			len = 0;
+			stage = 0;
 			continue ;
-			//buff = app_char(cmd, &i, buff);
-			//break ;
 		}
-		if (ft_strlen(buff))
-			arr = append_to_arr(buff, &len, arr);
+		if (stage == 3 && ft_strlen(buff))
+		{
+			if (comm->file_out)
+				close(comm->file_out);
+			if (comm->file_out_app)
+				close(comm->file_out_app);
+			comm->file_out = open(buff, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+			stage = 0;
+		}
+		if (stage == 4 && ft_strlen(buff))
+		{
+			if (comm->file_out)
+				close(comm->file_out);
+			if (comm->file_out_app)
+				close(comm->file_out_app);
+			comm->file_out_app = open(buff, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+			stage = 0;
+		}
+		if (stage == 5 && ft_strlen(buff))
+		{
+			comm->file_in = open(buff, O_RDONLY);
+			stage = 0;
+		}
+		if (isb > 2)
+		{
+			stage = isb;
+		}
+		if (isb == 4)
+			i++;
 		if (*(cmd + i) != 0)
 			i++;
 	}
 	comm->arr = arr;
-	for (int k = 0; k < len; k++)
-	{
-		printf("%s\n", arr[k]);
-	}
 	return (orig_comm);
 }
-/*
+
 int	main(int argv, char **argc)
 {
 	t_comm *comm_list;
-	char *str = "ciao domani come | pwd | echo | wc";
+	char *str = "ciao | pwd > wooo < fregnaaa | wc >> appp";
 	printf("input: %s\n", str);
 	comm_list = start_parsing(str);
 	while (comm_list)
 	{
 		printf("%s\n", comm_list->arr[0]);
-		printf("in: %d out: %d\n", comm_list->file_in, comm_list->file_out);
+		printf("file in: %d file out: %d file out app: %d\n", comm_list->file_in, comm_list->file_out, comm_list->file_out_app);
 		comm_list = comm_list->next;
 	}
-	
 	return (0);
 }
-*/
+
 
 /*
 
