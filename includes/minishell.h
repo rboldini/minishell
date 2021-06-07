@@ -38,8 +38,8 @@ typedef struct s_history
 
 typedef struct	s_shell
 {
-	char *prompt;
-	t_history *current;
+	char		*prompt;
+	t_history	*current;
 	t_history	*tmp;
 	int			n_up;
 	int			n_down;

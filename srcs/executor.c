@@ -7,3 +7,47 @@
 */
 
 #include "../includes/minishell.h"
+
+enum e_cmd
+{
+	CMD_PWD,
+	CMD_CD,
+	CMD_ENV,
+	CMD_EXP,
+	CMD_UNSET,
+	CMD_ECHO,
+	CMD_EXIT,
+	CMD_RUN,
+};
+
+int	check_for_cmd(char *cmd)
+ {
+	 if(!ft_strncmp(cmd, "./", 2))
+	 	return (CMD_RUN);
+	 else if(!ft_strcmp(cmd, "cd"))
+	 	return (CMD_CD);
+	 else if(!ft_strcmp(cmd, "pwd"))
+	 	return (CMD_PWD);
+	 else if(!ft_strcmp(cmd, "echo"))
+	 	return (CMD_ECHO);
+	 else if(!ft_strcmp(cmd, "unset"))
+	 	return (CMD_UNSET);
+	 else if(!ft_strcmp(cmd, "env"))
+	 	return (CMD_ENV);
+	 else if(!ft_strcmp(cmd, "export"))
+	 	return (CMD_EXP);
+	 else if(!ft_strcmp(cmd, "exit"))
+	 	return (CMD_EXIT);
+ }
+
+void	ft_executor(t_cmd *cmd, t_env *env)
+{
+	t_cmd *tmp;
+	int cmd_code;
+
+	tmp = cmd;
+	while (tmp)
+	{
+		cmd_code = check_for_cmd(cmd->arr[0]);
+	}
+}
