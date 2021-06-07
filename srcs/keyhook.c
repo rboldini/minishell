@@ -141,6 +141,8 @@ void	ft_new_history(t_history **curr)
 		(*curr)->next = new;
 	new->next = NULL;
 	new->index = 0;
+//	if ((*curr))
+//		printf("%s\n", (*curr)->row);
 	if ((*curr))
 		new->prev = *curr;
 	*curr = new;
@@ -165,9 +167,12 @@ void	hook_line(t_shell *minishell)
 	{
 		free(minishell->tmp->row);
 		minishell->tmp->row = ft_strdup(minishell->current->row);
+		minishell->tmp->index = (int)ft_strlen(minishell->current->row);
 		free(minishell->current->row);
 		minishell->current->row = minishell->current->old;
+		minishell->current->index = (int)ft_strlen(minishell->current->row);
 		minishell->current = minishell->tmp;
+		//printf("%s\n", minishell->current->prev->row);
 	}
 	minishell->n_up = 0;
 	if (minishell->current->row && ft_strlen(minishell->current->row))

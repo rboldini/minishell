@@ -62,7 +62,7 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 		{
 		//	printf("sono qui\n");
 			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
-				minishell->tmp = minishell->current;
+				minishell->tmp = ft_memcpy(minishell->tmp, minishell->current, sizeof(t_history));
 			write(1, "\r\033[2K", 5);
 			write(1, minishell->prompt, ft_strlen(minishell->prompt));
 			//while (minishell->current->prev && i++ < minishell->n_up)
@@ -72,20 +72,22 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			minishell->n_up++;
 		}
 	}
-	// else
-	// {
-	// 	if (minishell->current->next)
-	// 		printf("\n%s", minishell->current->next->row);
-	// 	fflush(stdout);
-	// }
-	/*
-	 * UP will duplicate the curr->previous->row to a new row, if it's pressed more
-	 * times, without an 'Enter' press, it will free(curr->row) and duplicate the
-	 * curr->previous->previous->row(etc..);
-	 * Logic: if the user write something and then press UP, we'll store the row
-	 * in minishell->tmp->row, just in case he/she would press DOWN to take it back.
-	 * In case the 'ENTER' Key is pressed minishell->curr will be sent to the parser.
-	 */
+	else
+	{
+		if (minishell->current->next)
+		{
+			minishell->n_up--;
+			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
+				minishell->tmp = minishell->current;
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			//while (minishell->current->prev && i++ < minishell->n_up)
+			minishell->current = minishell->current->next;
+			//	printf("%s\n", minishell->current->row);
+			write(1, minishell->current->row,
+				  ft_strlen(minishell->current->row));
+		}
+	}
 }
 
 void	ft_arrow_lr(int x, t_history *curr)
