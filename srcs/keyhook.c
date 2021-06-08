@@ -25,7 +25,10 @@ void	ft_fill_row(t_history *curr, t_shell *minishell, char c)
 	}
 	i = curr->index;
 	if (!curr->old && minishell->n_up)
+	{
 		curr->old = ft_strdup(curr->row); //crea un duplicato praticamente
+		printf("ho creato un old di curr->row (%s), che é %s\n", curr->row, curr->old);
+	}
 	if (curr->index < (int)ft_strlen(curr->row))
 	{
 		temp = curr->row[i];
@@ -141,10 +144,7 @@ void	ft_new_history(t_history **curr)
 		(*curr)->next = new;
 	new->next = NULL;
 	new->index = 0;
-//	if ((*curr))
-//		printf("%s\n", (*curr)->row);
-	if ((*curr))
-		new->prev = *curr;
+	new->prev = *curr;
 	*curr = new;
 }
 
@@ -162,6 +162,11 @@ void	hook_line(t_shell *minishell)
 			write(1, &c, 1);
 		}
 		c = (char)ft_hook_char();
+	}
+	if (!minishell->current->old && minishell->n_up)
+	{
+		minishell->current->old = ft_strdup(minishell->current->row); //crea un duplicato praticamente
+		printf("ho creato un old di curr->row (%s), che é %s\n", minishell->current->row, minishell->current->old);
 	}
 	if (minishell->current->old && minishell->n_up)
 	{

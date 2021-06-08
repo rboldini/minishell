@@ -69,6 +69,7 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			minishell->current = minishell->current->prev;
 		//	printf("%s\n", minishell->current->row);
 			write(1, minishell->current->row, ft_strlen(minishell->current->row));
+			minishell->current->old = ft_strdup(minishell->current->row); //crea un duplicato praticamente
 			minishell->n_up++;
 		}
 	}

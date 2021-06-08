@@ -19,9 +19,10 @@ CC_WHT " and " CC_CYN "smenna" CC_RESET "\n");
 void	init_minishell(t_shell **minishell)
 {
 	*minishell = ft_calloc(1, sizeof(t_shell));
-	ft_memset((*minishell), 0, sizeof(t_history));
+	ft_memset((*minishell), 0, sizeof(t_shell));
 	(*minishell)->current = NULL;
 	(*minishell)->tmp = malloc(sizeof(t_shell));
+	ft_memset((*minishell)->tmp, 0,sizeof(t_history));
 	ft_new_history(&(*minishell)->current);
 	(*minishell)->current->index = 0;
 	(*minishell)->n_up = 0;

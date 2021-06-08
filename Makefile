@@ -22,11 +22,10 @@ INCDIR = 		./includes
 #Files
 #				parser.c
 FILES =			main.c		\
-				keyhook.c		\
 				ft_echo.c	\
 				ft_pwd.c	\
 				command.c	\
-				special_keys.c
+				prova.c
 
 LIBFT_DIR =		libft
 
