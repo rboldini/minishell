@@ -59,9 +59,12 @@ int main(int n, char **arg, char **envp)
 			cmd = *cmd_arr;
 			while (cmd)
 			{
-				printf("%s\n", cmd->arr[0]);
+				if (cmd->len)
+					printf("%s\n", cmd->arr[0]);
 				printf("file in: %d file out: %d is app: %d\n", cmd->file_in, cmd->file_out, cmd->is_append);
-				ft_executor(cmd, enva);
+
+				if (cmd->len)
+					ft_executor(cmd, enva);
 				cmd = cmd->next;
 			}
 			cmd_arr++;
