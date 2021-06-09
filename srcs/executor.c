@@ -72,13 +72,17 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		tmp = cmd;
 		while(tmp->next && tmp->file_out == 1)
 		{
-			tmp->file_out = fd[0];
-			tmp->next->file_in = fd[1];
+			tmp->file_out = fd[1];
+			tmp->next->file_in = fd[0];
 			tmp = tmp->next;
 		}
-		dup2(1, tmp->file_out);
-		dup2(0, tmp->file_in);
-		run_command(cmd_code, cmd, env);
+		dup2(1, fd[1]);
+		dup2(0, fd[0]);
+		while (cmd)
+		{
+			run_command(cmd_code, cmd, env);
+			cmd = cmd->next;
+		}
 		close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
 		close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
 		exit(0); // <-- uscita da processo segnala il riavvio del processo padre
