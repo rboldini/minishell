@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:38:05 by scilla            #+#    #+#             */
-/*   Updated: 2021/06/09 14:33:54 by scilla           ###   ########.fr       */
+/*   Updated: 2021/06/09 14:55:00 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,6 @@ t_cmd	**start_parsing(const char *cmd)
 	arr_len = 0;
 	while (*(cmd + i))
 	{	
-		printf("new putevvirgola\n");
 		arr_len++;
 		tmp_cmd_arr = malloc(sizeof(t_cmd*) * (arr_len + 1));
 		tmp_cmd_arr[arr_len] = NULL;
@@ -255,7 +254,6 @@ t_cmd	**start_parsing(const char *cmd)
 		isb = 0;
 		while (*(cmd + i))
 		{
-			printf("new cmd\n");
 			buff = next_token(cmd, &i, &isb);
 			if (!stage && ft_strlen(buff))
 				arr = append_to_arr(buff, &len, arr);
@@ -279,14 +277,14 @@ t_cmd	**start_parsing(const char *cmd)
 			}
 			if (stage == 3 && ft_strlen(buff))
 			{
-				if (comm->file_out)
+				if (comm->file_out != 1)
 					close(comm->file_out);
 				comm->file_out = open(buff, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 				stage = 0;
 			}
 			if (stage == 4 && ft_strlen(buff))
 			{
-				if (comm->file_out)
+				if (comm->file_out != 1)
 					close(comm->file_out);
 				comm->file_out = open(buff, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 				comm->is_append = 1;
@@ -294,6 +292,8 @@ t_cmd	**start_parsing(const char *cmd)
 			}
 			if (stage == 5 && ft_strlen(buff))
 			{
+				if (comm->file_in != 0)
+					close(comm->file_in);
 				comm->file_in = open(buff, O_RDONLY);
 				stage = 0;
 			}
@@ -306,6 +306,7 @@ t_cmd	**start_parsing(const char *cmd)
 			if (isb == 6)
 			{
 				// se cmd vuoto > ERRORE
+				stage = 0;
 				break ;
 			}
 		}
@@ -316,20 +317,22 @@ t_cmd	**start_parsing(const char *cmd)
 /*
 int	main(int argv, char **argc)
 {
+	t_cmd	**comm_arr;
 	t_cmd	*comm_list;
 	char	*str = "ciao | pwd > wooo < fregnaaa | wc >> appp";
 	printf("input: %s\n", str);
-	comm_list = start_parsing(str);
+	comm_arr = start_parsing(str);
+	comm_list = comm_arr[0];
 	while (comm_list)
 	{
 		printf("%s\n", comm_list->arr[0]);
-		printf("file in: %d file out: %d file out app: %d\n", comm_list->file_in, comm_list->file_out, comm_list->file_out_app);
+		printf("file in: %d file out: %d is app: %d\n", comm_list->file_in, comm_list->file_out, comm_list->is_append);
 		comm_list = comm_list->next;
 	}
 	return (0);
 }
-
 */
+
 /*
 
 cmd > file1 > file2 > file3

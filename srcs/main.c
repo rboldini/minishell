@@ -56,7 +56,6 @@ int main(int n, char **arg, char **envp)
 		cmd_arr = start_parsing(minishell->current->row);
 		while (*cmd_arr)
 		{
-			printf("%s\n", (*cmd_arr)->arr[0]);
 			cmd = *cmd_arr;
 			while (cmd)
 			{
