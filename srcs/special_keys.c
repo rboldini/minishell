@@ -37,10 +37,8 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 	i = 0;
 	if (x == 65)
 	{
-		fflush(stdout);
 		if (minishell->current->prev)
 		{
-			fflush(stdout);
 			element = malloc(sizeof(t_history));
 			if (!element)
 				exit (-1);
@@ -62,12 +60,26 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			free(tmp);
 		}
 	}
-//	else
-//	{
-//		if (minishell->current->next)
-//			printf("\n%s", minishell->current->next->row);
-//		fflush(stdout);
-//	}
+	else
+	{
+		if (minishell->current->next)
+		{
+			element = malloc(sizeof(t_history));
+			if (!element)
+				exit (-1);
+			ft_memcpy(element, minishell->current->next, sizeof(t_history));
+			tmp = element;
+			write (1, "\r\033[2K", 5);
+			write (1, minishell->prompt, ft_strlen(minishell->prompt));
+			while (element->next && i++ < minishell->n_up)
+				element = element->next;
+			minishell->current->row = ft_strdup(element->row);
+			minishell->current->index = (int) ft_strlen(minishell->current->row);
+			write (1, minishell->current->row, ft_strlen(minishell->current->row));
+			minishell->n_up++;
+			free(tmp);
+		}
+	}
 	/*
 	 * UP will duplicate the curr->previous->row to a new row, if it's pressed more
 	 * times, without an 'Enter' press, it will free(curr->row) and duplicate the

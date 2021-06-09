@@ -52,13 +52,16 @@ int main(int n, char **arg, char **envp)
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
-		cmd = start_parsing(minishell->current->prev->row);
+		if(ft_strlen(minishell->current->row))
+			cmd = start_parsing(minishell->current->row);
 		while (cmd)
 		{
 			printf("%s\n", cmd->arr[0]);
 			printf("file in: %d file out: %d file out app: %d\n", cmd->file_in, cmd->file_out, cmd->file_out_app);
 			cmd = cmd->next;
 		}
+			if (ft_strlen(minishell->current->row))
+		ft_new_history(&minishell->current);
 	}
 	exit (0);
 }
