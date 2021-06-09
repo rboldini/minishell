@@ -135,8 +135,6 @@ void	hook_line(t_shell *minishell)
 		c = (char)ft_hook_char();
 	}
 	minishell->n_up = 0;
-	if (ft_strlen(minishell->current->row))
-		ft_new_history(&minishell->current);
 	printf("\n");
 }
 
