@@ -66,10 +66,34 @@ t_env	*init_env(char **env)
 void	ft_env(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
+	int i;
+	char *str;
+	int flag;
 	
 	(void)ac;
-	(void)av;
+	i = 0;
 	tmp = env;
+	if(av[1])
+	{
+		str = ft_strdup(av[1]);
+		while(str[i] != '=' && str[i])
+		{
+			i++;
+			if(str[i] == '=')
+				break;
+			else if(!str[i])
+				return ; 
+		}
+		str[i] = 0;
+		if(check_existing_env(env, str))
+			edit_env(&env, str, str + i);
+		else
+		{
+			str[i] = '=';
+			create_new_env(&env, str, 0);
+		}
+		flag = 1;
+	}
 	while (tmp)
 	{
 		if (tmp->exp == 1)
@@ -80,5 +104,12 @@ void	ft_env(t_env *env, int ac, char **av)
 			ft_printf_fd(1, "\n");
 		}
 		tmp = tmp->next_env;
+	}
+	if(flag)
+	{
+			ft_printf_fd(1, "%s", str);
+			ft_printf_fd(1, "=");
+			ft_printf_fd(1, "%s", str + 1);
+			ft_printf_fd(1, "\n");
 	}
 }

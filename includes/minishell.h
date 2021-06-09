@@ -92,6 +92,7 @@ void	unset_env(t_env **env, char* name);
 void	set_env(t_env **env, char* name);
 char	*ft_getenv(t_env *env, char *name);
 void	edit_env(t_env **env,char *name, char *new_value);
+t_env	*check_existing_env(t_env *env, char *name);
 
 
 /*
