@@ -1,5 +1,18 @@
 #include "../includes/minishell.h"
 
+
+void	free_old(t_history *curr)
+{
+	while (curr->prev)
+	{
+		free (curr->old);
+		curr->old = NULL;
+		curr = curr->prev;
+	}
+	free (curr->old);
+	curr->old = NULL;
+}
+
 void	ft_arrow_ud(int x, t_shell *minishell)
 {
 	if (x == 65)
@@ -8,12 +21,13 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 		{
 			if (minishell->n_up == 0)
 				minishell->tmp = minishell->current;
-			printf("\ntmp row é %s\n", minishell->tmp->row);
+			minishell->current->index = ft_strlen(minishell->current->row);
 			minishell->current = minishell->current->prev;
 			write(1, "\r\033[2K", 5);
 			write(1, minishell->prompt, ft_strlen(minishell->prompt));
-			minishell->current->old = ft_strdup(minishell->current->row);
-			write(1, minishell->current->row, ft_strlen(minishell->current->row));
+			if (!minishell->current->old)
+				minishell->current->old = ft_strdup(minishell->current->row);
+			write(1, minishell->current->row, minishell->current->index);
 			minishell->n_up++;
 		}
 	}
@@ -22,15 +36,21 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 		if (minishell->current->next)
 		{
 			minishell->n_up--;
-			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
-				minishell->tmp = minishell->current;
 			write(1, "\r\033[2K", 5);
 			write(1, minishell->prompt, ft_strlen(minishell->prompt));
-			//while (minishell->current->prev && i++ < minishell->n_up)
+			minishell->current->index = ft_strlen(minishell->current->row);
 			minishell->current = minishell->current->next;
-			//	printf("%s\n", minishell->current->row);
+			minishell->current->index = ft_strlen(minishell->current->row);
 			write(1, minishell->current->row,
 				  ft_strlen(minishell->current->row));
+		}
+		else if (minishell->tmp && ft_strlen(minishell->tmp->row))
+		{
+			minishell->current = minishell->tmp;
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			write(1, minishell->current->row,
+				  minishell->current->index);
 		}
 	}
 }
@@ -135,7 +155,7 @@ int	ft_special_keys(char c, t_shell *minishell)
 	}
 	else if(c == 127)
 		ft_process_backspace(minishell->current);
-	else if(c == 21) //line clear utility
+	else if(c == 21)
 	{
 		int i = 0;
 		while(i < (int)ft_strlen(minishell->current->row))
@@ -193,12 +213,13 @@ void	ft_fill_row(t_history *curr, char c)
 		temp = curr->row[i];
 		curr->row[i] = c;
 		write(1, &c, 1);
-		while (curr->row[(++i) - 1])
+		while (curr->row[i])
 		{
-			c = curr->row[i];
-			curr->row[i] = temp;
+			c = curr->row[i + 1];
+			curr->row[i + 1] = temp;
 			temp = c;
-			write(1, &curr->row[i], 1);
+			write(1, &curr->row[i + 1], 1);
+			i++;
 		}
 		i = -1;
 		while (++i < (int)ft_strlen(curr->row) - curr->index)
@@ -206,7 +227,11 @@ void	ft_fill_row(t_history *curr, char c)
 		curr->index++;
 	}
 	else
-		curr->row[curr->index++] = c;
+		{
+			i = curr->index;
+			curr->row[i] = c;
+			curr->index++;
+	 	}
 }
 
 void	ft_new_history(t_history **curr)
@@ -217,6 +242,7 @@ void	ft_new_history(t_history **curr)
 	ft_memset(new, 0, sizeof(t_history));
 	if ((*curr))
 		(*curr)->next = new;
+	new->row = malloc(0);
 	new->next = NULL;
 	new->index = 0;
 	new->prev = *curr;
@@ -228,8 +254,9 @@ void	hook_line(t_shell *minishell)
 	char	c;
 
 	c = (char)ft_hook_char();
+	free (minishell->current->row);
 	minishell->current->row = ft_calloc(1024, sizeof(char));
-	while (c != '\n') //fino a che non premo invio
+	while (c != '\n')
 	{
 		if (ft_special_keys(c, minishell))
 		{
@@ -240,28 +267,16 @@ void	hook_line(t_shell *minishell)
 	}
 	if (minishell->n_up)
 	{
-		minishell->current->prev = minishell->current->prev;
+		free (minishell->tmp->row);
 		minishell->tmp->row = minishell->current->row;
 		minishell->current->row = minishell->current->old;
-		minishell->tmp->index = minishell->current->index;
+		minishell->current->old = NULL;
+		minishell->tmp->index = ft_strlen(minishell->tmp->row);
+		minishell->current->index = ft_strlen(minishell->current->row);
 		minishell->current = minishell->tmp;
-		//strcmp()
-		printf("\ncurrent row %s tmp row %s\n", minishell->current->row, minishell->tmp->row);
-		//minishell->tmp = minishell->current;
-		// if (strcmp(minishell->current->old, minishell->current->row))
-		// {
-		// 	minishell->tmp->row = minishell->current->row;
-		// 	minishell->tmp->index = minishell->current.
-		// 	minishell->current = minishell->tmp;
-		// 	//free(minishell->tmp);
-		// 	//int i = minishell->n_up;
-		// 	//while ()
-			printf("siamo saliti %i volte\n", minishell->n_up);
-			//printf("wewe siamo diversi!!! ritorna: %i\n", strcmp(minishell->current->old, minishell->current->row));
-	//	}
+		free_old(minishell->current);
 	}
 	minishell->n_up = 0;
-	ft_new_history(&minishell->current);
 	//printf("\n%p <- prev prev\n%p <- prev\n%p <- prev next\n%p <- current\n%p <- next\n", minishell->current->prev->prev, minishell->current->prev, minishell->current->prev->next, minishell->current, minishell->current->next);
 	write(1, "\n", 1);
 }
