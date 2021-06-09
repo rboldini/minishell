@@ -31,6 +31,7 @@ int main(int n, char **arg, char **envp)
 {
 	t_shell *minishell;
 	t_env	*enva;
+	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
 	//int i = 0;
 
@@ -52,16 +53,20 @@ int main(int n, char **arg, char **envp)
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		fflush(stdout);
 		hook_line(minishell);
-		if(ft_strlen(minishell->current->row))
-			cmd = start_parsing(minishell->current->row);
-		while (cmd)
+		cmd_arr = start_parsing(minishell->current->row);
+		while (*cmd_arr)
 		{
-			printf("%s\n", cmd->arr[0]);
-			printf("file in: %d file out: %d file out app: %d\n", cmd->file_in, cmd->file_out, cmd->file_out_app);
-			cmd = cmd->next;
+			cmd = *cmd_arr;
+			while (cmd)
+			{
+				printf("%s\n", cmd->arr[0]);
+				printf("file in: %d file out: %d is app: %d\n", cmd->file_in, cmd->file_out, cmd->is_append);
+				cmd = cmd->next;
+			}
+			cmd_arr++;
 		}
-			if (ft_strlen(minishell->current->row))
-		ft_new_history(&minishell->current);
+		if (ft_strlen(minishell->current->row))
+			ft_new_history(&minishell->current);
 	}
 	exit (0);
 }

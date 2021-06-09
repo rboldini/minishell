@@ -61,11 +61,8 @@ typedef struct	s_cmd
 	//int				out_append;
 	int				file_in;	//0
 	int				file_out;	//1
-	int				file_out_app;	//1
 	int				err_out;	//2
-	char			*filename_in;
-	char			*filename_out;
-	char			*filename_out_app;
+	int				is_append;
 }				t_cmd;
 
 /*
@@ -77,7 +74,7 @@ typedef struct	s_cmd
 */
 
 void	hook_line(t_shell *minishell);
-t_cmd	*start_parsing(const char *cmd);
+t_cmd	**start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 
