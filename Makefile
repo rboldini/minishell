@@ -29,6 +29,8 @@ FILES =			main.c			\
 				command.c		\
 				ft_env.c		\
 				env_utils.c		\
+				executor.c		\
+				export_env.c	\
 				special_keys.c
 
 LIBFT_DIR =		libft

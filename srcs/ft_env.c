@@ -63,10 +63,12 @@ t_env	*init_env(char **env)
 	return (enva);
 }
 
-void	ft_env(t_env *env)
+void	ft_env(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
 	
+	(void)ac;
+	(void)av;
 	tmp = env;
 	while (tmp)
 	{

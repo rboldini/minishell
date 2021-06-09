@@ -85,11 +85,13 @@ void	ft_free_matrix(char **matrix);
 void	ft_free_env(t_env *env);
 void	ft_addback_env(t_env **env, t_env *new_env);
 void	create_new_env(t_env **env, char *raw_env, int export);
-void	ft_env(t_env *env);
+void	ft_env(t_env *env, int ac, char **av);
 void	ft_export_env(t_env *env, char *str);
+void	ft_export(t_env *env, int ac, char **av);
 void	unset_env(t_env **env, char* name);
 void	set_env(t_env **env, char* name);
 char	*ft_getenv(t_env *env, char *name);
+void	edit_env(t_env **env,char *name, char *new_value);
 
 /*
 ** CD
@@ -118,4 +120,11 @@ void	ft_arrow_lr(int x, t_history *curr);
 int 	ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
+
+/*
+** EXECUTOR
+*/
+
+void	ft_executor(t_cmd *cmd, t_env *env);
+
 #endif //MINISHELL_MINISHELL_H

@@ -61,6 +61,7 @@ int main(int n, char **arg, char **envp)
 			{
 				printf("%s\n", cmd->arr[0]);
 				printf("file in: %d file out: %d is app: %d\n", cmd->file_in, cmd->file_out, cmd->is_append);
+				ft_executor(cmd, enva);
 				cmd = cmd->next;
 			}
 			cmd_arr++;

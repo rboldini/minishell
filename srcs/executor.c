@@ -16,7 +16,7 @@ enum e_cmd
 int	check_for_cmd(char *cmd)
 {
 	if(!ft_strncmp(cmd, "./", 2))
-		return (CMD_RUN);
+		return (CMD_RUN);			//da rifare
 	else if(!ft_strcmp(cmd, "cd"))
 		return (CMD_CD);
 	else if(!ft_strcmp(cmd, "pwd"))
@@ -38,6 +38,24 @@ int	check_for_cmd(char *cmd)
 		return (-1);
 }
 
+void run_command(int code, t_cmd *cmd, t_env *env)
+{
+	/*if(code == CMD_RUN)
+		run_program();
+	else if(code == CMD_CD)
+		ft_cd(cmd->len, cmd->arr, env);
+	else if(code == CMD_PWD)
+		ft_pwd();*/
+	if(code == CMD_ECHO)
+		ft_echo(cmd->len, cmd->arr);
+	//else if(code == CMD_UNSET)
+	//	ft_unset();
+	else if(code == CMD_ENV)
+		ft_env(env, cmd->len, cmd->arr);
+	else if(code == CMD_EXP)
+		ft_export(env, cmd->len, cmd->arr);
+}
+
 void forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
 	int fd[2];
@@ -51,40 +69,24 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	pid = fork();
 	if(!pid)
 	{
+		tmp = cmd;
 		while(tmp->next && tmp->file_out == 1)
 		{
 			tmp->file_out = fd[0];
 			tmp->next->file_in = fd[1];
 			tmp = tmp->next;
 		}
-		dup2(stdout, tmp->file_out);
-		dup2(stdin, tmp->file_in);
+		dup2(1, tmp->file_out);
+		dup2(0, tmp->file_in);
 		run_command(cmd_code, cmd, env);
-		close(fd); // <-- ricordarsi di chiudere fd correttamente
+		close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
+		close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
 		exit(0); // <-- uscita da processo segnala il riavvio del processo padre
 	}
 	else
 	{
-		wait(pid);
+		wait(&pid);
 	}
-}
-
-void run_command(int code, t_cmd *cmd, t_env *env)
-{
-	if(code == CMD_RUN)
-		run_program();
-	else if(code == CMD_CD)
-		run_cd();
-	else if(code == CMD_PWD)
-		run_pwd();
-	if(code == CMD_ECHO)
-	run_echo(cmd);
-	else if(code == CMD_UNSET)
-		run_unset();
-	else if(code == CMD_ENV)
-		run_env();
-	else if(code == CMD_EXP)
-		run_exp();
 }
 
 void	ft_executor(t_cmd *cmd, t_env *env)
@@ -107,10 +109,21 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		forker(cmd, env, cmd_code);
 		tmp = tmp->next;
 	}
-	free_cmd_struct();
+	//free_cmd_struct();
 }
-
+/*
 int main(void)
 {
 	return (1);
 }
+*/
+/*
+
+->/usr/local/bin
+->/usr/bin
+->/bin
+->/usr/sbin
+->/sbin
+->/usr/local/munki
+
+*/

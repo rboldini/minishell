@@ -33,7 +33,8 @@ void	ft_export_env(t_env *env, char *str)
 			{
 				if(ft_strcmp(str, tmp->env_name) == 0)
 				{
-					edit_env(env, str + 1, 1);
+					edit_env(&env, tmp->env_name, str + 1);
+					set_env(&env, str + 1);
 					free(str_tmp);
 					return ;
 				}
@@ -42,26 +43,36 @@ void	ft_export_env(t_env *env, char *str)
 		}
 		i++;
 	}
-	create_new_env(env, str, 1);
+	create_new_env(&env, str, 1);
 	free(str_tmp);
 }
 
-void	ft_export(t_env *env)
+void	ft_export(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
+	int i;
 	
+	i = 1;
 	tmp = env;
-	while (tmp)
+	if(ac < 2)
 	{
-		if (tmp->exp == 1)
+		while (tmp)
 		{
-			ft_printf_fd(1, "declare -x ");
-			ft_printf_fd(1, "%s", tmp->env_name);
-			ft_printf_fd(1, "=");
-			ft_printf_fd(1, "%s", tmp->env_value);
-			ft_printf_fd(1, "\n");
+			if (tmp->exp == 1)
+			{
+				ft_printf_fd(1, "declare -x ");
+				ft_printf_fd(1, "%s", tmp->env_name);
+				ft_printf_fd(1, "=");
+				ft_printf_fd(1, "%s", tmp->env_value);
+				ft_printf_fd(1, "\n");
+			}
+			tmp = tmp->next_env;
 		}
-		tmp = tmp->next_env;
+	}
+	else
+	{
+		while(i < ac - 1)
+			ft_export_env(env, av[i++]);
 	}
 }
 

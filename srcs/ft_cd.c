@@ -1,6 +1,20 @@
 #include "../includes/minishell.h" //da rifare con nuovo sistema env
 
-void	ft_gotoroot(t_env *env)
+void ft_goback(t_env *env)
+{
+	char *tmp;
+
+	if (chdir("OLDPWD") == -1)
+	{
+		ft_printf_fd(stderr, "Error: %s\n", strerror(errno));
+		return ;
+	}
+	tmp = ft_getenv(env, "PWD");
+	ft_edit_env(env, "PWD", "OLDPWD");
+	ft_edit_env(env, "OLDPWD", tmp);
+}
+
+void	ft_gohome(t_env *env)
 {
 	if (chdir("~") == -1)
 	{
@@ -11,7 +25,7 @@ void	ft_gotoroot(t_env *env)
 	ft_edit_env(env, "PWD", "~");
 }
 
-void	ft_goback(t_env *env, char *curr_path)
+void	ft_goup(t_env *env, char *curr_path)
 {
 	int		errnum;
 	int		i;
@@ -73,17 +87,19 @@ void	ft_cd(int ac, char **av, t_env *env)
 	int		len;
 
 	curr_path = ft_getenv(env, "PWD");
-	if (!ft_strcmp(av[0], ".") || !av[0])
-		ft_gotoroot(env);
-	else if (!ft_strcmp(av[0], ".."))
-		ft_goback(env, curr_path);
+	if(av < 2)
+		ft_gohome(env);
+	else if (!ft_strcmp(av[1], ".."))
+		ft_goup(env, curr_path);
+	else if(!ft_strcmp(av[1], "-"))
+		ft_goback(env);
 	else
 	{
 		len = ft_strlen(ft_getenv(env, "HOME"));
-		if(!ft_strncmp(av[0], ft_getenv(env, "HOME"), len))
-			ft_absolute_path(env, av[0]);
+		if(!ft_strncmp(av[1], ft_getenv(env, "HOME"), len))
+			ft_absolute_path(env, av[1]);
 		else
-			ft_relative_path(env, av[0]);
+			ft_relative_path(env, av[1]);
 	}
 }
 

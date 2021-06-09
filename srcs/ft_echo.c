@@ -15,7 +15,7 @@ void	ft_echo(int ac, char **av)
 			n_flag = 1;
 		}
 	}
-	while (i < ac)
+	while (i <= ac)
 	{
 		ft_printf_fd(1, "%s", av[i]);
 		i++;
