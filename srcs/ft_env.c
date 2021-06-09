@@ -4,15 +4,13 @@ char	**duplicate_env(char **env)
 {
 	char	**dup;
 	int		i;
-	int		k;
 
 	i = 0;
-	k = 0;
 	while(env[i])
 		i++;
-	dup = malloc(sizeof(char *) * i + 1);
+	dup = malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (env[i] != 0)
+	while (env[i])
 	{
 		dup[i] = ft_strdup(env[i]);
 		i++;
@@ -61,7 +59,6 @@ t_env	*init_env(char **env)
 {
 	t_env	*enva;
 
-	//enva = malloc(sizeof(env));
 	enva = ft_parse_env(env);
 	return (enva);
 }

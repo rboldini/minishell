@@ -50,23 +50,25 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	int fd[2];
 	int err;
 	int pid;
+	t_cmd *tmp;
 
+	err = pipe(fd);
+	if(err == -1)
+		return ;
 	pid = fork();
 	if(!pid)
 	{
-		if(cmd->next && cmd->file_out == 1)
+		while(tmp->next && tmp->file_out == 1)
 		{
-			err = pipe(fd);
-			if(err == -1)
-				return ;
-			cmd->file_out = fd[0];
-			cmd->next->file_in = fd[1];
+			tmp->file_out = fd[0];
+			tmp->next->file_in = fd[1];
+			tmp = tmp->next;
 		}
-		dup2(stdout, cmd->file_out);
-		dup2(stdin, cmd->file_in);
+		dup2(stdout, tmp->file_out);
+		dup2(stdin, tmp->file_in);
 		run_command(cmd_code, cmd, env);
-		close(fd); //ricordarsi di chiudere fd
-		exit(0);
+		close(fd); // <-- ricordarsi di chiudere fd correttamente
+		exit(0); // <-- uscita da processo segnala il riavvio del processo padre
 	}
 	else
 		wait(pid);
