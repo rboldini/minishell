@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/07 17:38:05 by scilla            #+#    #+#             */
-/*   Updated: 2021/06/09 14:55:00 by scilla           ###   ########.fr       */
+/*   Updated: 2021/06/09 15:57:09 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,16 @@ char	*next_token(const char *cmd, int *i, int *isb)
 	return (buff);
 }
 
+void	init_cmd(t_cmd *comm)
+{
+	comm->file_in = 0;
+	comm->file_out = 1;
+	comm->err_out = 2;
+	comm->is_append = 0;
+	comm->len = 0;
+	comm->next = NULL;
+}
+
 t_cmd	**start_parsing(const char *cmd)
 {
 	t_cmd	**cmd_arr;
@@ -217,7 +227,6 @@ t_cmd	**start_parsing(const char *cmd)
 	t_cmd	*comm;
 	t_cmd	*tmp_comm;
 	char	**arr;
-	int		len;
 	int		i;
 	int		n;
 	char	*buff;
@@ -225,11 +234,12 @@ t_cmd	**start_parsing(const char *cmd)
 	int		isb;
 	int		arr_len;
 
-	cmd_arr = malloc(0);
+	cmd_arr = malloc(sizeof(t_cmd*));
+	cmd_arr[0] = NULL;
 	i = 0;
 	arr_len = 0;
-	while (*(cmd + i))
-	{	
+	while (1)
+	{
 		arr_len++;
 		tmp_cmd_arr = malloc(sizeof(t_cmd*) * (arr_len + 1));
 		tmp_cmd_arr[arr_len] = NULL;
@@ -243,35 +253,25 @@ t_cmd	**start_parsing(const char *cmd)
 		cmd_arr = tmp_cmd_arr;
 		comm = malloc(sizeof(t_cmd));
 		cmd_arr[arr_len - 1] = comm;
-		comm->file_in = 0;
-		comm->file_out = 1;
-		comm->err_out = 2;
-		comm->is_append = 0;
-		comm->next = NULL;
+		init_cmd(comm);
 		arr = malloc(0);
-		len = 0;
 		stage = 0;
 		isb = 0;
 		while (*(cmd + i))
 		{
 			buff = next_token(cmd, &i, &isb);
 			if (!stage && ft_strlen(buff))
-				arr = append_to_arr(buff, &len, arr);
+				arr = append_to_arr(buff, &comm->len, arr);
 			if (!stage && isb == 2)
 			{
 				tmp_comm = malloc(sizeof(t_cmd));
 				comm->next = tmp_comm;
 				comm->arr = arr;
-				comm->len = len;
 				tmp_comm->next = 0;
 				comm = comm->next;
-				comm->file_in = 0;
-				comm->file_out = 1;
-				comm->err_out = 2;
-				comm->is_append = 0;
+				init_cmd(comm);
 				i++;
 				arr = malloc(0);
-				len = 0;
 				stage = 0;
 				continue ;
 			}
@@ -311,6 +311,8 @@ t_cmd	**start_parsing(const char *cmd)
 			}
 		}
 		comm->arr = arr;
+		if (!*(cmd + i))
+			break ;
 	}
 	return (cmd_arr);
 }
