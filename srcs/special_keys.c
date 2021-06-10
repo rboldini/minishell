@@ -25,6 +25,7 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			//printf("1 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
 			minishell->current->index = ft_strlen(minishell->current->row);
 			minishell->current = minishell->current->prev;
+			minishell->current->index = ft_strlen(minishell->current->row);
 			//printf("2 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
 			write(1, "\r\033[2K", 5);
 			write(1, minishell->prompt, ft_strlen(minishell->prompt));
