@@ -1,6 +1,22 @@
 
 #include "../includes/minishell.h"
 
+int	valid_env_decla(char *raw)
+{
+	int i;
+
+	i = 0;
+	while(raw[i])
+	{
+		if(raw[i] == ' ')
+			return (0);
+		else if(raw[i] == '=')
+			return (1);
+		i++;
+	}
+	return(0);
+}
+
 enum e_cmd
 {
 	CMD_PWD,
@@ -10,9 +26,9 @@ enum e_cmd
 	CMD_UNSET,
 	CMD_ECHO,
 	CMD_EXIT,
-	CMD_RUN
+	CMD_RUN,
+	ENV_DECLA,
 };
-
 int	check_for_cmd(char *cmd)
 {
 	if(!ft_strncmp(cmd, "./", 2))
@@ -29,6 +45,8 @@ int	check_for_cmd(char *cmd)
 		return (CMD_ENV);
 	else if(!ft_strcmp(cmd, "export"))
 		return (CMD_EXP);
+	else if(valid_env_decla(cmd))
+		return (ENV_DECLA);
 	else if(!ft_strcmp(cmd, "exit"))
 	{
 		ft_printf_fd(1, "exit\n");
@@ -54,6 +72,8 @@ void run_command(int code, t_cmd *cmd, t_env *env)
 		ft_env(env, cmd->len, cmd->arr);
 	else if(code == CMD_EXP)
 		ft_export(env, cmd->len, cmd->arr);
+	else if(code == ENV_DECLA)
+		create_new_env(&env, cmd->arr[0], 0);
 }
 
 void forker(t_cmd *cmd, t_env *env, int cmd_code)

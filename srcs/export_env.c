@@ -20,6 +20,7 @@ void	ft_export_env(t_env *env, char *str)
 	t_env	*tmp;
 	int		i;
 	char	*str_tmp;
+	t_env 	*same_element;
 
 	i = 0;
 	tmp = env;
@@ -29,21 +30,18 @@ void	ft_export_env(t_env *env, char *str)
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
 			str_tmp[i] = 0;
-			while (tmp)
+			if((same_element = check_existing_env(env, str_tmp)) != 0)
 			{
-				if(ft_strcmp(str, tmp->env_name) == 0)
-				{
-					edit_env(&env, tmp->env_name, str + 1);
-					set_env(&env, str + 1);
-					free(str_tmp);
-					return ;
-				}
-				tmp = tmp->next_env;
+				edit_env(&env, same_element->env_name, str_tmp + i + 1);
+				set_env(&env, same_element->env_name);
+				free(str_tmp);
+				return ;
 			}
+			else
+				create_new_env(&env, str, 1);
 		}
 		i++;
 	}
-	create_new_env(&env, str, 1);
 	free(str_tmp);
 }
 

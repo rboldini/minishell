@@ -63,53 +63,61 @@ t_env	*init_env(char **env)
 	return (enva);
 }
 
+void check_and_add(t_env *env, char *str)
+{
+	t_env	*tmp;
+	int		i;
+	char	*str_tmp;
+	t_env 	*same_element;
+
+	i = 0;
+	tmp = env;
+	str_tmp = ft_strdup(str);
+	while (str_tmp[i])
+	{
+		if (str_tmp[i] == '=' || str_tmp[i] == 0)
+		{
+			str_tmp[i] = 0;
+			if((same_element = check_existing_env(env, str_tmp)) != 0)
+			{
+				edit_env(&env, same_element->env_name, str_tmp + i + 1);
+				unset_env(&env, same_element->env_name);
+				free(str_tmp);
+				return ;
+			}
+			else
+				create_new_env(&env, str, 0);
+		}
+		i++;
+	}
+	free(str_tmp);
+}
+
 void	ft_env(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
 	int i;
-	char *str;
-	int flag;
+	//char *str_tmp;
 	
-	(void)ac;
 	i = 0;
 	tmp = env;
-	if(av[1])
+	if(ac < 2)
 	{
-		str = ft_strdup(av[1]);
-		while(str[i] != '=' && str[i])
+		while (tmp)
 		{
-			i++;
-			if(str[i] == '=')
-				break;
-			else if(!str[i])
-				return ; 
+			if (tmp->exp == 1)
+			{
+				ft_printf_fd(1, "%s", tmp->env_name);
+				ft_printf_fd(1, "=");
+				ft_printf_fd(1, "%s", tmp->env_value);
+				ft_printf_fd(1, "\n");
+			}
+			tmp = tmp->next_env;
 		}
-		str[i] = 0;
-		if(check_existing_env(env, str))
-			edit_env(&env, str, str + i);
-		else
-		{
-			str[i] = '=';
-			create_new_env(&env, str, 0);
-		}
-		flag = 1;
 	}
-	while (tmp)
+	else
 	{
-		if (tmp->exp == 1)
-		{
-			ft_printf_fd(1, "%s", tmp->env_name);
-			ft_printf_fd(1, "=");
-			ft_printf_fd(1, "%s", tmp->env_value);
-			ft_printf_fd(1, "\n");
-		}
-		tmp = tmp->next_env;
-	}
-	if(flag)
-	{
-			ft_printf_fd(1, "%s", str);
-			ft_printf_fd(1, "=");
-			ft_printf_fd(1, "%s", str + 1);
-			ft_printf_fd(1, "\n");
+		while(i < ac - 1)
+			check_and_add(env, av[i++]);
 	}
 }
