@@ -69,7 +69,7 @@ void	ft_export(t_env *env, int ac, char **av)
 	}
 	else
 	{
-		while(i < ac - 1)
+		while(i < ac)
 			ft_export_env(env, av[i++]);
 	}
 }

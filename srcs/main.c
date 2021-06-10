@@ -49,7 +49,7 @@ int main(int n, char **arg, char **envp)
 	t_env	*enva;
 	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
-	//int i = 0;
+	int i = 0;
 
 	(void)n;
 	(void)arg;
@@ -74,8 +74,14 @@ int main(int n, char **arg, char **envp)
 			cmd = *cmd_arr;
 			while (cmd)
 			{
+				i = 0;
+				while (i < cmd->len)
+				{
+					printf("%s ", cmd->arr[i]);
+					i++;
+				}
 				if (cmd->len)
-					printf("%s\n", cmd->arr[0]);
+					printf("\n");
 				printf("file in: %d file out: %d is app: %d\n", cmd->file_in, cmd->file_out, cmd->is_append);
 
 				if (cmd->len)
