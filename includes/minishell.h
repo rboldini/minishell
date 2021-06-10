@@ -111,9 +111,10 @@ void	command_handle(char *command, t_shell *minishell);
 void	ft_echo(int ac, char **av);
 
 int	ft_hook_char(void);
-void	ft_arrow_ud(/*int x, t_history *curr*/);
+void	ft_arrow_ud(int x, t_shell *minishell);
 void	ft_arrow_lr(int x, t_history *curr);
 int 	ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
+void	free_old(t_history *curr);
 #endif //MINISHELL_MINISHELL_H
