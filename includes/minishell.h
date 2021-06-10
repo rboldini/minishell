@@ -31,6 +31,7 @@
 typedef struct s_history
 {
 	char	*row;
+	char	*old;
 	int		index;
 	struct	s_history *prev;
 	struct	s_history *next;
@@ -64,10 +65,6 @@ typedef struct	s_cmd
 	int				err_out;	//2
 	int				is_append;
 }				t_cmd;
-
-/*
- *
- */
 
 /*
 ** Parser
@@ -117,11 +114,12 @@ void	command_handle(char *command, t_shell *minishell);
 void	ft_echo(int ac, char **av);
 
 int	ft_hook_char(void);
-void	ft_arrow_ud(/*int x, t_history *curr*/);
+void	ft_arrow_ud(int x, t_shell *minishell);
 void	ft_arrow_lr(int x, t_history *curr);
 int 	ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
+void	free_old(t_history *curr);
 
 /*
 ** EXECUTOR

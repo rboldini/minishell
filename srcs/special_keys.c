@@ -1,93 +1,63 @@
 #include "../includes/minishell.h"
 
-void	ft_process_delete(t_history *curr)
-{
-	int	i;
-	int	len;
 
-	i = curr->index;
-	len = (int)ft_strlen(curr->row);
-	if (curr->index != len)
+void	free_old(t_history *curr)
+{
+	while (curr->prev)
 	{
-		while (i < (int)ft_strlen(curr->row))
-		{
-			curr->row[i] = curr->row[i + 1];
-			write(1, &curr->row[i], 1);
-			i++;
-		}
-		curr->row[i] = 0;
-		write(1, " ", 1);
-		i = 0;
-		while (i < len - curr->index)
-		{
-			write(1, "\b", 1);
-			i++;
-		}
+		free (curr->old);
+		curr->old = NULL;
+		curr = curr->prev;
 	}
-	else
-		write(1, "\a", 1);
+	free (curr->old);
+	curr->old = NULL;
 }
 
 void	ft_arrow_ud(int x, t_shell *minishell)
 {
-	t_history	*element;
-	t_history	*tmp;
-	int			i;
-
-	i = 0;
 	if (x == 65)
 	{
-		if (minishell->current->prev)
+		if(minishell->current->prev)
 		{
-			element = malloc(sizeof(t_history));
-			if (!element)
-				exit (-1);
-			ft_memcpy(element, minishell->current->prev, sizeof(t_history));
-			tmp = element;
-			if (ft_strlen(minishell->current->row) && minishell->n_up == 0)
-			{
-				minishell->tmp->row = minishell->current->row;
-				minishell->tmp->index = minishell->current->index;
-			}
-			write (1, "\r\033[2K", 5);
-			write (1, minishell->prompt, ft_strlen(minishell->prompt));
-			while (element->prev && i++ < minishell->n_up)
-				element = element->prev;
-			minishell->current->row = ft_strdup(element->row);
-			minishell->current->index = (int) ft_strlen(minishell->current->row);
-			write (1, minishell->current->row, ft_strlen(minishell->current->row));
+			//printf("\n1 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
+			if (minishell->n_up == 0)
+				minishell->tmp = minishell->current;
+			//printf("1 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
+			minishell->current->index = ft_strlen(minishell->current->row);
+			minishell->current = minishell->current->prev;
+			//printf("2 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			if (!minishell->current->old)
+				minishell->current->old = ft_strdup(minishell->current->row);
+			write(1, minishell->current->row, ft_strlen(minishell->current->row));
+			//printf("\n3 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
+			//printf("old %s\n", minishell->current->old);
 			minishell->n_up++;
-			free(tmp);
 		}
 	}
 	else
 	{
 		if (minishell->current->next)
 		{
-			element = malloc(sizeof(t_history));
-			if (!element)
-				exit (-1);
-			ft_memcpy(element, minishell->current->next, sizeof(t_history));
-			tmp = element;
-			write (1, "\r\033[2K", 5);
-			write (1, minishell->prompt, ft_strlen(minishell->prompt));
-			while (element->next && i++ < minishell->n_up)
-				element = element->next;
-			minishell->current->row = ft_strdup(element->row);
-			minishell->current->index = (int) ft_strlen(minishell->current->row);
-			write (1, minishell->current->row, ft_strlen(minishell->current->row));
-			minishell->n_up++;
-			free(tmp);
+			minishell->n_up--;
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			minishell->current->index = ft_strlen(minishell->current->row);
+			minishell->current = minishell->current->next;
+			minishell->current->index = ft_strlen(minishell->current->row);
+			write(1, minishell->current->row,
+				  ft_strlen(minishell->current->row));
+		}
+		else if (minishell->tmp && ft_strlen(minishell->tmp->row))
+		{
+			minishell->current = minishell->tmp;
+			write(1, "\r\033[2K", 5);
+			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			write(1, minishell->current->row,
+				  minishell->current->index);
 		}
 	}
-	/*
-	 * UP will duplicate the curr->previous->row to a new row, if it's pressed more
-	 * times, without an 'Enter' press, it will free(curr->row) and duplicate the
-	 * curr->previous->previous->row(etc..);
-	 * Logic: if the user write something and then press UP, we'll store the row
-	 * in minishell->tmp->row, just in case he/she would press DOWN to take it back.
-	 * In case the 'ENTER' Key is pressed minishell->curr will be sent to the parser.
-	 */
 }
 
 void	ft_arrow_lr(int x, t_history *curr)
@@ -136,4 +106,32 @@ int 	ft_process_backspace(t_history *curr)
 	else
 		write(1, "\a", 1);
 	return (1);
+}
+
+void	ft_process_delete(t_history *curr)
+{
+	int	i;
+	int	len;
+
+	i = curr->index;
+	len = (int)ft_strlen(curr->row);
+	if (curr->index != len)
+	{
+		while (i < (int)ft_strlen(curr->row))
+		{
+			curr->row[i] = curr->row[i + 1];
+			write(1, &curr->row[i], 1);
+			i++;
+		}
+		curr->row[i] = 0;
+		write(1, " ", 1);
+		i = 0;
+		while (i < len - curr->index)
+		{
+			write(1, "\b", 1);
+			i++;
+		}
+	}
+	else
+		write(1, "\a", 1);
 }

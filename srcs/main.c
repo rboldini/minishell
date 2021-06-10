@@ -6,6 +6,7 @@ void	watermark(void)
 {
 	//printf("%c[1;1H%c[2J", 27, 27);
 	printf("\n" CC_BHYEL
+
 		   "███╗   ███╗██████╗      ███████╗██╗  ██╗███████╗██╗     ██╗                   _.---._		\n"
 		   "████╗ ████║██╔══██╗     ██╔════╝██║  ██║██╔════╝██║     ██║               .\'\"\".\'/|\\`.\"\"\'.	\n"
 		   "██╔████╔██║███████║     ███████╗███████║█████╗  ██║     ██║              :  .' / | \\ `.  :	\n"
@@ -18,16 +19,31 @@ CC_WHT " & " CC_CYN "nessuno" CC_RESET "\n");
 
 void	init_minishell(t_shell **minishell)
 {
-	*minishell = malloc(sizeof(t_shell));
+	*minishell = ft_calloc(1, sizeof(t_shell));
+	ft_memset((*minishell), 0, sizeof(t_shell));
 	(*minishell)->current = NULL;
-	(*minishell)->tmp = malloc(sizeof(t_shell));
 	ft_new_history(&(*minishell)->current);
 	(*minishell)->current->index = 0;
 	(*minishell)->n_up = 0;
 	(*minishell)->n_down = 0;
 }
 
+
+void	free_history(t_history *curr)
+{
+	while(curr->prev)
+	{
+		free(curr->row);
+		curr = curr->prev;
+		free(curr->next);
+	}
+	free(curr->row);
+	free(curr);
+}
+
+
 int main(int n, char **arg, char **envp)
+
 {
 	t_shell *minishell;
 	t_env	*enva;
@@ -39,7 +55,7 @@ int main(int n, char **arg, char **envp)
 	(void)arg;
 	watermark();
 	init_minishell(&minishell);
-	minishell->prompt = malloc(0);
+	minishell->prompt = calloc(0, 1);
 	enva = init_env(envp);
 	//create_new_env(&enva, "GIOVANNI=ciao ciao ciao", 1);
 	//unset_env(&enva, "GIOVANNI");
@@ -51,7 +67,6 @@ int main(int n, char **arg, char **envp)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
-		fflush(stdout);
 		hook_line(minishell);
 		cmd_arr = start_parsing(minishell->current->row);
 		while (*cmd_arr)
@@ -72,5 +87,6 @@ int main(int n, char **arg, char **envp)
 		if (ft_strlen(minishell->current->row))
 			ft_new_history(&minishell->current);
 	}
+	free_history(minishell->current);
 	exit (0);
 }

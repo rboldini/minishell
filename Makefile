@@ -17,10 +17,6 @@ SRCDIR = 		./srcs
 OBJDIR =  		./objs
 INCDIR = 		./includes
 
-
-
-#Files
-#				parser.c
 FILES =			main.c			\
 				keyhook.c		\
 				parser.c		\
