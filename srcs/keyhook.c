@@ -150,3 +150,38 @@ void	hook_line(t_shell *minishell)
 	minishell->n_up = 0;
 	write(1, "\n", 1);
 }
+
+/*
+**	\0NNN	the character whose ASCII code is NNN (octal)
+**	\\		backslash
+**	\a		alert
+**	\b		backspace
+**	\c		produce no further output
+**	\f		form feed
+**	\n		new line
+**	\r		carriage return
+**	\t		horizontal tab
+**	\v		vertical tab
+**
+**	Clear line2K mixed to carriage return to clear the line rewriting the PROMPT
+**		printf("%c%c[2K", '\r', 27);
+**
+**	Clear line from cursor posix to the beginning
+**		printf("%c[1K", 27);
+**
+**	Clear line regardless cursor posix
+**		printf("%c[2K", 27);
+*/
+
+
+/*
+**TODO:	check	special:
+**						backspace = 127
+**						delete = 27, 91, 51, 126
+**						ctrl + u = 21 (clean line)
+**		check	arrows:
+**						up = 27, 91, 65
+**						down = 27, 91, 66
+**						right = 27, 91, 67
+**						left = 27, 91, 68
+*/

@@ -17,16 +17,17 @@ SRCDIR = 		./srcs
 OBJDIR =  		./objs
 INCDIR = 		./includes
 
-
-
-#Files
-#				parser.c
-FILES =			main.c		\
-				ft_echo.c	\
-				ft_pwd.c	\
-				command.c	\
-				special_keys.c	\
-				keyhook.c
+FILES =			main.c			\
+				keyhook.c		\
+				parser.c		\
+				ft_echo.c		\
+				ft_pwd.c		\
+				command.c		\
+				ft_env.c		\
+				env_utils.c		\
+				executor.c		\
+				export_env.c	\
+				special_keys.c
 
 LIBFT_DIR =		libft
 

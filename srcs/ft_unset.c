@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	ft_unset(t_env *env, char *exp_name)
+void	ft_unset(t_env *env, int ac, char **av)
 {
 	t_env *tmp;
 

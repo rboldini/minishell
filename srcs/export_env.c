@@ -5,6 +5,7 @@ int	env_lst_size(t_env *env)
 	t_env *tmp;
 	int res;
 
+	tmp = env;
 	res = 0;
 	while(tmp)
 	{
@@ -19,48 +20,57 @@ void	ft_export_env(t_env *env, char *str)
 	t_env	*tmp;
 	int		i;
 	char	*str_tmp;
+	t_env 	*same_element;
 
 	i = 0;
 	tmp = env;
-	str_tmp = ft_strdup(tmp);
+	str_tmp = ft_strdup(str);
 	while (str_tmp[i])
 	{
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
 			str_tmp[i] = 0;
-			while (tmp)
+			if((same_element = check_existing_env(env, str_tmp)) != 0)
 			{
-				if(ft_strcmp(str, tmp->env_name) == 0)
-				{
-					edit_env(env, str + 1, 1);
-					free(str_tmp);
-					return ;
-				}
-				tmp = tmp->next_env;
+				edit_env(&env, same_element->env_name, str_tmp + i + 1);
+				set_env(&env, same_element->env_name);
+				free(str_tmp);
+				return ;
 			}
+			else
+				create_new_env(&env, str, 1);
 		}
 		i++;
 	}
-	create_new_env(env, str, 1);
 	free(str_tmp);
 }
 
-void	ft_export(t_env *env)
+void	ft_export(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
+	int i;
 	
+	i = 1;
 	tmp = env;
-	while (tmp)
+	if(ac < 2)
 	{
-		if (tmp->exp == 1)
+		while (tmp)
 		{
-			ft_printf_fd(1, "declare -x ");
-			ft_printf_fd(1, "%s", tmp->env_name);
-			ft_printf_fd(1, "=");
-			ft_printf_fd(1, "%s", tmp->env_value);
-			ft_printf_fd(1, "\n");
+			if (tmp->exp == 1)
+			{
+				ft_printf_fd(1, "declare -x ");
+				ft_printf_fd(1, "%s", tmp->env_name);
+				ft_printf_fd(1, "=");
+				ft_printf_fd(1, "%s", tmp->env_value);
+				ft_printf_fd(1, "\n");
+			}
+			tmp = tmp->next_env;
 		}
-		tmp = tmp->next_env;
+	}
+	else
+	{
+		while(i < ac - 1)
+			ft_export_env(env, av[i++]);
 	}
 }
 
