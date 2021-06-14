@@ -64,7 +64,7 @@ void run_command(int code, t_cmd *cmd, t_env *env)
 	else if(code == CMD_CD)
 		ft_cd(cmd->len, cmd->arr, &env);
 	else if(code == CMD_PWD)
-		ft_pwd(env);
+		ft_pwd();
 	else if(code == CMD_ECHO)
 		ft_echo(cmd->len, cmd->arr);
 	else if(code == CMD_UNSET)

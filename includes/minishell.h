@@ -104,7 +104,7 @@ void	ft_cd(int ac, char **av, t_env **env);
 ** PDW
 */
 
-void	ft_pwd(t_env *env);
+void	ft_pwd();
 
 
 /*

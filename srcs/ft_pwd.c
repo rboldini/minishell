@@ -1,11 +1,9 @@
 #include "../includes/minishell.h"
 
-void ft_pwd(t_env *env)
+void ft_pwd()
 {
-	char *pwd;
-	//char *test = malloc(sizeof(char) * 4096);
+	char *test = malloc(sizeof(char) * 4096);
 
-	pwd = ft_getenv(env, "PWD");
-	//test = getcwd(test, 4096);
-	ft_printf_fd(1, "%s\n", pwd);
+	test = getcwd(test, 4096);
+	ft_printf_fd(1, "%s\n", test);
 }
