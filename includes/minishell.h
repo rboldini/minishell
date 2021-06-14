@@ -128,6 +128,7 @@ int 	ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
 void	free_old(t_history *curr);
+void	ft_fill_row(t_history *curr, char c);
 
 /*
 ** EXECUTOR

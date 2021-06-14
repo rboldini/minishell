@@ -22,8 +22,10 @@ int	ft_special_keys(char c, t_shell *minishell)
 				write(1, "\a", 1);
 		}
 	}
-	else if(c == 127)
+	else if(c == 127 || c == 8)
 		ft_process_backspace(minishell->current);
+	else if (c == 9)
+		write(1, "\a", 1);
 	else if(c == 21)
 	{
 		int i = 0;
