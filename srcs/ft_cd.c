@@ -9,7 +9,8 @@ void ft_goback(t_env **env)
 		ft_printf_fd(2, "Error: %s\n", strerror(errno));
 		return ;
 	}
-	tmp = ft_getenv(*env, "PWD");
+	tmp = ft_strdup(ft_getenv(*env, "PWD"));
+	//free(ft_getenv(*env, "PWD"));
 	edit_env(env, "PWD", ft_getenv(*env, "OLDPWD"));
 	edit_env(env, "OLDPWD", tmp);
 }
