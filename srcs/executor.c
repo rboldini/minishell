@@ -68,7 +68,7 @@ void run_command(int code, t_cmd *cmd, t_env *env)
 	else if(code == CMD_ECHO)
 		ft_echo(cmd->len, cmd->arr);
 	else if(code == CMD_UNSET)
-		ft_unset(env, cmd->len, cmd->arr);
+		ft_unset(&env, cmd->len, cmd->arr);
 	else if(code == CMD_ENV)
 		ft_env(env, cmd->len, cmd->arr);
 	else if(code == CMD_EXP)
