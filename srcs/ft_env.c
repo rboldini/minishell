@@ -99,7 +99,7 @@ void	ft_env(t_env *env, int ac, char **av)
 	int i;
 	//char *str_tmp;
 	
-	i = 0;
+	i = 1;
 	tmp = env;
 	if(ac < 2)
 	{

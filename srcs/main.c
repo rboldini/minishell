@@ -86,6 +86,7 @@ int main(int n, char **arg, char **envp)
 
 				if (cmd->len)
 					ft_executor(cmd, enva);
+				//ft_print_env(enva);
 				cmd = cmd->next;
 			}
 			cmd_arr++;

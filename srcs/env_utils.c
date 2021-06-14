@@ -100,8 +100,9 @@ void	edit_env(t_env **env,char *name, char *new_value)
 	{
 		if (!ft_strcmp(tmp->env_name, name))
 		{
-			free(tmp->env_value);
+			//free(tmp->env_value);
 			tmp->env_value = new_value;
+			break;
 		}
 		else
 			tmp = tmp->next_env;

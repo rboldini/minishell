@@ -88,6 +88,7 @@ void	ft_export(t_env *env, int ac, char **av);
 void	unset_env(t_env **env, char* name);
 void	set_env(t_env **env, char* name);
 char	*ft_getenv(t_env *env, char *name);
+void	ft_unset(t_env *env, int ac, char **av);
 void	edit_env(t_env **env,char *name, char *new_value);
 t_env	*check_existing_env(t_env *env, char *name);
 
@@ -96,7 +97,14 @@ t_env	*check_existing_env(t_env *env, char *name);
 ** CD
 */
 
-void	ft_cd(int ac, char **av, t_env *env);
+void	ft_cd(int ac, char **av, t_env **env);
+
+
+/*
+** PDW
+*/
+
+void	ft_pwd(t_env *env);
 
 
 /*
@@ -126,5 +134,13 @@ void	free_old(t_history *curr);
 */
 
 void	ft_executor(t_cmd *cmd, t_env *env);
+
+
+
+/*
+** DEBUG
+*/
+
+void ft_print_env(t_env *env);
 
 #endif //MINISHELL_MINISHELL_H

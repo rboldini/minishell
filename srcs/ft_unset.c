@@ -3,15 +3,18 @@
 void	ft_unset(t_env *env, int ac, char **av)
 {
 	t_env *tmp;
+	int i;
 
+	i = 1;
 	tmp = env;
-	while(tmp)
+
+	while(i < ac)
 	{
-		if(!ft_strcmp(exp_name, tmp->env_name))
+		if(check_existing_env(env, av[i]))
 		{
 			tmp->exp = 0;
 			return ;
 		}
-		tmp = tmp->next_env;
+		i++;
 	}
 }
