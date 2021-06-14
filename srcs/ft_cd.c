@@ -37,6 +37,8 @@ void	ft_goup(t_env **env, char *curr_path)
 	i = ft_strlen(curr_path);
 	while (curr_path[i] != '/')
 		i--;
+	if(i == 0)
+		i = 1;
 	prev_path = malloc(sizeof(char) * i + 1);
 	while (k < i)
 	{
@@ -71,6 +73,8 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	char *curr_path;
 
 	curr_path = ft_getenv(*env, "PWD");
+	if(!ft_strcmp(curr_path, "/"))
+		curr_path[0] = 0;
 	next_path = ft_strjoin(curr_path, "/");
 	next_path = ft_strjoin(next_path, relative_path);
 	if (chdir(next_path) == -1)
@@ -82,18 +86,31 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	edit_env(env, "PWD", next_path);
 }
 
+void ft_goroot(t_env **env)
+{
+	if (chdir("/") == -1)
+	{
+		ft_printf_fd(2, "%s: %s\n", "/", strerror(errno));
+		return ;
+	}
+	edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
+	edit_env(env, "PWD", "/");
+}
+
 void	ft_cd(int ac, char **av, t_env **env)
 {
 	char	*curr_path;
 	int		len;
 
 	curr_path = ft_getenv(*env, "PWD");
-	if(ac < 2) //broken
+	if(ac < 2 || !ft_strcmp("~", av[1])) //broken
 		ft_gohome(env);
 	else if (!ft_strcmp(av[1], "..")) //working
 		ft_goup(env, curr_path);
 	else if(!ft_strcmp(av[1], "-")) //broken
 		ft_goback(env);
+	else if(!ft_strcmp(av[1], "/")) //to_do
+		ft_goroot(env);
 	else if(ft_strcmp(av[1], ".")) //working - relative and absolute
 	{
 		len = ft_strlen(ft_getenv(*env, "HOME"));
