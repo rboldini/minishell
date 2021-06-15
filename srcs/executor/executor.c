@@ -32,9 +32,7 @@ enum e_cmd
 
 int	check_for_cmd(char *cmd)
 {
-	if(!ft_strncmp(cmd, "./", 2))
-		return (CMD_RUN);			//da rifare
-	else if(!ft_strcmp(cmd, "cd"))
+	if(!ft_strcmp(cmd, "cd"))
 		return (CMD_CD);
 	else if(!ft_strcmp(cmd, "pwd"))
 		return (CMD_PWD);
@@ -52,15 +50,17 @@ int	check_for_cmd(char *cmd)
 	{
 		ft_printf_fd(1, "exit\n");
 		exit(0);
-	}
+	}/*
+	else if(!ft_strncmp(cmd, "./", 2))
+		return (CMD_RUN);*/
 	else
-		return (-1);
+		return (CMD_RUN);
 }
 
 void run_command(int code, t_cmd *cmd, t_env *env)
 {
 	if(code == CMD_RUN)
-		;//run_program();
+		forker(cmd, env, code);
 	else if(code == CMD_CD)
 		ft_cd(cmd->len, cmd->arr, &env);
 	else if(code == CMD_PWD)
@@ -82,7 +82,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	int fd[2];
 	int err;
 	int pid;
-	t_cmd *tmp;
+	//t_cmd *tmp;
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
 
@@ -102,7 +102,8 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 				dup2(fd[0], 0);
 			if (cmd->file_in != 0)
 				dup2(cmd->file_in, 0);
-			run_command(cmd_code, cmd, env);
+			ft_runner(env, cmd->len, cmd->arr);
+			//run_command(cmd_code, cmd, env);
 			if (cmd->file_out != 1)
 				close(cmd->file_out);
 			if (cmd->file_in != 0)

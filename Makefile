@@ -32,7 +32,8 @@ FILES =			main.c			\
 				debug.c			\
 				ft_cd.c			\
 				check_ctrl.c	\
-				ft_home_end.c
+				ft_home_end.c	\
+				runner.c
 
 LIBFT_DIR =		libft
 

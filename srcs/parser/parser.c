@@ -9,7 +9,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	char	**tmp;
 	int		i;
 
-	tmp = malloc(sizeof(char *) * (*len + 1));
+	tmp = malloc(sizeof(char *) * (*len + 2));
 	i = 0;
 	while (i < *len)
 	{
@@ -18,6 +18,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	}
 	// remove system strdup
 	tmp[i] = ft_strdup(str);
+	tmp[i + 1] = 0;
 	free(arr);
 	(*len)++;
 	return (tmp);

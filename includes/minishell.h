@@ -36,6 +36,13 @@ typedef struct s_history
 	struct	s_history *prev;
 	struct	s_history *next;
 }				t_history;
+typedef struct s_env
+{
+	char	*env_name;
+	char	*env_value;
+	int		exp; // 0 = not_exported 	1 = exported
+	struct	s_env *next_env;
+}				t_env;
 
 typedef struct	s_shell
 {
@@ -44,15 +51,10 @@ typedef struct	s_shell
 	t_history	*tmp;
 	int			n_up;
 	int			n_down;
+	t_env		*env;
 }				t_shell;
 
-typedef struct s_env
-{
-	char	*env_name;
-	char	*env_value;
-	int		exp; // 0 = not_exported 	1 = exported
-	struct	s_env *next_env;
-}				t_env;
+t_shell *minishell;
 
 typedef struct	s_cmd
 {
@@ -96,6 +98,8 @@ void	ft_home_end(int c, t_shell *minishell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
+void	ft_runner(t_env *env, int ac, char **av);
+void forker(t_cmd *cmd, t_env *env, int cmd_code);
 
 
 /*

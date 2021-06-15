@@ -41,11 +41,9 @@ void	free_history(t_history *curr)
 	free(curr);
 }
 
-
 int main(int n, char **arg, char **envp)
 
 {
-	t_shell *minishell;
 	t_env	*enva;
 	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
@@ -57,6 +55,7 @@ int main(int n, char **arg, char **envp)
 	init_minishell(&minishell);
 	minishell->prompt = calloc(0, 1);
 	enva = init_env(envp);
+	minishell->env = enva;
 	//create_new_env(&enva, "GIOVANNI=ciao ciao ciao", 1);
 	//unset_env(&enva, "GIOVANNI");
 	//create_new_env(&enva, "GIOVANNI=uhuhuh", 1);
