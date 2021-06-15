@@ -1,2 +1,6 @@
 $? env
 error handling -> errore env con argomento senza '='
+ctrl+D --> chiuse processo e shell
+ctrl+C --> chiude tutto tranne shell, nel caso in cui non ci fossero processi in esecuzione da un propt nuovo
+ctrl+\ --> chiude il processo
+
