@@ -1,22 +1,29 @@
 #include "../includes/minishell.h"
 
-int	ft_special_keys(char c, t_shell *minishell)
+int ft_special_keys(int c, t_shell *minishell)
 {
 	if (c == 27)
 	{
-		c = (char)ft_hook_char();
+		c = ft_hook_char();
 		if (c == 91)
 		{
-			c = (char)ft_hook_char();
+			c = ft_hook_char();
 			if (c == 65 || c == 66)
 				ft_arrow_ud(c, minishell);
 			else if (c == 67 || c == 68)
 				ft_arrow_lr(c, minishell->current);
 			else if (c == 51)
 			{
-				c = (char)ft_hook_char();
+				c = ft_hook_char();
 				if (c == 126)
 					ft_process_delete(minishell->current);
+			}
+			else if (c == 72 || c == 70)
+				ft_home_end(c, minishell);
+			else if (c == 49)
+			{
+				if (ft_check_ctrl(&c))
+					ft_move_word(c, minishell->current);
 			}
 			else
 				write(1, "\a", 1);
@@ -129,7 +136,7 @@ void	hook_line(t_shell *minishell)
 	minishell->current->row = ft_calloc(1024, sizeof(char));
 	while (c != '\n')
 	{
-		if (ft_special_keys(c, minishell))
+		if (ft_special_keys(c, minishell) && ft_isprint(c))
 		{
 			ft_fill_row(minishell->current, c);
 			write(1, &c, 1);
@@ -144,11 +151,11 @@ void	hook_line(t_shell *minishell)
 		ft_strlcpy(minishell->current->row, minishell->current->old, ft_strlen(minishell->current->old) + 1 );
 		free (minishell->current->old);
 		minishell->current->old = NULL;
-		minishell->tmp->index = ft_strlen(minishell->tmp->row);
+		minishell->tmp->index = (int)ft_strlen(minishell->tmp->row);
 		minishell->current = minishell->tmp;
 		free_old(minishell->current);
 	}
-	minishell->current->index = ft_strlen(minishell->current->row);
+	minishell->current->index = (int)ft_strlen(minishell->current->row);
 	minishell->n_up = 0;
 	write(1, "\n", 1);
 }
