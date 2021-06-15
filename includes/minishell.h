@@ -93,7 +93,8 @@ void	edit_env(t_env **env,char *name, char *new_value);
 t_env	*check_existing_env(t_env *env, char *name);
 void	ft_home_end(int c, t_shell *minishell);
 void	ft_move_word(int c, t_history *curr);
-int	ft_check_ctrl(int *c);
+int		ft_check_ctrl(int *c);
+char	**exported_env_matrix(t_env *env);
 
 
 /*
