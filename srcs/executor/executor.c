@@ -1,5 +1,5 @@
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	valid_env_decla(char *raw)
 {

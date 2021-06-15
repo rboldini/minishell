@@ -1,5 +1,4 @@
-// #include "../includes/parser.h"
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 #include <stdio.h>
 #include <stdlib.h>

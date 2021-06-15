@@ -13,8 +13,8 @@ MKDIR =			mkdir -p
 RM =			rm -rf
 
 #Directories
-SRCDIR = 		./srcs
-OBJDIR =  		./objs
+SRCDIR = 		./srcs/*
+OBJDIR =  		./objs/*
 INCDIR = 		./includes
 
 FILES =			main.c			\

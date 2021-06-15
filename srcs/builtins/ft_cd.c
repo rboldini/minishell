@@ -1,4 +1,4 @@
-#include "../includes/minishell.h" //da rifare con nuovo sistema env
+#include "../../includes/minishell.h"
 
 void ft_goback(t_env **env)
 {

@@ -1,5 +1,4 @@
-#include "../includes/minishell.h"
-
+#include "../../includes/minishell.h"
 
 void	free_old(t_history *curr)
 {

@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	ft_home_end(int c, t_shell *minishell)
 {

@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int ft_special_keys(int c, t_shell *minishell)
 {
