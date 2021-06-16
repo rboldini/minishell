@@ -146,8 +146,6 @@ void	ft_fill_row(t_history *curr, char c);
 void	ft_executor(t_cmd *cmd, t_env *env);
 void	ft_error(int errnum);
 
-
-
 /*
 ** DEBUG
 */
