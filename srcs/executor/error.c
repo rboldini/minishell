@@ -1,7 +1,10 @@
 #include "../../includes/minishell.h"
 
-void	ft_error(int errnum)
+void	ft_error(int errnum, char *str)
 {
-	ft_printf_fd(2, "Error: %s\n", strerror(errnum));
+	if (str)
+		ft_printf_fd(2, "Conchiglia: %s: %s\n", str, strerror(errnum));
+	else
+		ft_printf_fd(2, "Conchiglia: %s\n", strerror(errnum));
 	return ;
 }

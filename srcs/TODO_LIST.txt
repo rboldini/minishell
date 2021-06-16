@@ -3,7 +3,5 @@ error handling -> errore env con argomento senza '='
 ctrl+D --> chiuse processo e shell
 ctrl+C --> chiude tutto tranne shell, nel caso in cui non ci fossero processi in esecuzione da un propt nuovo
 ctrl+\ --> chiude il processo
-
-
-
-tield (~) should be interpreted by the parser as HOME path or not (?)
+./ciao --> non esiste deve dare errore No such file or directory
+ciao --> deve dare "command not found"
