@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-int	ft_isfile(char *path)
+int	ft_isdir(char *path)
 {
 	int res;
 	char *tmp;
@@ -28,7 +28,18 @@ int	ft_isfile(char *path)
 	return (0);
 }
 
-#include <string.h>
+int	ft_isfile(char *path)
+{
+	int res;
+
+	res = open(path, 0);
+	if (res != -1)
+	{
+		close(res);
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_runner(t_env *env, int ac, char **av)
 {
@@ -44,7 +55,7 @@ void	ft_runner(t_env *env, int ac, char **av)
 	envp = exported_env_matrix(env);
 	tmp = ft_getenv(env, "PATH");
 	paths = ft_split(tmp, ':');
-	if (ft_isfile(av[0]))
+	if (ft_isdir(av[0]))
 	{
 		if(execve(av[0], av, envp) == -1)
 			ft_error(errno, av[0]);
@@ -57,8 +68,9 @@ void	ft_runner(t_env *env, int ac, char **av)
 			join = ft_strjoin(paths[i], slash);
 			if (ft_isfile(join))
 			{
-				if (execve(join, av, envp) != -1)
-					break ;
+				if (execve(join, av, envp) == -1)
+					ft_error(errno, 0);
+				break ;
 			}
 			free(slash);
 			free(join);
