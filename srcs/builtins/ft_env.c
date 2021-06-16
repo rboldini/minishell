@@ -97,7 +97,6 @@ void	ft_env(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
 	int i;
-	//char *str_tmp;
 	
 	i = 1;
 	tmp = env;
@@ -119,5 +118,12 @@ void	ft_env(t_env *env, int ac, char **av)
 	{
 		while(i < ac - 1)
 			check_and_add(env, av[i++]);
+		ft_env(env, 1, 0);
+		i = 0;
+		while(av[i])
+		{
+			printf("%s\n", av[i]);
+			i++;
+		}
 	}
 }

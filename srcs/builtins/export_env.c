@@ -25,9 +25,9 @@ void	ft_export_env(t_env *env, char *str)
 	i = 0;
 	tmp = env;
 	str_tmp = ft_strdup(str);
-	while (str_tmp[i])
+	while (str_tmp[i] || !str_tmp[i])
 	{
-		if (str_tmp[i] == '=' || str_tmp[i] == 0)
+		if (str_tmp[i] == '=')
 		{
 			str_tmp[i] = 0;
 			if((same_element = check_existing_env(env, str_tmp)) != 0)
@@ -39,6 +39,19 @@ void	ft_export_env(t_env *env, char *str)
 			}
 			else
 				create_new_env(&env, str, 1);
+		}
+		else if(str_tmp[i] == 0)
+		{
+			if((same_element = check_existing_env(env, str_tmp)) != 0)
+			{
+				edit_env(&env, same_element->env_name, str_tmp + i + 1);
+				set_env(&env, same_element->env_name);
+				free(str_tmp);
+				return ;
+			}
+			else
+				create_new_env(&env, str, 2);
+			break ;
 		}
 		i++;
 	}
@@ -56,11 +69,12 @@ void	ft_export(t_env *env, int ac, char **av)
 	{
 		while (tmp)
 		{
-			if (tmp->exp == 1)
+			if (tmp->exp == 1 || tmp->exp == 2)
 			{
 				ft_printf_fd(1, "declare -x ");
 				ft_printf_fd(1, "%s", tmp->env_name);
-				ft_printf_fd(1, "=");
+				if(tmp->exp == 1)
+					ft_printf_fd(1, "=");
 				ft_printf_fd(1, "%s", tmp->env_value);
 				ft_printf_fd(1, "\n");
 			}

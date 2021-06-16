@@ -60,7 +60,6 @@ void	ft_addback_env(t_env **env, t_env *new_env)
 	tmp->next_env = new_env;
 }
 
-//to_do with stefano (da fare funzione is_env che chiama create_new_env)
 void create_new_env(t_env **env, char *raw_env, int export)
 {
 	int		i;
@@ -70,7 +69,7 @@ void create_new_env(t_env **env, char *raw_env, int export)
 
 	i = 0;
 	tmp_raw = ft_strdup(raw_env);
-	while (tmp_raw[i] != '=')
+	while (tmp_raw[i] != '=' && tmp_raw[i])
 		i++;
 	tmp_raw[i] = '\0';
 	check = check_existing_env(*env, tmp_raw);

@@ -11,10 +11,7 @@ void	ft_unset(t_env **env, int ac, char **av)
 	while(i < ac)
 	{
 		if((tmp = check_existing_env(*env, av[i])))
-		{
 			tmp->exp = 0;
-			return ;
-		}
 		i++;
 	}
 }
