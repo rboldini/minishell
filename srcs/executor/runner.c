@@ -45,10 +45,12 @@ void	ft_runner(t_env *env, int ac, char **av)
 	tmp = ft_getenv(env, "PATH");
 	paths = ft_split(tmp, ':');
 	if (ft_isfile(av[0]))
-		execve(av[0], av, envp);
+	{
+		if(execve(av[0], av, envp) == -1)
+			ft_error(errno, av[0]);
+	}
 	else
 	{
-		printf("%d\n", errno);
 		while (paths[i])
 		{
 			slash = ft_strjoin("/", av[0]);
@@ -57,13 +59,11 @@ void	ft_runner(t_env *env, int ac, char **av)
 			{
 				if (execve(join, av, envp) != -1)
 					break ;
-				printf("%d", errno);	
 			}
 			free(slash);
 			free(join);
 			i++;
 		}
 		ft_error(errno, av[0]);
-		printf("%d\n", errno);
 	}
 }
