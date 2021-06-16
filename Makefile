@@ -33,7 +33,8 @@ FILES =			main.c			\
 				ft_cd.c			\
 				check_ctrl.c	\
 				ft_home_end.c	\
-				runner.c
+				runner.c		\
+				error.c			
 
 LIBFT_DIR =		libft
 
