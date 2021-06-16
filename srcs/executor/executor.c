@@ -32,9 +32,7 @@ enum e_cmd
 
 int	check_for_cmd(char *cmd)
 {
-	if(!ft_strncmp(cmd, "./", 2))
-		return (CMD_RUN);			//da rifare
-	else if(!ft_strcmp(cmd, "cd"))
+	if(!ft_strcmp(cmd, "cd"))
 		return (CMD_CD);
 	else if(!ft_strcmp(cmd, "pwd"))
 		return (CMD_PWD);
@@ -52,15 +50,17 @@ int	check_for_cmd(char *cmd)
 	{
 		ft_printf_fd(1, "exit\n");
 		exit(0);
-	}
+	}/*
+	else if(!ft_strncmp(cmd, "./", 2))
+		return (CMD_RUN);*/
 	else
-		return (-1);
+		return (CMD_RUN);
 }
 
 void run_command(int code, t_cmd *cmd, t_env *env)
 {
 	if(code == CMD_RUN)
-		;//run_program();
+		forker(cmd, env, code);
 	else if(code == CMD_CD)
 		ft_cd(cmd->len, cmd->arr, &env);
 	else if(code == CMD_PWD)
@@ -82,7 +82,9 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	int fd[2];
 	int err;
 	int pid;
-	t_cmd *tmp;
+	//t_cmd *tmp;
+	int saved_stdout = dup(STDOUT_FILENO);
+	int saved_stdin = dup(STDIN_FILENO);
 
 	err = pipe(fd);
 	if(err == -1)
@@ -92,6 +94,22 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		pid = fork();
 		if(!pid)
 		{
+			if (cmd->next && cmd->file_out == 1)
+				dup2(fd[1], 1);
+			if (cmd->file_out != 1)
+				dup2(cmd->file_out, 1);
+			if (cmd->has_previous && cmd->file_in == 0)
+				dup2(fd[0], 0);
+			if (cmd->file_in != 0)
+				dup2(cmd->file_in, 0);
+			ft_runner(env, cmd->len, cmd->arr);
+			//run_command(cmd_code, cmd, env);
+			if (cmd->file_out != 1)
+				close(cmd->file_out);
+			if (cmd->file_in != 0)
+				close(cmd->file_in);
+			cmd = cmd->next;
+			/*
 			tmp = cmd;
 			while(tmp->next && tmp->file_out == 1)
 			{
@@ -106,8 +124,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 				run_command(cmd_code, cmd, env);
 				cmd = cmd->next;
 			}
-			close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
-			close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
+			*/
 			exit(0); // <-- uscita da processo segnala il riavvio del processo padre
 		}
 		else
@@ -117,23 +134,28 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	else
 	{
-		tmp = cmd;
-		while(tmp->next && tmp->file_out == 1)
-		{
-			tmp->file_out = fd[1];
-			tmp->next->file_in = fd[0];
-			tmp = tmp->next;
-		}
-		//dup2(1, fd[1]);
-		//dup2(0, fd[0]);
 		while (cmd)
 		{
+			if (cmd->next && cmd->file_out == 1)
+				dup2(fd[1], 1);
+			if (cmd->file_out != 1)
+				dup2(cmd->file_out, 1);
+			if (cmd->has_previous && cmd->file_in == 0)
+				dup2(fd[0], 0);
+			if (cmd->file_in != 0)
+				dup2(cmd->file_in, 0);
 			run_command(cmd_code, cmd, env);
+			if (cmd->file_out != 1)
+				close(cmd->file_out);
+			if (cmd->file_in != 0)
+				close(cmd->file_in);
 			cmd = cmd->next;
 		}
-		close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
-		close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
 	}
+	close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
+	close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
+	dup2(saved_stdout, STDOUT_FILENO);
+	dup2(saved_stdin, STDIN_FILENO);
 }
 
 void	ft_executor(t_cmd *cmd, t_env *env)

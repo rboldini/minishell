@@ -9,7 +9,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	char	**tmp;
 	int		i;
 
-	tmp = malloc(sizeof(char *) * (*len + 1));
+	tmp = malloc(sizeof(char *) * (*len + 2));
 	i = 0;
 	while (i < *len)
 	{
@@ -18,6 +18,7 @@ char	**append_to_arr(const char *str, int *len, char **arr)
 	}
 	// remove system strdup
 	tmp[i] = ft_strdup(str);
+	tmp[i + 1] = 0;
 	free(arr);
 	(*len)++;
 	return (tmp);
@@ -205,6 +206,7 @@ void	init_cmd(t_cmd *comm)
 	comm->is_append = 0;
 	comm->len = 0;
 	comm->next = NULL;
+	comm->has_previous = 0;
 }
 
 t_cmd	**start_parsing(const char *cmd)
@@ -257,6 +259,7 @@ t_cmd	**start_parsing(const char *cmd)
 				tmp_comm->next = 0;
 				comm = comm->next;
 				init_cmd(comm);
+				comm->has_previous = 1;
 				i++;
 				arr = malloc(0);
 				stage = 0;
