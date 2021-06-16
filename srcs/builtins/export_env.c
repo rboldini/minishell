@@ -85,7 +85,7 @@ char	**exported_env_matrix(t_env *env)
 	i = 0;
 	tmp = env;
 	len = env_lst_size(env);
-	env_matrix = malloc(sizeof(char *) * len);
+	env_matrix = malloc(sizeof(char *) * (len + 1));
 	while (tmp)
 	{
 		if (tmp->exp == 1)
@@ -97,5 +97,6 @@ char	**exported_env_matrix(t_env *env)
 		}
 		tmp = tmp->next_env;
 	}
+	env_matrix[i] = 0;
 	return (env_matrix);
 }
