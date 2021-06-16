@@ -76,13 +76,8 @@ int main(int n, char **arg, char **envp)
 				i = 0;
 				while (i < cmd->len)
 				{
-					//printf("%s ", cmd->arr[i]);
 					i++;
 				}
-				if (cmd->len)
-					;//printf("\n");
-				//printf("file in: %d file out: %d is app: %d\n", cmd->file_in, cmd->file_out, cmd->is_append);
-
 				if (cmd->len)
 					ft_executor(cmd, enva);
 				//ft_print_env(enva);
