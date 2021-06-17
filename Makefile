@@ -34,6 +34,7 @@ FILES =			main.c			\
 				check_ctrl.c	\
 				ft_home_end.c	\
 				runner.c		\
+				ft_signal.c		\
 				error.c			
 
 LIBFT_DIR =		libft

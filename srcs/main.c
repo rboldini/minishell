@@ -67,6 +67,7 @@ int main(int n, char **arg, char **envp)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
+		ft_hook_signal();
 		hook_line(minishell);
 		cmd_arr = start_parsing(minishell->current->row);
 		arr_i = 0;

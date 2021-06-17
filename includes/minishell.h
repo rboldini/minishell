@@ -100,6 +100,7 @@ int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, int ac, char **av);
 void forker(t_cmd *cmd, t_env *env, int cmd_code);
+void	ft_hook_signal(void);
 
 
 /*
