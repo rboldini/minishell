@@ -81,65 +81,78 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	//t_cmd *tmp;
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
+	int	status;
 
-	//err = pipe(fd);
-	//if(err == -1)
-	//	return ;
+	fd[0] = 0;
+	fd[1] = 0;
+	err = pipe(fd);
+	if(err == -1)
+	{
+		printf("ERROR CREATING PIPPA\n");
+		return ;
+	}
 	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
-		err = pipe(fd);
 		cmd->file_out = fd[1];
 		cmd->next->file_in = fd[0];
 	}
+	//printf("cmd: %s in: %d out: %d\n", cmd->arr[0], cmd->file_in, cmd->file_out);
 	if (cmd_code == CMD_RUN)
 	{
 		pid = fork();
+		//printf("waiting %d\n", pid);
 		if(!pid)
 		{
-			if (cmd->file_in != 0)
-				dup2(cmd->file_in, 0);
-			if (cmd->file_out != 1)
-				dup2(cmd->file_out, 1);
+			dup2(cmd->file_in, STDIN_FILENO);
+			dup2(cmd->file_out, STDOUT_FILENO);
 			ft_runner(env, cmd->len, cmd->arr);
 			if (cmd->file_out != 1)
-			{
-				//close(cmd->file_out);
-				dup2(saved_stdout, STDOUT_FILENO);
-			}
+				close(cmd->file_out);
 			if (cmd->file_in != 0)
-			{
-				//close(cmd->file_in);
-				dup2(saved_stdin, STDIN_FILENO);
-			}
-			exit(0); // <-- uscita da processo segnala il riavvio del processo padre
+				close(cmd->file_in);
+			exit(0);
 		}
 		else
 		{
-			wait(&pid);
+			waitpid(pid, &status, WUNTRACED|WCONTINUED);
+
+			if (cmd->file_out != 1)
+				close(cmd->file_out);
+			if (cmd->file_in != 0)
+				close(cmd->file_in);
 		}
 	}
 	else
 	{
-		if (cmd->file_in != 0)
-			dup2(cmd->file_in, 0);
-		if (cmd->file_out != 1)
-			dup2(cmd->file_out, 1);
+		dup2(cmd->file_in, 0);
+		dup2(cmd->file_out, 1);
+		if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
+		{
+			err = pipe(fd);
+			cmd->file_out = fd[1];
+			cmd->next->file_in = fd[0];
+		}
 		run_command(cmd_code, cmd, env);
 		if (cmd->file_out != 1)
 		{
-			//close(cmd->file_out);
+			close(cmd->file_out);
 			dup2(saved_stdout, STDOUT_FILENO);
 		}
 		if (cmd->file_in != 0)
 		{
-			//close(cmd->file_in);
+			close(cmd->file_in);
 			dup2(saved_stdin, STDIN_FILENO);
 		}
 	}
-	//close(fd[0]); // <-- ricordarsi di chiudere fd correttamente
-	//close(fd[1]); // <-- ricordarsi di chiudere fd correttamente
+	
 	dup2(saved_stdout, STDOUT_FILENO);
 	dup2(saved_stdin, STDIN_FILENO);
+	/*
+	if (cmd->file_in != 0)
+		close(cmd->file_in); // <-- ricordarsi di chiudere fd correttamente
+	if (cmd->file_out != 1)
+		close(cmd->file_out); // <-- ricordarsi di chiudere fd correttamente
+	*/
 }
 
 void	ft_executor(t_cmd *cmd, t_env *env)
@@ -159,6 +172,7 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 			ft_printf_fd(1, "%s: command not found\n", tmp->arr[0]);
 			return ;
 		}
+		//printf("start: %s\n", cmd->arr[0]);
 		forker(cmd, env, cmd_code);
 		tmp = tmp->next;
 	}
