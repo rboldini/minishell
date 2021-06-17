@@ -47,7 +47,8 @@ int main(int n, char **arg, char **envp)
 	t_env	*enva;
 	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
-	int i = 0;
+	//int i = 0;
+	int	arr_i;
 
 	(void)n;
 	(void)arg;
@@ -69,22 +70,15 @@ int main(int n, char **arg, char **envp)
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		hook_line(minishell);
 		cmd_arr = start_parsing(minishell->current->row);
-		while (*cmd_arr)
+		arr_i = 0;
+		while (*(cmd_arr + arr_i))
 		{
-			cmd = *cmd_arr;
-			while (cmd)
+			cmd = *(cmd_arr + arr_i);
+			if (cmd->len)
 			{
-				i = 0;
-				while (i < cmd->len)
-				{
-					i++;
-				}
-				if (cmd->len)
-					ft_executor(cmd, enva);
-				//ft_print_env(enva);
-				cmd = cmd->next;
+				ft_executor(cmd, enva);
 			}
-			cmd_arr++;
+			arr_i++;
 		}
 		if (ft_strlen(minishell->current->row))
 			ft_new_history(&minishell->current);

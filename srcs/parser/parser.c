@@ -233,7 +233,7 @@ t_cmd	**start_parsing(const char *cmd)
 		tmp_cmd_arr = malloc(sizeof(t_cmd*) * (arr_len + 1));
 		tmp_cmd_arr[arr_len] = NULL;
 		n = 0;
-		while (n < arr_len - 1)
+		while (n < arr_len)
 		{
 			tmp_cmd_arr[n] = cmd_arr[n];
 			n++;
@@ -269,14 +269,14 @@ t_cmd	**start_parsing(const char *cmd)
 			{
 				if (comm->file_out != 1)
 					close(comm->file_out);
-				comm->file_out = open(buff, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+				comm->file_out = open(buff, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 				stage = 0;
 			}
 			if (stage == 4 && ft_strlen(buff))
 			{
 				if (comm->file_out != 1)
 					close(comm->file_out);
-				comm->file_out = open(buff, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+				comm->file_out = open(buff, O_CREAT | O_RDWR | O_APPEND, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 				comm->is_append = 1;
 				stage = 0;
 			}
