@@ -173,7 +173,7 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 			return ;
 		}
 		//printf("start: %s\n", cmd->arr[0]);
-		forker(cmd, env, cmd_code);
+		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
 	}
 	//free_cmd_struct();
