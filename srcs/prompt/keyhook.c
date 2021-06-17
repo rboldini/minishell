@@ -51,34 +51,20 @@ int	ft_hook_char(void)
 {
 	char			c;
 	int				ret;
+	struct termios before;
+	struct termios after;
+
+	tcgetattr (0, &before);
+	ft_memcpy(&after, &before, sizeof(struct termios));
+	after.c_lflag &= ~(ICANON | ECHO);
+	after.c_cc[VMIN] = 1;
+	after.c_cc[VTIME] = 0;
+	tcsetattr (0, TCSANOW, &after);
 	ret = (int)read (0, &c, sizeof(char));
 	if (ret == -1)
 		exit(1);
+	tcsetattr (0, TCSANOW, &after);
 	return (c);
-}
-
-void	ft_row_mode(void)
-{
-	struct termios before;
-	struct termios after;
-	tcgetattr (0, &before);
-	ft_memcpy(&after, &before, sizeof(struct termios));
-	after.c_lflag &= ~(ICANON | ECHO | ISIG);
-	after.c_cc[VMIN] = 1;
-	after.c_cc[VTIME] = 0;
-	tcsetattr (0, TCSANOW, &after);
-}
-
-void	ft_restore_cooked(void)
-{
-	struct termios before;
-	struct termios after;
-	tcgetattr (0, &before);
-	ft_memcpy(&after, &before, sizeof(struct termios));
-	after.c_lflag |= (ICANON | ECHO | ISIG);
-	after.c_cc[VMIN] = 1;
-	after.c_cc[VTIME] = 0;
-	tcsetattr (0, TCSANOW, &after);
 }
 
 void	ft_fill_row(t_history *curr, char c)

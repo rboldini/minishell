@@ -53,7 +53,6 @@ int main(int n, char **arg, char **envp)
 	(void)n;
 	(void)arg;
 	watermark();
-	ft_row_mode();
 	init_minishell(&minishell);
 	minishell->prompt = calloc(0, 1);
 	enva = init_env(envp);
@@ -83,7 +82,6 @@ int main(int n, char **arg, char **envp)
 		if (ft_strlen(minishell->current->row))
 			ft_new_history(&minishell->current);
 	}
-	ft_restore_cooked();
 	free_history(minishell->current);
 	exit (0);
 }
