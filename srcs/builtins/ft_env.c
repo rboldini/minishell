@@ -63,7 +63,7 @@ t_env	*init_env(char **env)
 	return (enva);
 }
 
-void check_and_add(t_env *env, char *str)
+int check_and_add(t_env *env, char *str)
 {
 	t_env	*tmp;
 	int		i;
@@ -73,30 +73,42 @@ void check_and_add(t_env *env, char *str)
 	i = 0;
 	tmp = env;
 	str_tmp = ft_strdup(str);
-	while (str_tmp[i])
+	while (str_tmp[i] || !str_tmp[i])
 	{
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
+			if(!str_tmp[i])
+			{
+				printf("Conchiglia: %s: No such file or directory\n", str_tmp);
+				free(str_tmp);
+				return (- 1);
+			}
 			str_tmp[i] = 0;
 			if((same_element = check_existing_env(env, str_tmp)) != 0)
 			{
 				edit_env(&env, same_element->env_name, str_tmp + i + 1);
 				unset_env(&env, same_element->env_name);
 				free(str_tmp);
-				return ;
+				return (0);
 			}
 			else
+			{
 				create_new_env(&env, str, 0);
+				free(str_tmp);
+				return(0);
+			}
 		}
 		i++;
 	}
 	free(str_tmp);
+	return(0);
 }
 
 void	ft_env(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
 	int i;
+	int flag;
 	
 	i = 1;
 	tmp = env;
@@ -116,10 +128,13 @@ void	ft_env(t_env *env, int ac, char **av)
 	}
 	else
 	{
-		while(i < ac - 1)
-			check_and_add(env, av[i++]);
+		while(i <= ac - 1)
+			flag = check_and_add(env, av[i++]);
+		if(flag == -1)
+			return;
 		ft_env(env, 1, 0);
-		i = 0;
+		i = 1;
+
 		while(av[i])
 		{
 			printf("%s\n", av[i]);
