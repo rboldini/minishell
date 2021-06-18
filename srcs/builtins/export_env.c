@@ -1,5 +1,25 @@
 #include "../../includes/minishell.h"
 
+void	equal_notequal(t_env *env, char *str_tmp, int i, int equal)
+{
+	t_env *same_element;
+
+	if(equal)
+		equal = 1;
+	else
+		equal = 2;
+	str_tmp[i] = 0;
+	if((same_element = check_existing_env(env, str_tmp)) != 0)
+	{
+		edit_env(&env, same_element->env_name, str_tmp + i + 1);
+		set_env(&env, same_element->env_name);
+		free(str_tmp);
+		return ;
+	}
+	else
+		create_new_env(&env, str, equal);
+}
+
 int	env_lst_size(t_env *env)
 {
 	t_env *tmp;
@@ -29,28 +49,12 @@ void	ft_export_env(t_env *env, char *str)
 	{
 		if (str_tmp[i] == '=')
 		{
-			str_tmp[i] = 0;
-			if((same_element = check_existing_env(env, str_tmp)) != 0)
-			{
-				edit_env(&env, same_element->env_name, str_tmp + i + 1);
-				set_env(&env, same_element->env_name);
-				free(str_tmp);
-				return ;
-			}
-			else
-				create_new_env(&env, str, 1);
+			equal_notequal(env, str_tmp, i, 1);
+			break ;
 		}
 		else if(str_tmp[i] == 0)
 		{
-			if((same_element = check_existing_env(env, str_tmp)) != 0)
-			{
-				edit_env(&env, same_element->env_name, str_tmp + i + 1);
-				set_env(&env, same_element->env_name);
-				free(str_tmp);
-				return ;
-			}
-			else
-				create_new_env(&env, str, 2);
+			equal_notequal(env, str_tmp, i, 2);
 			break ;
 		}
 		i++;
