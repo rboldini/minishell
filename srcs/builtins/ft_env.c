@@ -23,7 +23,7 @@ t_env	*ft_parse_env(char **env)
 {
 	char	**tmp;
 	int		i;
-	int k;
+	int 	k;
 	t_env	*parsed_env;
 	t_env 	*tempo;
 
@@ -81,7 +81,7 @@ int check_and_add(t_env *env, char *str)
 			{
 				printf("Conchiglia: %s: No such file or directory\n", str_tmp);
 				free(str_tmp);
-				return (- 1);
+				return (-1);
 			}
 			str_tmp[i] = 0;
 			if((same_element = check_existing_env(env, str_tmp)) != 0)

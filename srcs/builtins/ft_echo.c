@@ -16,9 +16,7 @@ int analyse_flag(char **av)
 		{
 			k++;
 			while (av[i][k] == 'n')
-			{
 				k++;
-			}
 		}
 		else
 			return(flag);
