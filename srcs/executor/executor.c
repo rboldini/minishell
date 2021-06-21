@@ -128,7 +128,7 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		if(cmd_code == -1 && tmp->arr[0])
 		{
 			ft_printf_fd(1, "%s: command not found\n", tmp->arr[0]);
-			return ;
+			break ;
 		}
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;

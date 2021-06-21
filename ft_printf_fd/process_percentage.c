@@ -103,9 +103,7 @@ static void	elaborate(t_option *lista, char temp)
 void	process_percentage(t_option *lista)
 {
 	char	temp;
-	int		len;
 
 	temp = '%';
-	len = 1;
 	elaborate(lista, temp);
 }

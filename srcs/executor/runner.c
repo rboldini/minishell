@@ -20,6 +20,7 @@ int	ft_isdir(char *path)
 	//printf("dir: %s\n", tmp);
 	res = open(tmp, O_DIRECTORY);
 	//printf("%i\n", res);
+	free(tmp);
 	if (res != -1)
 	{
 		close(res);
