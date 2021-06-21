@@ -69,7 +69,7 @@ void	ft_runner(t_env *env, int ac, char **av)
 			join = ft_strjoin(paths[i], slash);
 			if (ft_isfile(join))
 			{
-				if (execve(join, av, envp) == -1)
+				if (ac && execve(join, av, envp) == -1)
 					ft_error(errno, 0, 0);
 				break ;
 			}

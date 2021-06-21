@@ -298,7 +298,6 @@ t_cmd	**start_parsing(const char *cmd)
 				i++;
 			if (isb == 6)
 			{
-				// se cmd vuoto > ERRORE
 				stage = 0;
 				break ;
 			}
