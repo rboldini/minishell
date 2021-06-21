@@ -57,6 +57,7 @@ int main(int n, char **arg, char **envp)
 	edit_env(&minishell->env, "OLDPWD", ft_getenv(minishell->env, "PWD"));
 	while (1)
 	{
+		minishell->pid = 0;
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		ft_hook_signal();
