@@ -24,10 +24,10 @@ void	ft_free_env(t_env *env)
 	{
 		free(tmp->env_name);
 		free(tmp->env_value);
+		env = tmp;
 		tmp = tmp->next_env;
+		free(env);
 	}
-	free(env);
-	env = NULL;
 }
 
 t_env	*check_existing_env(t_env *env, char *name) //torna un puntatore all' elemento combaciante

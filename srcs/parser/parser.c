@@ -263,6 +263,7 @@ t_cmd	**start_parsing(const char *cmd)
 				i++;
 				arr = malloc(0);
 				stage = 0;
+				free(buff);
 				continue ;
 			}
 			if (stage == 3 && ft_strlen(buff))
@@ -297,8 +298,10 @@ t_cmd	**start_parsing(const char *cmd)
 			{
 				// se cmd vuoto > ERRORE
 				stage = 0;
+				free(buff);
 				break ;
 			}
+			free(buff);
 		}
 		comm->arr = arr;
 		if (!*(cmd + i))

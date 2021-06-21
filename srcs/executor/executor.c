@@ -133,4 +133,11 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
 	}
+	while (cmd)
+	{
+		ft_free_matrix(cmd->arr);
+		tmp = cmd;
+		cmd = cmd->next;
+		free(tmp);
+	}
 }
