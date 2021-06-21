@@ -44,7 +44,6 @@ void	free_history(t_history *curr)
 int main(int n, char **arg, char **envp)
 
 {
-	t_env	*enva;
 	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
 	int	arr_i;
@@ -54,8 +53,7 @@ int main(int n, char **arg, char **envp)
 	watermark();
 	init_minishell();
 	minishell->prompt = calloc(0, 1);
-	enva = init_env(envp);
-	minishell->env = enva;
+	minishell->env = init_env(envp);
 	while (1)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
@@ -68,7 +66,7 @@ int main(int n, char **arg, char **envp)
 		{
 			cmd = *(cmd_arr + arr_i);
 			if (cmd->len)
-				ft_executor(cmd, enva);
+				ft_executor(cmd, minishell->env);
 			arr_i++;
 		}
 		if (ft_strlen(minishell->current->row))
