@@ -71,7 +71,6 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	edit_env(env, "OLDPWD", curr_path);
 	edit_env(env, "PWD", next_path);
 	free(temp_path);
-	free(curr_path);
 	free(next_path);
 }
 
