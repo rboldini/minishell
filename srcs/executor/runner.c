@@ -52,7 +52,7 @@ void	ft_runner(t_env *env, int ac, char **av)
 	int		i;
 
 	(void)ac;
-	if (!ac)
+	if (!av[0])
 		return ;
 	i = 0;
 	envp = exported_env_matrix(env);
