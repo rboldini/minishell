@@ -17,19 +17,6 @@ int	valid_env_decla(char *raw)
 	return(0);
 }
 
-enum e_cmd
-{
-	CMD_PWD,
-	CMD_CD,
-	CMD_ENV,
-	CMD_EXP,
-	CMD_UNSET,
-	CMD_ECHO,
-	CMD_EXIT,
-	CMD_RUN,
-	ENV_DECLA,
-};
-
 int	check_for_cmd(char *cmd)
 {
 	if(!ft_strcmp(cmd, "cd"))

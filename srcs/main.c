@@ -19,13 +19,13 @@ CC_WHT " & " CC_CYN "nessuno" CC_RESET "\n");
 
 void	init_minishell()
 {
-	*minishell = ft_calloc(1, sizeof(t_shell));
-	ft_memset((*minishell), 0, sizeof(t_shell));
-	(*minishell)->current = NULL;
-	ft_new_history(&(*minishell)->current);
-	(*minishell)->current->index = 0;
-	(*minishell)->n_up = 0;
-	(*minishell)->n_down = 0;
+	minishell = ft_calloc(1, sizeof(t_shell));
+	ft_memset((minishell), 0, sizeof(t_shell));
+	(minishell)->current = NULL;
+	ft_new_history(&(minishell)->current);
+	(minishell)->current->index = 0;
+	(minishell)->n_up = 0;
+	(minishell)->n_down = 0;
 }
 
 

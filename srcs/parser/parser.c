@@ -97,7 +97,7 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 			var_name = app_char(src, i, var_name);
 			c = *(src + *i);
 		}
-		var_value = getenv(var_name);
+		var_value = ft_getenv(minishell->env, var_name);
 		if (var_value)
 		{
 			tmp = ft_strjoin(dst, var_value);

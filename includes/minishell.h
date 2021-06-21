@@ -27,6 +27,19 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
+enum e_cmd
+{
+	CMD_PWD,
+	CMD_CD,
+	CMD_ENV,
+	CMD_EXP,
+	CMD_UNSET,
+	CMD_ECHO,
+	CMD_EXIT,
+	CMD_RUN,
+	ENV_DECLA,
+};
+
 typedef struct s_history
 {
 	char	*row;
