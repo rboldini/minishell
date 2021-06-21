@@ -99,8 +99,9 @@ void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, int ac, char **av);
-void forker(t_cmd *cmd, t_env *env, int cmd_code);
+void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
+void	free_history(t_history *curr);
 
 
 /*
@@ -139,6 +140,7 @@ void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
 void	free_old(t_history *curr);
 void	ft_fill_row(t_history *curr, char c);
+void	ft_exit(t_shell *minishell);
 
 /*
 ** EXECUTOR

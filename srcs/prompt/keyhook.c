@@ -29,6 +29,11 @@ int ft_special_keys(int c, t_shell *minishell)
 				write(1, "\a", 1);
 		}
 	}
+	else if (c == 4)
+	{
+		if (!minishell->current->row[0])
+			ft_exit(minishell);
+	}
 	else if(c == 127 || c == 8)
 		ft_process_backspace(minishell->current);
 	else if (c == 9)
@@ -63,7 +68,7 @@ int	ft_hook_char(void)
 	ret = (int)read (0, &c, sizeof(char));
 	if (ret == -1)
 		exit(1);
-	tcsetattr (0, TCSANOW, &after);
+	tcsetattr (0, TCSANOW, &before);
 	return (c);
 }
 
@@ -136,6 +141,7 @@ void	hook_line(t_shell *minishell)
 	minishell->current->row = ft_calloc(1024, sizeof(char));
 	while (c != '\n')
 	{
+		//printf("%i\n", c);
 		if (ft_special_keys(c, minishell) && ft_isprint(c))
 		{
 			ft_fill_row(minishell->current, c);

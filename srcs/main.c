@@ -83,6 +83,5 @@ int main(int n, char **arg, char **envp)
 		if (ft_strlen(minishell->current->row))
 			ft_new_history(&minishell->current);
 	}
-	free_history(minishell->current);
-	exit (0);
+	return (0);
 }

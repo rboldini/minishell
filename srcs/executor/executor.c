@@ -48,8 +48,8 @@ int	check_for_cmd(char *cmd)
 		return (ENV_DECLA);
 	else if(!ft_strcmp(cmd, "exit"))
 	{
-		ft_printf_fd(1, "exit\n");
-		exit(0);
+		ft_exit(minishell);
+		return (0);
 	}
 	else
 		return (CMD_RUN);
