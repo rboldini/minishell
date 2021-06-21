@@ -80,4 +80,5 @@ void	ft_runner(t_env *env, int ac, char **av)
 		ft_error(errno, av[0], 1);
 	}
 	ft_free_matrix(envp);
+	ft_free_matrix(paths);
 }
