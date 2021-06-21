@@ -52,6 +52,8 @@ void	ft_runner(t_env *env, int ac, char **av)
 	int		i;
 
 	(void)ac;
+	if (!ac)
+		return ;
 	i = 0;
 	envp = exported_env_matrix(env);
 	tmp = ft_getenv(env, "PATH");
@@ -69,7 +71,7 @@ void	ft_runner(t_env *env, int ac, char **av)
 			join = ft_strjoin(paths[i], slash);
 			if (ft_isfile(join))
 			{
-				if (ac && execve(join, av, envp) == -1)
+				if (execve(join, av, envp) == -1)
 					ft_error(errno, 0, 0);
 				break ;
 			}
