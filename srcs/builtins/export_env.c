@@ -16,7 +16,7 @@ void	equal_notequal(t_env *env, char *str_tmp, int i, char *str)
 		{
 			set_env(&env, same_element->env_name);
 		}
-		else if(same_element->env_value == 0 && equal == 1)
+		else if(equal == 1)
 		{
 			edit_env(&env, same_element->env_name, str_tmp + i + 1);
 			set_env(&env, same_element->env_name);
