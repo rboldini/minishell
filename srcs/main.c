@@ -54,6 +54,7 @@ int main(int n, char **arg, char **envp)
 	init_minishell();
 	minishell->prompt = calloc(0, 1);
 	minishell->env = init_env(envp);
+	edit_env(minishell->env, "OLDPWD", ft_getenv(minishell->env, "PWD"));
 	while (1)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
@@ -69,6 +70,7 @@ int main(int n, char **arg, char **envp)
 				ft_executor(cmd, minishell->env);
 			arr_i++;
 		}
+		free(cmd_arr);
 		if (ft_strlen(minishell->current->row))
 			ft_new_history(&minishell->current);
 	}
