@@ -261,7 +261,8 @@ t_cmd	**start_parsing(const char *cmd)
 				init_cmd(comm);
 				comm->has_previous = 1;
 				i++;
-				arr = malloc(0);
+				arr = malloc(sizeof(char*));
+				*arr = NULL;
 				stage = 0;
 				free(buff);
 				continue ;
