@@ -75,7 +75,7 @@ fclean: clean
 	@make fclean --quiet -C ./ft_printf_fd
 
 run:
-	@clear -c
+#	@clear -c
 	@./minishell
 
 re: fclean all
