@@ -54,7 +54,7 @@ int main(int n, char **arg, char **envp)
 	init_minishell();
 	minishell->prompt = calloc(0, 1);
 	minishell->env = init_env(envp);
-	edit_env(minishell->env, "OLDPWD", ft_getenv(minishell->env, "PWD"));
+	edit_env(&minishell->env, "OLDPWD", ft_getenv(minishell->env, "PWD"));
 	while (1)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
