@@ -65,13 +65,11 @@ t_env	*init_env(char **env)
 
 int check_and_add(t_env *env, char *str)
 {
-	t_env	*tmp;
 	int		i;
 	char	*str_tmp;
 	t_env 	*same_element;
 
 	i = 0;
-	tmp = env;
 	str_tmp = ft_strdup(str);
 	while (str_tmp[i] || !str_tmp[i])
 	{
