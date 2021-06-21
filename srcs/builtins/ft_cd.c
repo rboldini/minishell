@@ -104,7 +104,6 @@ void	ft_cd(int ac, char **av, t_env **env)
 		else
 			ft_relative_path(env, av[1]);
 	}
-	free(curr_path);
 }
 
 
