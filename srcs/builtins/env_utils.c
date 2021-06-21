@@ -67,6 +67,8 @@ void create_new_env(t_env **env, char *raw_env, int export)
 	char 	*tmp_raw;
 	t_env	*check;
 
+	//bash-3.2$ export =
+	//bash: export: `=': not a valid identifier
 	i = 0;
 	tmp_raw = ft_strdup(raw_env);
 	while (tmp_raw[i] != '=' && tmp_raw[i])
