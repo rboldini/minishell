@@ -6,7 +6,6 @@
  *	< infile
  *	> outfile
  *	| redirect output
- *
  */
 
 #include <stdlib.h>
@@ -40,7 +39,7 @@ typedef struct s_env
 {
 	char	*env_name;
 	char	*env_value;
-	int		exp; // 0 = not_exported 	1 = exported
+	int		exp; // 0 = not_exported 	1 = exported	2 = semi-exported
 	struct	s_env *next_env;
 }				t_env;
 
@@ -78,6 +77,7 @@ void	hook_line(t_shell *minishell);
 t_cmd	**start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
+void	run_command(int code, t_cmd *cmd, t_env *env);
 
 /*
 ** ENV - EXPORT
@@ -130,10 +130,8 @@ char* getprompt(t_shell *minishell);
 ** CMD
 */
 
-void	command_handle(char *command, t_shell *minishell);
 void	ft_echo(int ac, char **av);
-
-int	ft_hook_char(void);
+int		ft_hook_char(void);
 void	ft_arrow_ud(int x, t_shell *minishell);
 void	ft_arrow_lr(int x, t_history *curr);
 int 	ft_process_backspace(t_history *curr);
@@ -155,6 +153,6 @@ void	ft_error(int errnum, char *str, int cmd_flag);
 ** DEBUG
 */
 
-void ft_print_env(t_env *env);
+void	ft_print_env(t_env *env);
 
 #endif //MINISHELL_MINISHELL_H

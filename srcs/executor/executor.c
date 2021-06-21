@@ -55,29 +55,10 @@ int	check_for_cmd(char *cmd)
 		return (CMD_RUN);
 }
 
-void run_command(int code, t_cmd *cmd, t_env *env)
-{
-	if(code == CMD_CD)
-		ft_cd(cmd->len, cmd->arr, &env);
-	else if(code == CMD_PWD)
-		ft_pwd();
-	else if(code == CMD_ECHO)
-		ft_echo(cmd->len, cmd->arr);
-	else if(code == CMD_UNSET)
-		ft_unset(&env, cmd->len, cmd->arr);
-	else if(code == CMD_ENV)
-		ft_env(env, cmd->len, cmd->arr);
-	else if(code == CMD_EXP)
-		ft_export(env, cmd->len, cmd->arr);
-	else if(code == ENV_DECLA)
-		create_new_env(&env, cmd->arr[0], 0);
-}
-
 void forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
 	int fd[2];
 	int err;
-	//t_cmd *tmp;
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
 	int	status;
@@ -141,7 +122,6 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 			dup2(saved_stdin, STDIN_FILENO);
 		}
 	}
-	
 	dup2(saved_stdout, STDOUT_FILENO);
 	dup2(saved_stdin, STDIN_FILENO);
 }
@@ -166,21 +146,4 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
 	}
-	//free_cmd_struct();
 }
-/*
-int main(void)
-{
-	return (1);
-}
-*/
-/*
-
-->/usr/local/bin
-->/usr/bin
-->/bin
-->/usr/sbin
-->/sbin
-->/usr/local/munki
-
-*/

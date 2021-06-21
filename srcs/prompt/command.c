@@ -13,23 +13,20 @@ char* getprompt(t_shell *minishell)
 	return minishell->prompt;
 }
 
-//void	command_handle(char *command, t_shell *minishell)
-//{
-//	if (!ft_strcmp(command, CMD_ECHO))
-//		ft_echo(minishell);
-//	else if (!ft_strcmp(command, EXIT))
-//	{
-//		free(minishell->line);
-//		free(minishell);
-//		exit(0);
-//	}
-//	else if (!ft_strcmp(command, PWD))
-//		ft_pwd(minishell);
-//	else if (!ft_strcmp(command, CD))
-//		ft_cd(minishell);
-//	else
-//	{
-//		printf(CC_MAG"%s:"CC_RESET, "TEST");
-//		printf(CC_RED" command not found: %s\n"CC_RESET, minishell->splitted[0]);
-//	}
-//}
+void run_command(int code, t_cmd *cmd, t_env *env)
+{
+	if(code == CMD_CD)
+		ft_cd(cmd->len, cmd->arr, &env);
+	else if(code == CMD_PWD)
+		ft_pwd();
+	else if(code == CMD_ECHO)
+		ft_echo(cmd->len, cmd->arr);
+	else if(code == CMD_UNSET)
+		ft_unset(&env, cmd->len, cmd->arr);
+	else if(code == CMD_ENV)
+		ft_env(env, cmd->len, cmd->arr);
+	else if(code == CMD_EXP)
+		ft_export(env, cmd->len, cmd->arr);
+	else if(code == ENV_DECLA)
+		create_new_env(&env, cmd->arr[0], 0);
+}

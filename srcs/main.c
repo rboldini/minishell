@@ -17,7 +17,7 @@ void	watermark(void)
 CC_WHT " & " CC_CYN "nessuno" CC_RESET "\n");
 }
 
-void	init_minishell(t_shell **minishell)
+void	init_minishell()
 {
 	*minishell = ft_calloc(1, sizeof(t_shell));
 	ft_memset((*minishell), 0, sizeof(t_shell));
@@ -47,22 +47,15 @@ int main(int n, char **arg, char **envp)
 	t_env	*enva;
 	t_cmd	**cmd_arr;
 	t_cmd	*cmd;
-	//int i = 0;
 	int	arr_i;
 
 	(void)n;
 	(void)arg;
 	watermark();
-	init_minishell(&minishell);
+	init_minishell();
 	minishell->prompt = calloc(0, 1);
 	enva = init_env(envp);
 	minishell->env = enva;
-	//create_new_env(&enva, "GIOVANNI=ciao ciao ciao", 1);
-	//unset_env(&enva, "GIOVANNI");
-	//create_new_env(&enva, "GIOVANNI=uhuhuh", 1);
-	//set_env(&enva, "GIOVANNI");
-	//printf("%s\n", ft_getenv(enva, "LOGNAME"));
-	//ft_env(enva);
 	while (1)
 	{
 		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
@@ -75,9 +68,7 @@ int main(int n, char **arg, char **envp)
 		{
 			cmd = *(cmd_arr + arr_i);
 			if (cmd->len)
-			{
 				ft_executor(cmd, enva);
-			}
 			arr_i++;
 		}
 		if (ft_strlen(minishell->current->row))
