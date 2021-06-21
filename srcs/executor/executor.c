@@ -68,6 +68,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	if (cmd_code == CMD_RUN)
 	{
 		minishell->pid = fork();
+		printf("f**ked \n");
 		if(!minishell->pid)
 		{
 			dup2(cmd->file_in, STDIN_FILENO);
