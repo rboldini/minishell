@@ -15,8 +15,14 @@ void	ft_signal(int sig)
 	}
 	if (sig == 3)
 	{
-		printf("hai premuto ctrl + \\\t");
-		fflush(stdout);
+		if (minishell->pid)
+		{
+			kill(minishell->pid, 3);
+			write(1, "\b \b\b \b", 6);
+			printf("ho quittato bella\n");
+			minishell->pid = 0;
+		}
+		
 	}
 }
 

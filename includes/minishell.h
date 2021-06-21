@@ -51,6 +51,7 @@ typedef struct	s_shell
 	t_history	*tmp;
 	int			n_up;
 	int			n_down;
+	int 		pid;
 	t_env		*env;
 }				t_shell;
 

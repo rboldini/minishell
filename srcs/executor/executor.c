@@ -77,7 +77,6 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
 	int fd[2];
 	int err;
-	int pid;
 	//t_cmd *tmp;
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
@@ -98,8 +97,8 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	if (cmd_code == CMD_RUN)
 	{
-		pid = fork();
-		if(!pid)
+		minishell->pid = fork();
+		if(!minishell->pid)
 		{
 			dup2(cmd->file_in, STDIN_FILENO);
 			dup2(cmd->file_out, STDOUT_FILENO);
@@ -112,7 +111,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		}
 		else
 		{
-			waitpid(pid, &status, WUNTRACED|WCONTINUED);
+			waitpid(minishell->pid, &status, WUNTRACED|WCONTINUED);
 
 			if (cmd->file_out != 1)
 				close(cmd->file_out);
