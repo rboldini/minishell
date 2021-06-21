@@ -19,7 +19,9 @@ int	valid_env_decla(char *raw)
 
 int	check_for_cmd(char *cmd)
 {
-	if(!ft_strcmp(cmd, "cd"))
+	if (!*cmd)
+		return (CMD_RUN);
+	else if(!ft_strcmp(cmd, "cd"))
 		return (CMD_CD);
 	else if(!ft_strcmp(cmd, "pwd"))
 		return (CMD_PWD);
