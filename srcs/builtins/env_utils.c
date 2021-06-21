@@ -77,7 +77,13 @@ void create_new_env(t_env **env, char *raw_env, int export)
 	{
 		new = malloc(sizeof(t_env));
 		new->env_name = ft_strdup(tmp_raw);
-		new->env_value = ft_strdup(tmp_raw + i + 1);
+		if (ft_strlen(raw_env) > ft_strlen(tmp_raw))
+			new->env_value = ft_strdup(tmp_raw + i + 1);
+		else
+		{
+			new->env_value = malloc(sizeof(char));
+			*new->env_value = 0;
+		}
 		new->exp = export;
 		new->next_env = 0;
 		ft_addback_env(env, new);
