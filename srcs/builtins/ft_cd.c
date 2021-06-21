@@ -10,6 +10,7 @@ void ft_goback(t_env **env)
 	//free(ft_getenv(*env, "PWD"));
 	edit_env(env, "PWD", ft_getenv(*env, "OLDPWD"));
 	edit_env(env, "OLDPWD", tmp);
+	free(tmp);
 }
 
 void	ft_gohome(t_env **env)
@@ -43,6 +44,7 @@ void	ft_goup(t_env **env, char *curr_path)
 		ft_error(errno, 0, 0);
 	edit_env(env, "OLDPWD", curr_path);
 	edit_env(env, "PWD", prev_path);
+	free(prev_path);
 }
 
 void ft_absolute_path(t_env **env, char *absolute_path)
@@ -55,18 +57,22 @@ void ft_absolute_path(t_env **env, char *absolute_path)
 
 void	ft_relative_path(t_env **env, char *relative_path)
 {
-	char *next_path;
-	char *curr_path;
+	char	*next_path;
+	char	*curr_path;
+	char	*temp_path;
 
 	curr_path = ft_getenv(*env, "PWD");
 	if(!ft_strcmp(curr_path, "/"))
 		curr_path[0] = 0;
-	next_path = ft_strjoin(curr_path, "/");
-	next_path = ft_strjoin(next_path, relative_path);
+	temp_path = ft_strjoin(curr_path, "/");
+	next_path = ft_strjoin(temp_path, relative_path);
 	if (chdir(next_path) == -1)
 		ft_error(errno, 0, 0);
 	edit_env(env, "OLDPWD", curr_path);
 	edit_env(env, "PWD", next_path);
+	free(temp_path);
+	free(curr_path);
+	free(next_path);
 }
 
 void ft_goroot(t_env **env)
@@ -99,6 +105,7 @@ void	ft_cd(int ac, char **av, t_env **env)
 		else
 			ft_relative_path(env, av[1]);
 	}
+	free(curr_path);
 }
 
 
