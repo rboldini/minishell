@@ -43,12 +43,10 @@ int	env_lst_size(t_env *env)
 
 void	ft_export_env(t_env *env, char *str)
 {
-	t_env	*tmp;
 	int		i;
 	char	*str_tmp;
 
 	i = 0;
-	tmp = env;
 	str_tmp = ft_strdup(str);
 	while (str_tmp[i] || !str_tmp[i])
 	{
