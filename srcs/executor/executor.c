@@ -117,10 +117,8 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 {
 	t_cmd *tmp;
 	int cmd_code;
-	int i;
 
 	tmp = cmd;
-	i = 0;
 	cmd_code = -1;
 	while (tmp)
 	{
