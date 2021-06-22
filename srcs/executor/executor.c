@@ -107,7 +107,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	if (cmd_code == CMD_RUN)
 	{
-		//is_exec(env, cmd->len, cmd->arr);
+		is_exec(env, cmd->len, cmd->arr);
 		minishell->pid = fork();
 		if(!minishell->pid)
 		{
