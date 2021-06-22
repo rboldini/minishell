@@ -91,7 +91,14 @@ void	ft_export(t_env *env, int ac, char **av)
 	else
 	{
 		while(i < ac)
+		{
+			if(av[i][0] == '=')
+			{
+				ft_printf_fd(2, "Conchiglia: export: '=': not a valid identifier\n");
+				i++;
+			}
 			ft_export_env(env, av[i++]);
+		}
 	}
 }
 
