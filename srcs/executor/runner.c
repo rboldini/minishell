@@ -73,7 +73,7 @@ void	ft_runner(t_env *env, int ac, char **av)
 			if (ft_isfile(join))
 			{
 				if (execve(join, av, envp) == -1)
-					ft_error(errno, 0, 0);
+					ft_error(errno, av[0], 1);
 				break ;
 			}
 			free(slash);
