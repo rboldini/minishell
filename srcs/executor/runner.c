@@ -17,9 +17,7 @@ int	ft_isdir(char *path)
 		}
 		i--;
 	}
-	//printf("dir: %s\n", tmp);
 	res = open(tmp, O_DIRECTORY);
-	//printf("%i\n", res);
 	free(tmp);
 	if (res != -1)
 	{
@@ -54,7 +52,6 @@ void	ft_runner(t_env *env, int ac, char **av)
 	(void)ac;
 	if (!av[0])
 		return ;
-	//printf("av[0] %s\n", av[0]);
 	i = 0;
 	envp = exported_env_matrix(env);
 	tmp = ft_getenv(env, "PATH");

@@ -117,20 +117,17 @@ void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);
 
-
 /*
 ** CD
 */
 
 void	ft_cd(int ac, char **av, t_env **env);
 
-
 /*
 ** PDW
 */
 
 void	ft_pwd();
-
 
 /*
 ** PROMPT
@@ -160,7 +157,8 @@ void	ft_exit(t_shell *minishell);
 
 void	ft_executor(t_cmd *cmd, t_env *env);
 void	ft_error(int errnum, char *str, int cmd_flag);
-
+int		ft_isdir(char *path);
+int		ft_isfile(char *path);
 
 /*
 ** DEBUG
