@@ -18,7 +18,7 @@ char *is_exec(t_env *env, int ac, char  **av)
 	if (ft_isdir(av[0]))
 	{
 		ft_free_matrix(paths);
-		return (av[0]);
+		return (ft_strdup(av[0]));
 	}
 	else
 	{
@@ -38,7 +38,6 @@ char *is_exec(t_env *env, int ac, char  **av)
 		}
 		ft_error(errno, av[0], 1);
 	}
-	ft_free_matrix(paths);
 	return (NULL);
 }
 
