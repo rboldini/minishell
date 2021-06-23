@@ -1,6 +1,46 @@
 
 #include "../../includes/minishell.h"
 
+char *is_exec(t_env *env, int ac, char  **av)
+{
+	char	**paths;
+	char	*tmp;
+	char	*join;
+	char	*slash;
+	int		i;
+
+	(void)ac;
+	if (!av[0])
+		return (0);
+	i = 0;
+	tmp = ft_getenv(env, "PATH");
+	paths = ft_split(tmp, ':');
+	if (ft_isdir(av[0]))
+	{
+		ft_free_matrix(paths);
+		return (ft_strdup(av[0]));
+	}
+	else
+	{
+		while (paths[i])
+		{
+			slash = ft_strjoin("/", av[0]);
+			join = ft_strjoin(paths[i], slash);
+			if (ft_isfile(join))
+			{
+				free(slash);
+				ft_free_matrix(paths);
+				return (join);
+			}
+			free(slash);
+			free(join);
+			i++;
+		}
+		ft_error(errno, av[0], 1);
+	}
+	return (NULL);
+}
+
 int	valid_env_decla(char *raw)
 {
 	int i;
@@ -51,6 +91,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
 	int	status;
+	char *path;
 
 	fd[0] = 0;
 	fd[1] = 0;
@@ -67,27 +108,31 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	if (cmd_code == CMD_RUN)
 	{
-		//printf("arr %s\n", cmd->arr[0]);
-		minishell->pid = fork();
-		if(!minishell->pid)
-		{
-			dup2(cmd->file_in, STDIN_FILENO);
-			dup2(cmd->file_out, STDOUT_FILENO);
-			ft_runner(env, cmd->len, cmd->arr);
-			if (cmd->file_out != 1)
-				close(cmd->file_out);
-			if (cmd->file_in != 0)
-				close(cmd->file_in);
-			exit(0);
-		}
-		else
-		{
-			waitpid(minishell->pid, &status, WUNTRACED|WCONTINUED);
-
-			if (cmd->file_out != 1)
-				close(cmd->file_out);
-			if (cmd->file_in != 0)
-				close(cmd->file_in);
+		path = is_exec(env, cmd->len, cmd->arr);
+		if(path)
+		{	
+			minishell->pid = fork();
+			if(!minishell->pid)
+			{
+				dup2(cmd->file_in, STDIN_FILENO);
+				dup2(cmd->file_out, STDOUT_FILENO);
+				ft_runner(env, cmd->arr, path); //dovrebbe bastare sostituire a ft_runner direttamente execve dandogli path come var perchè adesso i controlli li facciamo fuori dal fork
+				if (cmd->file_out != 1)
+					close(cmd->file_out);
+				if (cmd->file_in != 0)
+					close(cmd->file_in);
+				free(path);
+				exit(0);
+			}
+			else
+			{
+				waitpid(minishell->pid, &status, WUNTRACED|WCONTINUED);
+				if (cmd->file_out != 1)
+					close(cmd->file_out);
+				if (cmd->file_in != 0)
+					close(cmd->file_in);
+			}
+			free(path);
 		}
 	}
 	else

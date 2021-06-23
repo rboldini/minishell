@@ -1,10 +1,11 @@
 $? env
-error handling -> errore env con argomento senza '='
 ctrl+D --> chiuse processo e shell
 ctrl+C --> chiude tutto tranne shell, nel caso in cui non ci fossero processi in esecuzione da un propt nuovo
 ctrl+\ --> chiude il processo
 ./ciao --> non esiste deve dare errore No such file or directory
-ciao --> deve dare "command not found"
 
 
-da chiedere a stefano se l`espansione delle variabili temporanee prende l`env da ft_getenv e non da getenv.
+BUG --> ctrl+C crea due prompt uno davanti all'altro sulla stessa linea quando si esce da un processo in attesa
+
+
+

@@ -112,11 +112,10 @@ void	ft_home_end(int c, t_shell *minishell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
-void	ft_runner(t_env *env, int ac, char **av);
+void	ft_runner(t_env *env, char **av, char *path);
 void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);
-
 
 /*
 ** CD
@@ -124,13 +123,11 @@ void	free_history(t_history *curr);
 
 void	ft_cd(int ac, char **av, t_env **env);
 
-
 /*
 ** PDW
 */
 
 void	ft_pwd();
-
 
 /*
 ** PROMPT
@@ -160,7 +157,8 @@ void	ft_exit(t_shell *minishell);
 
 void	ft_executor(t_cmd *cmd, t_env *env);
 void	ft_error(int errnum, char *str, int cmd_flag);
-
+int		ft_isdir(char *path);
+int		ft_isfile(char *path);
 
 /*
 ** DEBUG
