@@ -116,7 +116,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 			{
 				dup2(cmd->file_in, STDIN_FILENO);
 				dup2(cmd->file_out, STDOUT_FILENO);
-				ft_runner(env, cmd->len, cmd->arr); //dovrebbe bastare sostituire a ft_runner direttamente execve dandogli path come var perchè adesso i controlli li facciamo fuori dal fork
+				ft_runner(env, cmd->arr, path); //dovrebbe bastare sostituire a ft_runner direttamente execve dandogli path come var perchè adesso i controlli li facciamo fuori dal fork
 				if (cmd->file_out != 1)
 					close(cmd->file_out);
 				if (cmd->file_in != 0)

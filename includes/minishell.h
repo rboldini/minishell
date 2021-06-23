@@ -112,7 +112,7 @@ void	ft_home_end(int c, t_shell *minishell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
-void	ft_runner(t_env *env, int ac, char **av);
+void	ft_runner(t_env *env, char **av, char *path);
 void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);

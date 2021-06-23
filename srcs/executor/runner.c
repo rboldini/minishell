@@ -40,45 +40,14 @@ int	ft_isfile(char *path)
 	return (0);
 }
 
-void	ft_runner(t_env *env, int ac, char **av)
+void	ft_runner(t_env *env, char **av, char *path)
 {
 	char	**envp;
-	char	**paths;
-	char	*tmp;
-	char	*join;
-	char	*slash;
-	int		i;
 
-	(void)ac;
 	if (!av[0])
 		return ;
-	i = 0;
 	envp = exported_env_matrix(env);
-	tmp = ft_getenv(env, "PATH");
-	paths = ft_split(tmp, ':');
-	if (ft_isdir(av[0]))
-	{
-		if(execve(av[0], av, envp) == -1)
-			ft_error(errno, av[0], 0);
-	}
-	else
-	{
-		while (paths[i])
-		{
-			slash = ft_strjoin("/", av[0]);
-			join = ft_strjoin(paths[i], slash);
-			if (ft_isfile(join))
-			{
-				if (execve(join, av, envp) == -1)
-					ft_error(errno, av[0], 1);
-				break ;
-			}
-			free(slash);
-			free(join);
-			i++;
-		}
-		ft_error(errno, av[0], 1);
-	}
-	ft_free_matrix(envp);
-	ft_free_matrix(paths);
+	if(execve(path, av, envp) == -1)
+		ft_error(errno, av[0], 0);
+	free(envp);
 }
