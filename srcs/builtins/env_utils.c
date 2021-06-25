@@ -30,7 +30,7 @@ void	ft_free_env(t_env *env)
 	}
 }
 
-t_env	*check_existing_env(t_env *env, char *name) //torna un puntatore all' elemento combaciante
+t_env	*check_existing_env(t_env *env, char *name)
 {
 	t_env	*tmp;
 
@@ -60,22 +60,20 @@ void	ft_addback_env(t_env **env, t_env *new_env)
 	tmp->next_env = new_env;
 }
 
-void create_new_env(t_env **env, char *raw_env, int export)
+void	create_new_env(t_env **env, char *raw_env, int export)
 {
 	int		i;
 	t_env	*new;
-	char 	*tmp_raw;
+	char	*tmp_raw;
 	t_env	*check;
 
-	//bash-3.2$ export =
-	//bash: export: `=': not a valid identifier
 	i = 0;
 	tmp_raw = ft_strdup(raw_env);
 	while (tmp_raw[i] != '=' && tmp_raw[i])
 		i++;
 	tmp_raw[i] = '\0';
 	check = check_existing_env(*env, tmp_raw);
-	if(!check)
+	if (!check)
 	{
 		new = malloc(sizeof(t_env));
 		new->env_name = ft_strdup(tmp_raw);
@@ -98,7 +96,7 @@ void create_new_env(t_env **env, char *raw_env, int export)
 	}
 }
 
-void	edit_env(t_env **env,char *name, char *new_value)
+void	edit_env(t_env **env, char *name, char *new_value)
 {
 	t_env	*tmp;
 
@@ -131,7 +129,7 @@ char	*ft_getenv(t_env *env, char *name)
 	return (NULL);
 }
 
-void	set_env(t_env **env, char* name)
+void	set_env(t_env **env, char *name)
 {
 	t_env	*tmp;
 
@@ -144,7 +142,7 @@ void	set_env(t_env **env, char* name)
 	}
 }
 
-void	unset_env(t_env **env, char* name)
+void	unset_env(t_env **env, char *name)
 {
 	t_env	*tmp;
 

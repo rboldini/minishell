@@ -2,21 +2,22 @@
 
 void	equal_notequal(t_env *env, char *str_tmp, int i, char *str)
 {
-	t_env *same_element;
-	int equal;
+	t_env	*same_element;
+	int		equal;
 
-	if(str_tmp[i] == '=')
+	if (str_tmp[i] == '=')
 		equal = 1;
-	else if(str_tmp[i] == 0)
+	else if (str_tmp[i] == 0)
 		equal = 2;
 	str_tmp[i] = 0;
-	if((same_element = check_existing_env(env, str_tmp)) != 0)
+	same_element = check_existing_env(env, str_tmp);
+	if (same_element != 0)
 	{
-		if(same_element->env_value != 0 && equal == 2)
+		if (same_element->env_value != 0 && equal == 2)
 		{
 			set_env(&env, same_element->env_name);
 		}
-		else if(equal == 1)
+		else if (equal == 1)
 		{
 			edit_env(&env, same_element->env_name, str_tmp + i + 1);
 			set_env(&env, same_element->env_name);
@@ -28,12 +29,12 @@ void	equal_notequal(t_env *env, char *str_tmp, int i, char *str)
 
 int	env_lst_size(t_env *env)
 {
-	t_env *tmp;
-	int res;
+	t_env	*tmp;
+	int		res;
 
 	tmp = env;
 	res = 0;
-	while(tmp)
+	while (tmp)
 	{
 		res++;
 		tmp = tmp->next_env;
@@ -55,7 +56,7 @@ void	ft_export_env(t_env *env, char *str)
 			equal_notequal(env, str_tmp, i, str);
 			break ;
 		}
-		else if(str_tmp[i] == 0)
+		else if (str_tmp[i] == 0)
 		{
 			equal_notequal(env, str_tmp, i, str);
 			break ;
@@ -68,11 +69,11 @@ void	ft_export_env(t_env *env, char *str)
 void	ft_export(t_env *env, int ac, char **av)
 {
 	t_env	*tmp;
-	int i;
-	
+	int		i;
+
 	i = 1;
 	tmp = env;
-	if(ac < 2)
+	if (ac < 2)
 	{
 		while (tmp)
 		{
@@ -80,7 +81,7 @@ void	ft_export(t_env *env, int ac, char **av)
 			{
 				ft_printf_fd(1, "declare -x ");
 				ft_printf_fd(1, "%s", tmp->env_name);
-				if(tmp->exp == 1)
+				if (tmp->exp == 1)
 					ft_printf_fd(1, "=");
 				ft_printf_fd(1, "%s", tmp->env_value);
 				ft_printf_fd(1, "\n");
@@ -90,11 +91,12 @@ void	ft_export(t_env *env, int ac, char **av)
 	}
 	else
 	{
-		while(i < ac)
+		while (i < ac)
 		{
-			if(av[i][0] == '=')
+			if (av[i][0] == '=')
 			{
-				ft_printf_fd(2, "Conchiglia: export: '=': not a valid identifier\n");
+				ft_printf_fd(2, "Conchiglia: export: ");
+				ft_printf_fd(2, "'=': not a valid identifier\n");
 				i++;
 			}
 			ft_export_env(env, av[i++]);
@@ -104,12 +106,12 @@ void	ft_export(t_env *env, int ac, char **av)
 
 char	**exported_env_matrix(t_env *env)
 {
-	int len;
-	char **env_matrix;
-	int i;
-	t_env *tmp;
-	char *temp;
-	
+	int		len;
+	char	**env_matrix;
+	int		i;
+	t_env	*tmp;
+	char	*temp;
+
 	i = 0;
 	tmp = env;
 	len = env_lst_size(env);
