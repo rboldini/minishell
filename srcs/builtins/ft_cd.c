@@ -1,8 +1,8 @@
 #include "../../includes/minishell.h"
 
-void ft_goback(t_env **env)
+void	ft_goback(t_env **env)
 {
-	char *tmp;
+	char	*tmp;
 
 	if (chdir(ft_getenv(*env, "OLDPWD")) == -1)
 	{
@@ -40,7 +40,7 @@ void	ft_goup(t_env **env, char *curr_path)
 	i = ft_strlen(curr_path);
 	while (curr_path[i] != '/')
 		i--;
-	if(i == 0)
+	if (i == 0)
 		i = 1;
 	prev_path = malloc(sizeof(char) * i + 1);
 	while (k < i)
@@ -61,7 +61,7 @@ void	ft_goup(t_env **env, char *curr_path)
 	free(prev_path);
 }
 
-void ft_absolute_path(t_env **env, char *absolute_path)
+void	ft_absolute_path(t_env **env, char *absolute_path)
 {
 	if (chdir(absolute_path) == -1)
 	{
@@ -81,7 +81,7 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	char	*temp_path;
 
 	curr_path = ft_getenv(*env, "PWD");
-	if(!ft_strcmp(curr_path, "/"))
+	if (!ft_strcmp(curr_path, "/"))
 		curr_path[0] = 0;
 	temp_path = ft_strjoin(curr_path, "/");
 	next_path = ft_strjoin(temp_path, relative_path);
@@ -98,7 +98,7 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	free(next_path);
 }
 
-void ft_goroot(t_env **env)
+void	ft_goroot(t_env **env)
 {
 	if (chdir("/") == -1)
 	{
@@ -117,22 +117,20 @@ void	ft_cd(int ac, char **av, t_env **env)
 	int		len;
 
 	curr_path = ft_getenv(*env, "PWD");
-	if(ac < 2 || !ft_strcmp("~", av[1])) //working
+	if (ac < 2 || !ft_strcmp("~", av[1]))
 		ft_gohome(env);
-	else if (!ft_strcmp(av[1], "..")) //working
+	else if (!ft_strcmp(av[1], ".."))
 		ft_goup(env, curr_path);
-	else if(!ft_strcmp(av[1], "-")) //working
+	else if (!ft_strcmp(av[1], "-"))
 		ft_goback(env);
-	else if(!ft_strcmp(av[1], "/")) //working
+	else if (!ft_strcmp(av[1], "/"))
 		ft_goroot(env);
-	else if(ft_strcmp(av[1], ".")) //working - relative and absolute
+	else if (ft_strcmp(av[1], "."))
 	{
 		len = ft_strlen(ft_getenv(*env, "HOME"));
-		if(!ft_strncmp(av[1], ft_getenv(*env, "HOME"), len))
+		if (!ft_strncmp(av[1], ft_getenv(*env, "HOME"), len))
 			ft_absolute_path(env, av[1]);
 		else
 			ft_relative_path(env, av[1]);
 	}
 }
-
-

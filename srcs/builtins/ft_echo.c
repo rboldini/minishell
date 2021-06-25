@@ -1,25 +1,25 @@
 #include "../../includes/minishell.h"
 
-int analyse_flag(char **av)
+int	analyse_flag(char **av)
 {
-	int i;
-	int k;
-	int flag;
+	int	i;
+	int	k;
+	int	flag;
 
 	flag = 1;
 	k = 0;
 	i = 1;
-	while(av[i])
+	while (av[i])
 	{
 		k = 0;
-		if(av[i][k] == '-')
+		if (av[i][k] == '-')
 		{
 			k++;
 			while (av[i][k] == 'n')
 				k++;
 		}
 		else
-			return(flag);
+			return (flag);
 		flag += 1;
 		i++;
 	}
@@ -30,17 +30,17 @@ void	ft_echo(int ac, char **av)
 {
 	int	i;
 	int	n_flag;
-	
+
 	n_flag = 0;
 	i = 1;
-	if(ac != 1)
+	if (ac != 1)
 	{
 		n_flag = analyse_flag(av);
 		i = n_flag;
 		while (i < ac)
 		{
 			ft_printf_fd(1, "%s", av[i]);
-			if(i < ac - 1)
+			if (i < ac - 1)
 				ft_printf_fd(1, " ");
 			i++;
 		}
