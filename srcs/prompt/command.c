@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void set_prompt(t_shell *minishell, char *str)
+void	set_prompt(t_shell *minishell, char *str)
 {
 	if (minishell->prompt)
 		free(minishell->prompt);
@@ -8,25 +8,25 @@ void set_prompt(t_shell *minishell, char *str)
 	strcpy(minishell->prompt, str);
 }
 
-char* getprompt(t_shell *minishell)
+char	*getprompt(t_shell *minishell)
 {
-	return minishell->prompt;
+	return (minishell->prompt);
 }
 
-void run_command(int code, t_cmd *cmd, t_env *env)
+void	run_command(int code, t_cmd *cmd, t_env *env)
 {
-	if(code == CMD_CD)
+	if (code == CMD_CD)
 		ft_cd(cmd->len, cmd->arr, &env);
-	else if(code == CMD_PWD)
+	else if (code == CMD_PWD)
 		ft_pwd();
-	else if(code == CMD_ECHO)
+	else if (code == CMD_ECHO)
 		ft_echo(cmd->len, cmd->arr);
-	else if(code == CMD_UNSET)
+	else if (code == CMD_UNSET)
 		ft_unset(&env, cmd->len, cmd->arr);
-	else if(code == CMD_ENV)
+	else if (code == CMD_ENV)
 		ft_env(env, cmd->len, cmd->arr);
-	else if(code == CMD_EXP)
+	else if (code == CMD_EXP)
 		ft_export(env, cmd->len, cmd->arr);
-	else if(code == ENV_DECLA)
+	else if (code == ENV_DECLA)
 		create_new_env(&env, cmd->arr[0], 0);
 }
