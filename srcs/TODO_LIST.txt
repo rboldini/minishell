@@ -8,4 +8,25 @@ ctrl+\ --> chiude il processo
 BUG --> ctrl+C crea due prompt uno davanti all'altro sulla stessa linea quando si esce da un processo in attesa
 
 
+QUOTING CHARACTERS and ESCAPE --> found some bugs
 
+example:
+CONCHIGLIA -> % date=20212806
+CONCHIGLIA -> % echo $date
+20212806 (correct!)
+CONCHIGLIA -> % echo \$date
+\20212806 (should be escaping the $ and printing $date)
+CONCHIGLIA -> % echo '$date'
+$date (correct!)
+CONCHIGLIA -> % echo "$date"
+20212806 (correct!)
+CONCHIGLIA -> % "`date`"
+`20212806` (should've printed Mon Jun 28 19:25:24 CEST 2021 -- current date/time)
+CONCHIGLIA -> echo % "I'd say: \"Go for it!\""
+I'd say: \Go for it!" (should be: I'd say: "Go for it!" -- printing \ instead of ")
+CONCHIGLIA -> % echo "\"
+\ (should be: >)
+CONCHIGLIA -> % echo "\\"
+\\ (should print one \)
+
+do we need to check exit status?
