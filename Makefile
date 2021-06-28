@@ -3,7 +3,7 @@ NAME =			minishell
 
 #Compiler
 CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror -g # -fsanitize=address
+CFLAGS = 		-Wall -Wextra -Werror -g  -fsanitize=address
 
 #Norm
 NORM =			norminette
@@ -36,6 +36,7 @@ FILES =			main.c			\
 				runner.c		\
 				ft_signal.c		\
 				error.c			\
+				d_redirect.c	\
 				ft_exit.c
 
 LIBFT_DIR =		libft

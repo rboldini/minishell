@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	set_prompt(t_shell *minishell, char *str)
+void	set_prompt(char *str)
 {
 	if (minishell->prompt)
 		free(minishell->prompt);
@@ -8,9 +8,9 @@ void	set_prompt(t_shell *minishell, char *str)
 	strcpy(minishell->prompt, str);
 }
 
-char	*getprompt(t_shell *minishell)
+void	get_prompt()
 {
-	return (minishell->prompt);
+	write(1, minishell->prompt, ft_strlen(minishell->prompt));
 }
 
 void	run_command(int code, t_cmd *cmd, t_env *env)

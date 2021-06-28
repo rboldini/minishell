@@ -25,7 +25,6 @@ void	init_minishell()
 	ft_new_history(&(minishell)->current);
 	(minishell)->current->index = 0;
 	(minishell)->n_up = 0;
-	(minishell)->n_down = 0;
 }
 
 
@@ -58,7 +57,7 @@ int main(int n, char **arg, char **envp)
 	while (1)
 	{
 		minishell->pid = 0;
-		set_prompt(minishell, "\e[1;35mCONCHIGLIA -> % \e[0m");
+		set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		ft_hook_signal();
 		hook_line(minishell);

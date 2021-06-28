@@ -48,6 +48,7 @@ typedef struct s_history
 	struct	s_history *prev;
 	struct	s_history *next;
 }				t_history;
+
 typedef struct s_env
 {
 	char	*env_name;
@@ -62,7 +63,6 @@ typedef struct	s_shell
 	t_history	*current;
 	t_history	*tmp;
 	int			n_up;
-	int			n_down;
 	int 		pid;
 	t_env		*env;
 }				t_shell;
@@ -72,6 +72,7 @@ t_shell *minishell;
 typedef struct	s_cmd
 {
 	char			**arr;
+	char			*eof;
 	int				len;
 	struct s_cmd	*next;
 	int				has_previous;
@@ -116,6 +117,7 @@ void	ft_runner(t_env *env, char **av, char *path);
 void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);
+char	*d_redirect(char *eof);
 
 /*
 ** CD
@@ -133,8 +135,8 @@ void	ft_pwd();
 ** PROMPT
 */
 
-void set_prompt(t_shell *minishell, char *str);
-char* getprompt(t_shell *minishell);
+void set_prompt(char *str);
+void get_prompt();
 
 /*
 ** CMD

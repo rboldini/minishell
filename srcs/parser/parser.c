@@ -162,6 +162,8 @@ int		is_break(const char *cmd, int i)
 		return (1);
 	if (c == '>' && *(cmd + i + 1) == '>')
 		return (4);
+	if (c == '<' && *(cmd + i + 1) == '<')
+		return (7);
 	if (c == '>')
 		return (3);
 	if (c == '<')
@@ -244,6 +246,8 @@ t_cmd	**start_parsing(const char *cmd)
 		cmd_arr[arr_len - 1] = comm;
 		init_cmd(comm);
 		arr = malloc(0);
+		comm->eof = malloc(sizeof(char));
+		*comm->eof = 0;
 		stage = 0;
 		isb = 0;
 		while (*(cmd + i))
@@ -258,6 +262,8 @@ t_cmd	**start_parsing(const char *cmd)
 				comm->arr = arr;
 				tmp_comm->next = 0;
 				comm = comm->next;
+				comm->eof = malloc(sizeof(char));
+				*comm->eof = 0;
 				init_cmd(comm);
 				comm->has_previous = 1;
 				i++;
@@ -289,10 +295,24 @@ t_cmd	**start_parsing(const char *cmd)
 				comm->file_in = open(buff, O_RDONLY);
 				stage = 0;
 			}
-			free(buff);
+			/*
+			if (stage == 7 && !ft_strlen(buff))
+			{
+				comm->eof = malloc(sizeof(char));
+				*comm->eof = 0;
+			}
+			 */
+			if (stage == 7 && ft_strlen(buff))
+			{
+				free(comm->eof);
+				comm->eof = buff;
+				stage = 0;
+			}
+			else
+				free(buff);
 			if (isb > 2)
 				stage = isb;
-			if (isb == 4)
+			if (isb == 4 || isb == 7)
 				i++;
 			if (*(cmd + i) != 0)
 				i++;

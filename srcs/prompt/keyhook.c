@@ -136,25 +136,27 @@ void	hook_line(t_shell *minishell)
 {
 	char	c;
 
-	c = (char)ft_hook_char();
+	//c = (char)ft_hook_char();
 	free (minishell->current->row);
 	minishell->current->row = ft_calloc(1024, sizeof(char));
-	while (c != '\n')
+	while (1)
 	{
+		c = (char)ft_hook_char();
+		if (c == '\n')
+			break ;
 		//printf("%i\n", c);
 		if (ft_special_keys(c, minishell) && ft_isprint(c))
 		{
 			ft_fill_row(minishell->current, c);
 			write(1, &c, 1);
 		}
-		c = (char)ft_hook_char();
 	}
 	if (minishell->n_up)
 	{
 		ft_bzero(minishell->tmp->row, ft_strlen(minishell->tmp->row));
 		ft_strlcpy(minishell->tmp->row, minishell->current->row, ft_strlen(minishell->current->row) + 1);
 		ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
-		ft_strlcpy(minishell->current->row, minishell->current->old, ft_strlen(minishell->current->old) + 1 );
+		ft_strlcpy(minishell->current->row, minishell->current->old, ft_strlen(minishell->current->old) + 1);
 		free (minishell->current->old);
 		minishell->current->old = NULL;
 		minishell->tmp->index = (int)ft_strlen(minishell->tmp->row);

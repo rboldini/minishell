@@ -26,8 +26,8 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 			minishell->current = minishell->current->prev;
 			minishell->current->index = ft_strlen(minishell->current->row);
 			//printf("2 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
-			write(1, "\r\033[2K", 5);
-			write(1, minishell->prompt, ft_strlen(minishell->prompt));
+			write(1, "\r\033[2K", 5); //delete prompt
+			get_prompt();
 			if (!minishell->current->old)
 				minishell->current->old = ft_strdup(minishell->current->row);
 			write(1, minishell->current->row, ft_strlen(minishell->current->row));

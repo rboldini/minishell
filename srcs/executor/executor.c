@@ -92,16 +92,34 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	int saved_stdin = dup(STDIN_FILENO);
 	int	status;
 	char *path;
+	char *inp;
 
 	fd[0] = 0;
 	fd[1] = 0;
 	err = pipe(fd);
 	if(err == -1)
 	{
-		printf("ERROR CREATING PIPPA\n");
+		printf("ERROR PIPPAting\n");
+		dup2(saved_stdout, STDOUT_FILENO);
+		dup2(saved_stdin, STDIN_FILENO);
 		return ;
 	}
-	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
+	if (*cmd->eof)
+	{
+		printf("EOF: %s\n", cmd->eof);
+		if (!ft_strlen(cmd->eof))
+		{
+			ft_printf_fd(2, "conchiglia: syntax error near unexpected token\n");
+			dup2(saved_stdout, STDOUT_FILENO);
+			dup2(saved_stdin, STDIN_FILENO);
+			return ;
+		}
+		inp = d_redirect(cmd->eof);
+		cmd->file_in = fd[0];
+		write(fd[1], inp, ft_strlen(inp));
+		close(fd[1]);
+	}
+	else if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
 		cmd->file_out = fd[1];
 		cmd->next->file_in = fd[0];
@@ -116,7 +134,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 			{
 				dup2(cmd->file_in, STDIN_FILENO);
 				dup2(cmd->file_out, STDOUT_FILENO);
-				ft_runner(env, cmd->arr, path); //dovrebbe bastare sostituire a ft_runner direttamente execve dandogli path come var perchè adesso i controlli li facciamo fuori dal fork
+				ft_runner(env, cmd->arr, path);
 				if (cmd->file_out != 1)
 					close(cmd->file_out);
 				if (cmd->file_in != 0)
@@ -171,11 +189,6 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 	while (tmp)
 	{
 		cmd_code = check_for_cmd(tmp->arr[0]);
-		if(cmd_code == -1 && tmp->arr[0])
-		{
-			ft_printf_fd(1, "%s: command not found\n", tmp->arr[0]);
-			break ;
-		}
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
 	}
