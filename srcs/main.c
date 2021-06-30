@@ -57,11 +57,22 @@ int main(int n, char **arg, char **envp)
 	while (1)
 	{
 		minishell->pid = 0;
-		minishell->abort = 0;
 		set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
-		write (1, minishell->prompt, ft_strlen(minishell->prompt));
+		if (!minishell->abort_dred)
+		{
+			write (1, minishell->prompt, ft_strlen(minishell->prompt));
+		}
 		ft_hook_signal();
-		hook_line(minishell);
+		if (!minishell->abort_dred)
+		{
+			minishell->abort = 0;
+			minishell->abort_dred = 0;
+			minishell->in_dred = 0;
+			hook_line(minishell);
+		}
+		minishell->abort = 0;
+		minishell->abort_dred = 0;
+		minishell->in_dred = 0;
 		cmd_arr = start_parsing(minishell->current->row);
 		arr_i = 0;
 		while (*(cmd_arr + arr_i))
@@ -72,7 +83,7 @@ int main(int n, char **arg, char **envp)
 			arr_i++;
 		}
 		free(cmd_arr);
-		if (ft_strlen(minishell->current->row))
+		if (ft_strlen(minishell->current->row) && !minishell->abort_dred && !minishell->abort)
 			ft_new_history(&minishell->current);
 	}
 	return (0);

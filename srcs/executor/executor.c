@@ -121,7 +121,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 			return ;
 		}
 		inp = d_redirect(cmd->eof);
-		if (minishell->abort)
+		if (minishell->abort_dred)
 			return ;
 		cmd->file_in = fd_double[0];
 		write(fd_double[1], inp, ft_strlen(inp));

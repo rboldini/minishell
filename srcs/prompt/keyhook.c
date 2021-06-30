@@ -64,10 +64,8 @@ int	ft_hook_char(void)
 	after.c_lflag &= ~(ICANON | ECHO);
 	after.c_cc[VMIN] = 1;
 	after.c_cc[VTIME] = 0;
-	tcsetattr (0, TCSANOW, &after);
-	ret = (int)read (0, &c, sizeof(char));
-	if (minishell->abort)
-		return (0);
+	tcsetattr(0, TCSANOW, &after);
+	ret = (int)read(0, &c, sizeof(char));
 	if (ret == -1)
 		exit(1);
 	tcsetattr (0, TCSANOW, &before);
@@ -138,14 +136,20 @@ void	hook_line(t_shell *minishell)
 {
 	char	c;
 
-	//c = (char)ft_hook_char();
 	free (minishell->current->row);
 	minishell->current->row = ft_calloc(1024, sizeof(char));
 	while (1)
 	{
 		c = (char)ft_hook_char();
-		if (minishell->abort)
-			break ;
+		/*
+		if (minishell->abort_dred)
+		{
+			minishell->current->row[0] = c;
+			minishell->current->index = 1;
+			ft_fill_row(minishell->current, c);
+			return ;
+		}
+		*/
 		if (c == '\n')
 			break ;
 		//printf("%i\n", c);

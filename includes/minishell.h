@@ -62,8 +62,10 @@ typedef struct	s_shell
 	char		*prompt;
 	t_history	*current;
 	t_history	*tmp;
+	int			in_dred;
 	int			n_up;
 	int			abort;
+	int			abort_dred;
 	int 		pid;
 	t_env		*env;
 }				t_shell;

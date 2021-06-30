@@ -10,11 +10,14 @@ void	ft_signal(int sig)
 			ft_strlcpy(minishell->current->row, minishell->current->old, ft_strlen(minishell->current->old) + 1);
 			minishell->current->index = ft_strlen(minishell->current->row);
 			write(1, "\n", 1);
+			write(1, "\r\033[2K", 5);
 			set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
 			get_prompt();
 			while (minishell->current->next)
 				minishell->current = minishell->current->next;
 			minishell->current->index = 0;
+			if (minishell->in_dred)
+				minishell->abort_dred = 1;
 			minishell->abort = 1;
 		}
 		else
