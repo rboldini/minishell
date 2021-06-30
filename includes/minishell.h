@@ -63,6 +63,7 @@ typedef struct	s_shell
 	t_history	*current;
 	t_history	*tmp;
 	int			n_up;
+	int			abort;
 	int 		pid;
 	t_env		*env;
 }				t_shell;
@@ -73,6 +74,7 @@ typedef struct	s_cmd
 {
 	char			**arr;
 	char			*eof;
+	int				has_dred;
 	int				len;
 	struct s_cmd	*next;
 	int				has_previous;

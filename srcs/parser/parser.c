@@ -248,6 +248,7 @@ t_cmd	**start_parsing(const char *cmd)
 		arr = malloc(0);
 		comm->eof = malloc(sizeof(char));
 		*comm->eof = 0;
+		comm->has_dred = 0;
 		stage = 0;
 		isb = 0;
 		while (*(cmd + i))
@@ -255,7 +256,8 @@ t_cmd	**start_parsing(const char *cmd)
 			buff = next_token(cmd, &i, &isb);
 			if (!stage && ft_strlen(buff))
 				arr = append_to_arr(buff, &comm->len, arr);
-			if (!stage && isb == 2)
+			//if (!stage && isb == 2)
+			if (isb == 2)
 			{
 				tmp_comm = malloc(sizeof(t_cmd));
 				comm->next = tmp_comm;
@@ -264,6 +266,7 @@ t_cmd	**start_parsing(const char *cmd)
 				comm = comm->next;
 				comm->eof = malloc(sizeof(char));
 				*comm->eof = 0;
+				comm->has_dred = 0;
 				init_cmd(comm);
 				comm->has_previous = 1;
 				i++;
@@ -295,23 +298,27 @@ t_cmd	**start_parsing(const char *cmd)
 				comm->file_in = open(buff, O_RDONLY);
 				stage = 0;
 			}
-			/*
-			if (stage == 7 && !ft_strlen(buff))
+			if (isb == 7)
 			{
-				comm->eof = malloc(sizeof(char));
-				*comm->eof = 0;
+				printf("set in isb\n");
+				comm->has_dred = 1;
 			}
-			 */
 			if (stage == 7 && ft_strlen(buff))
 			{
+				printf("set in stage\n");
 				free(comm->eof);
 				comm->eof = buff;
+				comm->has_dred = 1;
 				stage = 0;
 			}
 			else
 				free(buff);
 			if (isb > 2)
 				stage = isb;
+			if (isb >= 2 && isb != 7)
+			{
+				comm->has_dred = 0;
+			}
 			if (isb == 4 || isb == 7)
 				i++;
 			if (*(cmd + i) != 0)

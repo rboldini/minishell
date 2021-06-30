@@ -87,6 +87,7 @@ int	check_for_cmd(char *cmd)
 void forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
 	int fd[2];
+	int fd_double[2];
 	int err;
 	int saved_stdout = dup(STDOUT_FILENO);
 	int saved_stdin = dup(STDIN_FILENO);
@@ -104,22 +105,29 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		dup2(saved_stdin, STDIN_FILENO);
 		return ;
 	}
-	if (*cmd->eof)
+	if (cmd->has_dred)
 	{
-		printf("EOF: %s\n", cmd->eof);
+		fd_double[0] = 0;
+		fd_double[1] = 0;
+		int derr = pipe(fd_double);
+		(void)derr;
 		if (!ft_strlen(cmd->eof))
 		{
-			ft_printf_fd(2, "conchiglia: syntax error near unexpected token\n");
+			ft_printf_fd(2, "Conchiglia: syntax error near unexpected token\n");
 			dup2(saved_stdout, STDOUT_FILENO);
 			dup2(saved_stdin, STDIN_FILENO);
+			minishell->abort = 1;
+			errno = 258;
 			return ;
 		}
 		inp = d_redirect(cmd->eof);
-		cmd->file_in = fd[0];
-		write(fd[1], inp, ft_strlen(inp));
-		close(fd[1]);
+		if (minishell->abort)
+			return ;
+		cmd->file_in = fd_double[0];
+		write(fd_double[1], inp, ft_strlen(inp));
+		close(fd_double[1]);
 	}
-	else if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
+	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
 		cmd->file_out = fd[1];
 		cmd->next->file_in = fd[0];
@@ -191,6 +199,8 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		cmd_code = check_for_cmd(tmp->arr[0]);
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
+		if (minishell->abort)
+			break ;
 	}
 	while (cmd)
 	{

@@ -66,6 +66,8 @@ int	ft_hook_char(void)
 	after.c_cc[VTIME] = 0;
 	tcsetattr (0, TCSANOW, &after);
 	ret = (int)read (0, &c, sizeof(char));
+	if (minishell->abort)
+		return (0);
 	if (ret == -1)
 		exit(1);
 	tcsetattr (0, TCSANOW, &before);
@@ -142,6 +144,8 @@ void	hook_line(t_shell *minishell)
 	while (1)
 	{
 		c = (char)ft_hook_char();
+		if (minishell->abort)
+			break ;
 		if (c == '\n')
 			break ;
 		//printf("%i\n", c);

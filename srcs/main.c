@@ -57,6 +57,7 @@ int main(int n, char **arg, char **envp)
 	while (1)
 	{
 		minishell->pid = 0;
+		minishell->abort = 0;
 		set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		ft_hook_signal();
