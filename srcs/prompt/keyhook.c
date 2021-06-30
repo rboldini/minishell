@@ -159,7 +159,7 @@ void	hook_line(t_shell *minishell)
 			write(1, &c, 1);
 		}
 	}
-	if (minishell->n_up)
+	if (minishell->n_up && !minishell->abort)
 	{
 		ft_bzero(minishell->tmp->row, ft_strlen(minishell->tmp->row));
 		ft_strlcpy(minishell->tmp->row, minishell->current->row, ft_strlen(minishell->current->row) + 1);
