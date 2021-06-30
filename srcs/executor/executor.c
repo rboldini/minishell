@@ -126,6 +126,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		cmd->file_in = fd_double[0];
 		write(fd_double[1], inp, ft_strlen(inp));
 		close(fd_double[1]);
+		free(inp);
 	}
 	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
@@ -205,6 +206,7 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 	while (cmd)
 	{
 		ft_free_matrix(cmd->arr);
+		free(cmd->eof);
 		tmp = cmd;
 		cmd = cmd->next;
 		free(tmp);
