@@ -38,12 +38,11 @@ int	init_double_readirect(t_forker *forker, t_cmd *cmd)
 	write(forker->fd_double[1], forker->inp, ft_strlen(forker->inp));
 	close(forker->fd_double[1]);
 	free(forker->inp);
-	return(1);
+	return (1);
 }
 
 void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 {
-	forker->path = is_exec(env, cmd->len, cmd->arr);
 	if (forker->path)
 	{	
 		minishell->pid = fork();
@@ -61,7 +60,7 @@ void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 		}
 		else
 		{
-			waitpid(minishell->pid, &forker->status, WUNTRACED|WCONTINUED);
+			waitpid(minishell->pid, &forker->status, WUNTRACED | WCONTINUED);
 			if (cmd->file_out != 1)
 				close(cmd->file_out);
 			if (cmd->file_in != 0)
@@ -96,11 +95,11 @@ void	is_builtin(t_env *env, t_forker *forker, t_cmd *cmd, int cmd_code)
 
 void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
-	t_forker *forker;
+	t_forker	*forker;
 
 	forker = malloc(sizeof(t_forker));
 	init_forker(forker);
-	if(forker->err == -1)
+	if (forker->err == -1)
 		return ;
 	if (cmd->has_dred)
 	{
@@ -113,7 +112,10 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 		cmd->next->file_in = forker->fd[0];
 	}
 	if (cmd_code == CMD_RUN)
+	{
+		forker->path = is_exec(env, cmd->len, cmd->arr);
 		not_builtin(env, forker, cmd);
+	}
 	else
 		is_builtin(env, forker, cmd, cmd_code);
 	dup2(forker->saved_stdout, STDOUT_FILENO);

@@ -87,6 +87,19 @@ typedef struct	s_cmd
 	int				is_append;
 }				t_cmd;
 
+typedef struct s_forker
+{
+	int		fd[2];
+	int		fd_double[2];
+	int		err;
+	int		saved_stdout;
+	int		saved_stdin;
+	int		status;
+	char	*path;
+	char	*inp;
+	int		derr;
+}		t_forker;
+
 /*
 ** Parser
 */
@@ -169,6 +182,8 @@ void	ft_executor(t_cmd *cmd, t_env *env);
 void	ft_error(int errnum, char *str, int cmd_flag);
 int		ft_isdir(char *path);
 int		ft_isfile(char *path);
+char	*is_exec(t_env *env, int ac, char **av);
+
 
 /*
 ** DEBUG
