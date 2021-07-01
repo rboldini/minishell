@@ -27,6 +27,7 @@ PRINTF_SRCS = 	ft_printf.c							\
 				process_string.c					\
 				process_unsigned_decimal.c			\
 				process_unsigned_hex.c				\
+				ft_setup_precision.c
 
 PRINTF_DIR = 	.
 

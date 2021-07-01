@@ -6,7 +6,7 @@
 /*   By: vbuonvin <vbuonvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 10:22:44 by vbuonvin          #+#    #+#             */
-/*   Updated: 2021/06/21 13:41:35 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:04:58 by vbuonvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,36 +64,6 @@ void	ft_setup_zero(t_option *lista, int nblen)
 		if (!lista->output_zeroes)
 			return ;
 		lista->output_zeroes[i] = 0;
-	}
-}
-
-void	ft_setup_precision(t_option *lista, int len, char *temp)
-{
-	int	i;
-
-	i = 0;
-	lista->output_p = NULL;
-	if (lista->precision < len)
-	{
-		lista->output_p = (char *)ft_calloc(sizeof(char), lista->precision + 1);
-		if (!lista->output_p)
-			return ;
-		while (i < lista->precision)
-		{
-			lista->output_p[i] = temp[i];
-			i++;
-		}
-	}
-	else if (lista->precision >= len)
-	{
-		lista->output_p = (char *)ft_calloc(sizeof(char), len + 1);
-		if (!lista->output_p)
-			return ;
-		while (i < len)
-		{
-			lista->output_p[i] = temp[i];
-			i++;
-		}
 	}
 }
 
