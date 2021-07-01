@@ -29,12 +29,10 @@ char	*is_exec(t_env *env, int ac, char **av)
 	char	**paths;
 	char	*tmp;
 	char	*join;
-	int		i;
 
 	(void)ac;
 	if (!av[0])
 		return (0);
-	i = 0;
 	tmp = ft_getenv(env, "PATH");
 	paths = ft_split(tmp, ':');
 	if (ft_isdir(av[0]))
@@ -188,12 +186,12 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 		if (cmd->file_out != 1)
 		{
 			close(cmd->file_out);
-			dup2(saved_stdout, STDOUT_FILENO);
+			//dup2(saved_stdout, STDOUT_FILENO);
 		}
 		if (cmd->file_in != 0)
 		{
 			close(cmd->file_in);
-			dup2(saved_stdin, STDIN_FILENO);
+			//dup2(saved_stdin, STDIN_FILENO);
 		}
 	}
 	dup2(saved_stdout, STDOUT_FILENO);

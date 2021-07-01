@@ -75,8 +75,6 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 		cv->comm->has_dred = 1;
 	if (cv->isb > 2)
 		cv->stage = cv->isb;
-	if (cv->isb >= 2 && cv->isb != 7)
-		cv->comm->has_dred = 0;
 	if (cv->isb == 4 || cv->isb == 7)
 		(*i)++;
 	if (*(cmd + *i) != 0)
@@ -92,6 +90,7 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 t_cmd	**start_parsing(const char *cmd)
 {
 	t_cv	*cv;
+	t_cmd	**cmd_arr_out;
 	int		i;
 
 	cv = ft_calloc(1, sizeof(t_cv));
@@ -115,5 +114,7 @@ t_cmd	**start_parsing(const char *cmd)
 		if (!*(cmd + i))
 			break ;
 	}
-	return (cv->cmd_arr);
+	cmd_arr_out = cv->cmd_arr;
+	free(cv);
+	return (cmd_arr_out);
 }
