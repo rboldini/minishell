@@ -71,13 +71,21 @@ int	check_and_add(t_env *env, char *str)
 
 	i = 0;
 	str_tmp = ft_strdup(str);
-	while (str_tmp[i] || !str_tmp[i])
+	while (1)
 	{
+		if(str_tmp[0] == '=')
+		{
+			printf("Conchiglia: env: invalid argument\n");
+			errno = 1;
+			free(str_tmp);
+			return (-1);
+		}
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
 			if (!str_tmp[i])
 			{
 				printf("Conchiglia: %s: No such file or directory\n", str_tmp);
+				errno = 127;
 				free(str_tmp);
 				return (-1);
 			}
