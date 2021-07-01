@@ -120,4 +120,5 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 		is_builtin(env, forker, cmd, cmd_code);
 	dup2(forker->saved_stdout, STDOUT_FILENO);
 	dup2(forker->saved_stdin, STDIN_FILENO);
+	free(forker);
 }
