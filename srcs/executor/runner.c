@@ -2,9 +2,9 @@
 
 int	ft_isdir(char *path)
 {
-	int res;
-	char *tmp;
-	int i;
+	int		res;
+	char	*tmp;
+	int		i;
 
 	i = (int)ft_strlen(path);
 	tmp = ft_strdup(path);
@@ -29,7 +29,7 @@ int	ft_isdir(char *path)
 
 int	ft_isfile(char *path)
 {
-	int res;
+	int	res;
 
 	res = open(path, 0);
 	if (res != -1)
@@ -47,7 +47,7 @@ void	ft_runner(t_env *env, char **av, char *path)
 	if (!av[0])
 		return ;
 	envp = exported_env_matrix(env);
-	if(execve(path, av, envp) == -1)
+	if (execve(path, av, envp) == -1)
 		ft_error(errno, av[0], 0);
 	free(envp);
 }

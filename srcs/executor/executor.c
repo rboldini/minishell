@@ -1,12 +1,34 @@
-
 #include "../../includes/minishell.h"
 
-char *is_exec(t_env *env, int ac, char  **av)
+char	*elab_joined(char **av, char **paths)
+{
+	char	*slash;
+	char	*join;
+	int		i;
+
+	i = 0;
+	while (paths[i])
+	{
+		slash = ft_strjoin("/", av[0]);
+		join = ft_strjoin(paths[i], slash);
+		if (ft_isfile(join))
+		{
+			free(slash);
+			ft_free_matrix(paths);
+			return (join);
+		}
+		free(slash);
+		free(join);
+		i++;
+	}
+	return (NULL);
+}
+
+char	*is_exec(t_env *env, int ac, char **av)
 {
 	char	**paths;
 	char	*tmp;
 	char	*join;
-	char	*slash;
 	int		i;
 
 	(void)ac;
@@ -22,20 +44,9 @@ char *is_exec(t_env *env, int ac, char  **av)
 	}
 	else
 	{
-		while (paths[i])
-		{
-			slash = ft_strjoin("/", av[0]);
-			join = ft_strjoin(paths[i], slash);
-			if (ft_isfile(join))
-			{
-				free(slash);
-				ft_free_matrix(paths);
-				return (join);
-			}
-			free(slash);
-			free(join);
-			i++;
-		}
+		join = elab_joined(av, paths);
+		if (join != NULL)
+			return(join);
 		ft_error(errno, av[0], 1);
 	}
 	ft_free_matrix(paths);
@@ -44,39 +55,39 @@ char *is_exec(t_env *env, int ac, char  **av)
 
 int	valid_env_decla(char *raw)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(raw[i])
+	while (raw[i])
 	{
-		if(raw[i] == ' ')
+		if (raw[i] == ' ')
 			return (0);
-		else if(raw[i] == '=')
+		else if (raw[i] == '=')
 			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	check_for_cmd(char *cmd)
 {
 	if (!cmd)
 		return (CMD_RUN);
-	else if(!ft_strcmp(cmd, "cd"))
+	else if (!ft_strcmp(cmd, "cd"))
 		return (CMD_CD);
-	else if(!ft_strcmp(cmd, "pwd"))
+	else if (!ft_strcmp(cmd, "pwd"))
 		return (CMD_PWD);
-	else if(!ft_strcmp(cmd, "echo"))
+	else if (!ft_strcmp(cmd, "echo"))
 		return (CMD_ECHO);
-	else if(!ft_strcmp(cmd, "unset"))
+	else if (!ft_strcmp(cmd, "unset"))
 		return (CMD_UNSET);
-	else if(!ft_strcmp(cmd, "env"))
+	else if (!ft_strcmp(cmd, "env"))
 		return (CMD_ENV);
-	else if(!ft_strcmp(cmd, "export"))
+	else if (!ft_strcmp(cmd, "export"))
 		return (CMD_EXP);
-	else if(valid_env_decla(cmd))
+	else if (valid_env_decla(cmd))
 		return (ENV_DECLA);
-	else if(!ft_strcmp(cmd, "exit"))
+	else if (!ft_strcmp(cmd, "exit"))
 	{
 		ft_exit(minishell);
 		return (0);
@@ -87,19 +98,19 @@ int	check_for_cmd(char *cmd)
 
 void forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
-	int fd[2];
-	int fd_double[2];
-	int err;
-	int saved_stdout = dup(STDOUT_FILENO);
-	int saved_stdin = dup(STDIN_FILENO);
-	int	status;
-	char *path;
-	char *inp;
+	int		fd[2];
+	int		fd_double[2];
+	int		err;
+	int		saved_stdout = dup(STDOUT_FILENO);
+	int		saved_stdin = dup(STDIN_FILENO);
+	int		status;
+	char	*path;
+	char	*inp;
 
 	fd[0] = 0;
 	fd[1] = 0;
 	err = pipe(fd);
-	if(err == -1)
+	if (err == -1)
 	{
 		ft_error(errno, "pipe", 0);
 		dup2(saved_stdout, STDOUT_FILENO);
@@ -137,10 +148,10 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	if (cmd_code == CMD_RUN)
 	{
 		path = is_exec(env, cmd->len, cmd->arr);
-		if(path)
+		if (path)
 		{	
 			minishell->pid = fork();
-			if(!minishell->pid)
+			if (!minishell->pid)
 			{
 				dup2(cmd->file_in, STDIN_FILENO);
 				dup2(cmd->file_out, STDOUT_FILENO);
@@ -191,8 +202,8 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 
 void	ft_executor(t_cmd *cmd, t_env *env)
 {
-	t_cmd *tmp;
-	int cmd_code;
+	t_cmd	*tmp;
+	int		cmd_code;
 
 	tmp = cmd;
 	cmd_code = -1;
