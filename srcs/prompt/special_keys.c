@@ -16,23 +16,19 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 {
 	if (x == 65)
 	{
-		if(minishell->current->prev)
+		if (minishell->current->prev)
 		{
-			//printf("\n1 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
 			if (minishell->n_up == 0)
 				minishell->tmp = minishell->current;
-			//printf("1 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
 			minishell->current->index = ft_strlen(minishell->current->row);
 			minishell->current = minishell->current->prev;
 			minishell->current->index = ft_strlen(minishell->current->row);
-			//printf("2 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
-			write(1, "\r\033[2K", 5); //delete prompt
+			write(1, "\r\033[2K", 5);
 			get_prompt();
 			if (!minishell->current->old)
 				minishell->current->old = ft_strdup(minishell->current->row);
-			write(1, minishell->current->row, ft_strlen(minishell->current->row));
-			//printf("\n3 tmp %s // curr %s\n", minishell->tmp->row, minishell->current->row);
-			//printf("old %s\n", minishell->current->old);
+			write(1, minishell->current->row,
+				ft_strlen(minishell->current->row));
 			minishell->n_up++;
 		}
 	}

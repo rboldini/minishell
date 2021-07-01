@@ -1,27 +1,30 @@
 #include "../../includes/minishell.h"
 
+void	ctrl_left(int c, t_history *curr)
+{
+	if (curr->index > 0 && ft_isalnum(curr->row[i])
+		&& (!(ft_isalnum(curr->row[i - 1]))))
+	{
+		curr->index--;
+		i--;
+		write(1, "\b", 1);
+	}
+	while (curr->index > 0 && !(ft_isalnum(curr->row[i])
+			&& !ft_isalnum(curr->row[i - 1])))
+	{
+		i--;
+		curr->index--;
+		write(1, "\b", 2);
+	}
+}
+
 void	ft_move_word(int c, t_history *curr)
 {
 	int	i;
 
 	i = curr->index;
 	if (c == 68)
-	{
-		if (curr->index > 0 && ft_isalnum(curr->row[i])
-			&& (!(ft_isalnum(curr->row[i - 1]))))
-		{
-			curr->index--;
-			i--;
-			write(1, "\b", 1);
-		}
-		while (curr->index > 0 && !(ft_isalnum(curr->row[i])
-				&& !ft_isalnum(curr->row[i - 1])))
-		{
-			i--;
-			curr->index--;
-			write(1, "\b", 2);
-		}
-	}
+		ctrl_left(c, curr);
 	else
 	{
 		if (curr->index == 0 && ft_strlen(curr->row))
