@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	ctrl_left(int c, t_history *curr)
+void	ctrl_left(t_history *curr, int i)
 {
 	if (curr->index > 0 && ft_isalnum(curr->row[i])
 		&& (!(ft_isalnum(curr->row[i - 1]))))
@@ -24,7 +24,7 @@ void	ft_move_word(int c, t_history *curr)
 
 	i = curr->index;
 	if (c == 68)
-		ctrl_left(c, curr);
+		ctrl_left(curr, i);
 	else
 	{
 		if (curr->index == 0 && ft_strlen(curr->row))
