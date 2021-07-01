@@ -4,6 +4,7 @@
 .idea
 .vsc
 .vscode
+.idea
 
 # Object files
 *.o
