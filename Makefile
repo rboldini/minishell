@@ -3,7 +3,7 @@ NAME =			minishell
 
 #Compiler
 CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = 		-Wall -Wextra -Werror -g -fsanitize=address
 
 #Norm
 NORM =			norminette
@@ -20,6 +20,11 @@ INCDIR = 		./includes
 FILES =			main.c			\
 				keyhook.c		\
 				parser.c		\
+				parser_utils.c	\
+				parser_cmd.c	\
+				parser_dollar.c	\
+				parser_quote.c	\
+				parser_token.c	\
 				ft_echo.c		\
 				ft_pwd.c		\
 				command.c		\

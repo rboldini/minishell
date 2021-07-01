@@ -100,6 +100,17 @@ typedef struct s_forker
 	int		derr;
 }		t_forker;
 
+typedef struct s_cv
+{
+	t_cmd	**cmd_arr;
+	t_cmd	*comm;
+	t_cmd	*tmp_comm;
+	char	**arr;
+	char	*buff;
+	int		stage;
+	int		isb;
+}				t_cv;
+
 /*
 ** Parser
 */
@@ -110,6 +121,18 @@ t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 void	run_command(int code, t_cmd *cmd, t_env *env);
 void	ctrl_c(void);
+char	*app_char(const char *cmd, int *i, char *buff);
+char	*elab_dollar(const char *src, int *i, char *dst);
+char	*escape_slash(const char *src, int *i, char *dst);
+char	**append_to_arr(const char *str, int *len, char **arr);
+char	*elab_quote(const char *src, int *i, char *dst);
+char	*elab_dquote(const char *src, int *i, char *dst);
+int		next_char(char *str, char c, int start);
+int		is_break(const char *cmd, int i);
+char	*next_token(const char *cmd, int *i, int *isb);
+void	init_cmd(t_cmd *comm);
+t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv);
+
 void	finalize_history(void);
 void	ft_arrow_down(void);
 void	ft_process_delete(t_history *curr);
