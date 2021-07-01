@@ -2,7 +2,7 @@
 
 void	ft_home_end(int c, t_shell *minishell)
 {
-	if (c == 72) //home
+	if (c == 72)
 	{
 		while (minishell->current->index > 0)
 		{

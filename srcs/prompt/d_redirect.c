@@ -2,7 +2,7 @@
 
 int	d_redirect2(char **res, char *eof)
 {
-	char *tmp;
+	char	*tmp;
 
 	get_prompt();
 	ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));

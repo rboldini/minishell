@@ -58,7 +58,7 @@ void	ft_arrow_ud(int x, t_shell *minishell)
 
 void	ft_arrow_lr(int x, t_history *curr)
 {
-	if (x == 68 && curr->index > 0)//sinistra
+	if (x == 68 && curr->index > 0)
 	{
 		write(1, "\b", 1);
 		curr->index--;
