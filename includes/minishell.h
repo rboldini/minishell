@@ -97,6 +97,9 @@ t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 void	run_command(int code, t_cmd *cmd, t_env *env);
 void	ctrl_c(void);
+void	finalize_history(void);
+void	ft_arrow_down(void);
+void	ft_process_delete(t_history *curr);
 
 /*
 ** ENV - EXPORT
