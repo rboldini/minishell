@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/01 19:39:18 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/01 20:18:00 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	check_stage2(t_cv *cv)
 	}
 	else
 		free(cv->buff);
-	if (cv->stage >= 3 && cv->stage < 6)
-		cv->stage = 0;
 }
 
 void	check_stage(t_cv *cv)
@@ -59,12 +57,14 @@ void	check_stage(t_cv *cv)
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			cv->comm->is_append = 1;
 		}
+		cv->stage = 0;
 	}
-	if (cv->stage == 5 && ft_strlen(cv->buff))
+	else if (cv->stage == 5 && ft_strlen(cv->buff))
 	{
 		if (cv->comm->file_in != 0)
 			close(cv->comm->file_in);
 		cv->comm->file_in = open(cv->buff, O_RDONLY);
+		cv->stage = 0;
 	}
 	check_stage2(cv);
 }
