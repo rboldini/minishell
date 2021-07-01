@@ -87,6 +87,17 @@ typedef struct	s_cmd
 	int				is_append;
 }				t_cmd;
 
+typedef struct s_cv
+{
+	t_cmd	**cmd_arr;
+	t_cmd	*comm;
+	t_cmd	*tmp_comm;
+	char	**arr;
+	char	*buff;
+	int		stage;
+	int		isb;
+}				t_cv;
+
 /*
 ** Parser
 */
@@ -101,6 +112,13 @@ char	*app_char(const char *cmd, int *i, char *buff);
 char	*elab_dollar(const char *src, int *i, char *dst);
 char	*escape_slash(const char *src, int *i, char *dst);
 char	**append_to_arr(const char *str, int *len, char **arr);
+char	*elab_quote(const char *src, int *i, char *dst);
+char	*elab_dquote(const char *src, int *i, char *dst);
+int		next_char(char *str, char c, int start);
+int		is_break(const char *cmd, int i);
+char	*next_token(const char *cmd, int *i, int *isb);
+void	init_cmd(t_cmd *comm);
+t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv);
 
 void	finalize_history(void);
 void	ft_arrow_down(void);

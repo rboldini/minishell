@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/01 17:18:32 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/01 18:58:14 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ char	*elab_errno(int *i, char *dst, char *var_name)
 		tmp = ft_strjoin(dst, var_value);
 		free(dst);
 		dst = tmp;
+		free(var_value);
 	}
 	free(var_name);
 	(*i)++;
 	return (dst);
 }
 
-char	*append_env(const char *src, int *i, char *var_name, char *dst)
+char	*append_env(const char *src, int *i, char **var_name, char *dst)
 {
 	char	*var_value;
 	char	c;
@@ -41,10 +42,10 @@ char	*append_env(const char *src, int *i, char *var_name, char *dst)
 	while ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
 		|| (c >= '0' && c <= '9') || c == '_')
 	{
-		var_name = app_char(src, i, var_name);
+		*var_name = app_char(src, i, *var_name);
 		c = *(src + *i);
 	}
-	var_value = ft_getenv(minishell->env, var_name);
+	var_value = ft_getenv(minishell->env, *var_name);
 	if (var_value)
 	{
 		tmp = ft_strjoin(dst, var_value);
@@ -67,7 +68,7 @@ char	*elab_dollar(const char *src, int *i, char *dst)
 	if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_'))
 		dst = app_char(src, i, dst);
 	else
-		dst = append_env(src, i, var_name, dst);
+		dst = append_env(src, i, &var_name, dst);
 	free(var_name);
 	return (dst);
 }
