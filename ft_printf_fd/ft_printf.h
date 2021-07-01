@@ -6,7 +6,7 @@
 /*   By: vbuonvin <vbuonvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:06:45 by vbuonvin          #+#    #+#             */
-/*   Updated: 2021/06/21 13:41:35 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/01 17:07:55 by rboldini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void			process_unsigned_decimal(t_option *lista, va_list argptr);
 void			process_unsigned_hex(t_option *lista, va_list argptr);
 void			process_percentage(t_option *lista);
 int				ft_printf_fd(int fd, const char *str, ...);
+void			ft_setup_precision(t_option *lista, int len, char *temp);
 
 #endif

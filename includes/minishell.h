@@ -102,6 +102,10 @@ char	*elab_dollar(const char *src, int *i, char *dst);
 char	*escape_slash(const char *src, int *i, char *dst);
 char	**append_to_arr(const char *str, int *len, char **arr);
 
+void	finalize_history(void);
+void	ft_arrow_down(void);
+void	ft_process_delete(t_history *curr);
+
 /*
 ** ENV - EXPORT
 */

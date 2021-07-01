@@ -39,6 +39,8 @@ FILES =			main.c			\
 				ft_signal.c		\
 				error.c			\
 				d_redirect.c	\
+				keyhook_utils.c	\
+				special_keys_utils.c	\
 				ft_exit.c
 
 LIBFT_DIR =		libft

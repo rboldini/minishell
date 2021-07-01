@@ -6,7 +6,7 @@
 #    By: vbuonvin <vbuonvin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/17 13:38:49 by vbuonvin          #+#    #+#              #
-#    Updated: 2021/06/21 13:41:35 by rboldini         ###   ########.fr        #
+#    Updated: 2021/07/01 17:07:55 by rboldini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ PRINTF_SRCS = 	ft_printf.c							\
 				process_string.c					\
 				process_unsigned_decimal.c			\
 				process_unsigned_hex.c				\
+				ft_setup_precision.c
 
 PRINTF_DIR = 	.
 
