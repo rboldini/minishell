@@ -18,6 +18,23 @@ void	ctrl_left(t_history *curr, int i)
 	}
 }
 
+void	ft_move_word2(t_history *curr, int i)
+{
+	if (curr->index == 0 && ft_strlen(curr->row))
+	{
+		curr->index++;
+		write(1, "\033[C", 3);
+		i++;
+	}
+	if (curr->index < (int)ft_strlen(curr->row)
+		&& !ft_isalnum(curr->row[i]) && ft_isalnum(curr->row[i - 1]))
+	{
+		curr->index++;
+		i++;
+		write(1, "\033[C", 3);
+	}
+}
+
 void	ft_move_word(int c, t_history *curr)
 {
 	int	i;
@@ -27,19 +44,7 @@ void	ft_move_word(int c, t_history *curr)
 		ctrl_left(curr, i);
 	else
 	{
-		if (curr->index == 0 && ft_strlen(curr->row))
-		{
-			curr->index++;
-			write(1, "\033[C", 3);
-			i++;
-		}
-		if (curr->index < (int)ft_strlen(curr->row)
-			&& !ft_isalnum(curr->row[i]) && ft_isalnum(curr->row[i - 1]))
-		{
-			curr->index++;
-			i++;
-			write(1, "\033[C", 3);
-		}
+		ft_move_word2(curr, i);
 		while (curr->index < (int)ft_strlen(curr->row)
 			&& !(!ft_isalnum(curr->row[i]) && ft_isalnum(curr->row[i - 1])))
 		{

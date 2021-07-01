@@ -256,7 +256,6 @@ t_cmd	**start_parsing(const char *cmd)
 			buff = next_token(cmd, &i, &isb);
 			if (!stage && ft_strlen(buff))
 				arr = append_to_arr(buff, &comm->len, arr);
-			//if (!stage && isb == 2)
 			if (isb == 2)
 			{
 				tmp_comm = malloc(sizeof(t_cmd));
@@ -335,57 +334,3 @@ t_cmd	**start_parsing(const char *cmd)
 	}
 	return (cmd_arr);
 }
-/*
-int	main(int argv, char **argc)
-{
-	t_cmd	**comm_arr;
-	t_cmd	*comm_list;
-	char	*str = "ciao | pwd > wooo < fregnaaa | wc >> appp";
-	printf("input: %s\n", str);
-	comm_arr = start_parsing(str);
-	comm_list = comm_arr[0];
-	while (comm_list)
-	{
-		printf("%s\n", comm_list->arr[0]);
-		printf("file in: %d file out: %d is app: %d\n", comm_list->file_in, comm_list->file_out, comm_list->is_append);
-		comm_list = comm_list->next;
-	}
-	return (0);
-}
-*/
-
-/*
-
-cmd > file1 > file2 > file3
-cmd1 | cmd2 < file_in
-cmd > file_out
-cmd >> file_app
-cmd < file_in
-cmd1 ; cmd2
-
-bash-3.2$ echo "$TERM"
-xterm-256color
-
-bash-3.2$ echo '$TERM'
-$TERM
-
-bash-3.2$ echo "\'"
-\'
-
-bash-3.2$ echo '\"'
-\"
-
-bash-3.2$ echo "ciao   test"
-ciao   test
-
-bash-3.2$ echo ciao   test
-ciao test
-
-bash-3.2$ echo 'ciao   test'
-ciao   test
-
-bash-3.2$ ARG="ciao   test"
-bash-3.2$ echo $ARG
-ciao test
-
-*/

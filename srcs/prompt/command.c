@@ -8,7 +8,7 @@ void	set_prompt(char *str)
 	strcpy(minishell->prompt, str);
 }
 
-void	get_prompt()
+void	get_prompt(void)
 {
 	write(1, minishell->prompt, ft_strlen(minishell->prompt));
 }
