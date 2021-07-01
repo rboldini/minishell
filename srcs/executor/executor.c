@@ -29,12 +29,10 @@ char	*is_exec(t_env *env, int ac, char **av)
 	char	**paths;
 	char	*tmp;
 	char	*join;
-	int		i;
 
 	(void)ac;
 	if (!av[0])
 		return (0);
-	i = 0;
 	tmp = ft_getenv(env, "PATH");
 	paths = ft_split(tmp, ':');
 	if (ft_isdir(av[0]))
@@ -46,7 +44,7 @@ char	*is_exec(t_env *env, int ac, char **av)
 	{
 		join = elab_joined(av, paths);
 		if (join != NULL)
-			return(join);
+			return (join);
 		ft_error(errno, av[0], 1);
 	}
 	ft_free_matrix(paths);
@@ -94,110 +92,6 @@ int	check_for_cmd(char *cmd)
 	}
 	else
 		return (CMD_RUN);
-}
-
-void forker(t_cmd *cmd, t_env *env, int cmd_code)
-{
-	int		fd[2];
-	int		fd_double[2];
-	int		err;
-	int		saved_stdout = dup(STDOUT_FILENO);
-	int		saved_stdin = dup(STDIN_FILENO);
-	int		status;
-	char	*path;
-	char	*inp;
-
-	fd[0] = 0;
-	fd[1] = 0;
-	err = pipe(fd);
-	if (err == -1)
-	{
-		ft_error(errno, "pipe", 0);
-		dup2(saved_stdout, STDOUT_FILENO);
-		dup2(saved_stdin, STDIN_FILENO);
-		return ;
-	}
-	if (cmd->has_dred)
-	{
-		fd_double[0] = 0;
-		fd_double[1] = 0;
-		int derr = pipe(fd_double);
-		(void)derr;
-		if (!ft_strlen(cmd->eof))
-		{
-			ft_printf_fd(2, "Conchiglia: syntax error near unexpected token\n");
-			dup2(saved_stdout, STDOUT_FILENO);
-			dup2(saved_stdin, STDIN_FILENO);
-			minishell->abort = 1;
-			errno = 258;
-			return ;
-		}
-		inp = d_redirect(cmd->eof);
-		if (minishell->abort_dred)
-			return ;
-		cmd->file_in = fd_double[0];
-		write(fd_double[1], inp, ft_strlen(inp));
-		close(fd_double[1]);
-		free(inp);
-	}
-	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
-	{
-		cmd->file_out = fd[1];
-		cmd->next->file_in = fd[0];
-	}
-	if (cmd_code == CMD_RUN)
-	{
-		path = is_exec(env, cmd->len, cmd->arr);
-		if (path)
-		{	
-			minishell->pid = fork();
-			if (!minishell->pid)
-			{
-				dup2(cmd->file_in, STDIN_FILENO);
-				dup2(cmd->file_out, STDOUT_FILENO);
-				ft_runner(env, cmd->arr, path);
-				if (cmd->file_out != 1)
-					close(cmd->file_out);
-				if (cmd->file_in != 0)
-					close(cmd->file_in);
-				free(path);
-				exit(0);
-			}
-			else
-			{
-				waitpid(minishell->pid, &status, WUNTRACED|WCONTINUED);
-				if (cmd->file_out != 1)
-					close(cmd->file_out);
-				if (cmd->file_in != 0)
-					close(cmd->file_in);
-			}
-			free(path);
-		}
-	}
-	else
-	{
-		dup2(cmd->file_in, 0);
-		dup2(cmd->file_out, 1);
-		if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
-		{
-			err = pipe(fd);
-			cmd->file_out = fd[1];
-			cmd->next->file_in = fd[0];
-		}
-		run_command(cmd_code, cmd, env);
-		if (cmd->file_out != 1)
-		{
-			close(cmd->file_out);
-			dup2(saved_stdout, STDOUT_FILENO);
-		}
-		if (cmd->file_in != 0)
-		{
-			close(cmd->file_in);
-			dup2(saved_stdin, STDIN_FILENO);
-		}
-	}
-	dup2(saved_stdout, STDOUT_FILENO);
-	dup2(saved_stdin, STDIN_FILENO);
 }
 
 void	ft_executor(t_cmd *cmd, t_env *env)
