@@ -298,13 +298,9 @@ t_cmd	**start_parsing(const char *cmd)
 				stage = 0;
 			}
 			if (isb == 7)
-			{
-				printf("set in isb\n");
 				comm->has_dred = 1;
-			}
 			if (stage == 7 && ft_strlen(buff))
 			{
-				printf("set in stage\n");
 				free(comm->eof);
 				comm->eof = buff;
 				comm->has_dred = 1;
@@ -315,9 +311,7 @@ t_cmd	**start_parsing(const char *cmd)
 			if (isb > 2)
 				stage = isb;
 			if (isb >= 2 && isb != 7)
-			{
 				comm->has_dred = 0;
-			}
 			if (isb == 4 || isb == 7)
 				i++;
 			if (*(cmd + i) != 0)

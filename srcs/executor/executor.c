@@ -101,7 +101,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	err = pipe(fd);
 	if(err == -1)
 	{
-		printf("ERROR PIPPAting\n");
+		ft_error(errno, "pipe", 0);
 		dup2(saved_stdout, STDOUT_FILENO);
 		dup2(saved_stdin, STDIN_FILENO);
 		return ;
