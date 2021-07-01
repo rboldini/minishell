@@ -125,7 +125,8 @@ void	ft_new_history(t_history **curr)
 	ft_memset(new, 0, sizeof(t_history));
 	if ((*curr))
 		(*curr)->next = new;
-	new->row = malloc(0);
+	new->row = malloc(sizeof(char));
+	*new->row = 0;
 	new->next = NULL;
 	new->index = 0;
 	new->prev = *curr;
