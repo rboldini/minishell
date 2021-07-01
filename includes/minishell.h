@@ -97,6 +97,11 @@ t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 void	run_command(int code, t_cmd *cmd, t_env *env);
 void	ctrl_c(void);
+char	*app_char(const char *cmd, int *i, char *buff);
+char	*elab_dollar(const char *src, int *i, char *dst);
+char	*escape_slash(const char *src, int *i, char *dst);
+char	**append_to_arr(const char *str, int *len, char **arr);
+
 void	finalize_history(void);
 void	ft_arrow_down(void);
 void	ft_process_delete(t_history *curr);
