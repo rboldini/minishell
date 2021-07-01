@@ -99,7 +99,8 @@ void	ft_export(t_env *env, int ac, char **av)
 				ft_printf_fd(2, "'=': not a valid identifier\n");
 				i++;
 			}
-			ft_export_env(env, av[i++]);
+			else
+				ft_export_env(env, av[i++]);
 		}
 	}
 }

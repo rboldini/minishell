@@ -87,13 +87,13 @@ void	create_new_env(t_env **env, char *raw_env, int export)
 		new->exp = export;
 		new->next_env = 0;
 		ft_addback_env(env, new);
-		free(tmp_raw);
 	}
 	else
 	{
 		free(check->env_value);
 		check->env_value = ft_strdup(raw_env + i + 1);
 	}
+	free(tmp_raw);
 }
 
 void	edit_env(t_env **env, char *name, char *new_value)
