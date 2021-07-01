@@ -37,7 +37,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 {
 	minishell->pid = 0;
 	set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
-	if (!minishell->abort_dred)
+	if (!minishell->abort_dred && !minishell->one_cmd)
 		get_prompt();
 	ft_hook_signal();
 	if (!minishell->abort_dred)
@@ -72,11 +72,20 @@ int	main(int n, char **arg, char **envp)
 	arr_i = 0;
 	cmd_arr = 0;
 	cmd = 0;
-	watermark();
+	if (n == 1)
+		watermark();
 	init_minishell(envp);
+	minishell->one_cmd = NULL;
+	if (n > 1)
+	{
+		minishell->one_cmd = arg[1];
+		printf("cmd in: %s", arg[1]);
+	}
 	while (1)
 	{
 		shell(cmd_arr, cmd, arr_i);
+		if (minishell->one_cmd)
+			break ;
 		if (ft_strlen(minishell->current->row) && !minishell->abort_dred)
 			ft_new_history(&minishell->current);
 	}

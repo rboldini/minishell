@@ -3,7 +3,7 @@ NAME =			minishell
 
 #Compiler
 CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = 		-Wall -Wextra -Werror -fsanitize=address
 
 #Norm
 NORM =			norminette
@@ -58,7 +58,7 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(MKDIR) $(@D)
 	@$(CC) $(CFLAGS) -I $(INCDIR) -c -o $@ $<
 
-all: $(NAME) run
+all: $(NAME) # run
 
 $(NAME): libft printf $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a ./ft_printf_fd/ft_printf_fd.a -o $(NAME)

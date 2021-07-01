@@ -108,7 +108,13 @@ void	hook_line(t_shell *minishell)
 	char	c;
 
 	free (minishell->current->row);
-	minishell->current->row = ft_calloc(1024, sizeof(char));
+	if (!minishell->one_cmd)
+		minishell->current->row = ft_calloc(1024, sizeof(char));
+	else
+	{
+		minishell->current->row = minishell->one_cmd;
+		return ;
+	}
 	while (1)
 	{
 		c = (char)ft_hook_char();

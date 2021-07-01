@@ -68,6 +68,7 @@ typedef struct	s_shell
 	int			abort_dred;
 	int 		pid;
 	t_env		*env;
+	char		*one_cmd;
 }				t_shell;
 
 t_shell *minishell;
