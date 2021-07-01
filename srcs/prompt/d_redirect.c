@@ -1,9 +1,11 @@
 #include "../../includes/minishell.h"
+
 int	d_redirect2(char **res, char *eof)
 {
 	char *tmp;
 
 	get_prompt();
+	printf("lensize: %d\n", ft_strlen(minishell->current->row));
 	ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
 	minishell->current->index = 0;
 	hook_line(minishell);
