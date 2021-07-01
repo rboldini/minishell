@@ -1,48 +1,49 @@
 #include "../../includes/minishell.h"
 
-int ft_special_keys(int c, t_shell *minishell)
+void	special_keys2(int c)
+{
+	c = ft_hook_char();
+	if (c == 65 || c == 66)
+		ft_arrow_ud(c, minishell);
+	else if (c == 67 || c == 68)
+		ft_arrow_lr(c, minishell->current);
+	else if (c == 51)
+	{
+		c = ft_hook_char();
+		if (c == 126)
+			ft_process_delete(minishell->current);
+	}
+	else if (c == 72 || c == 70)
+		ft_home_end(c, minishell);
+	else if (c == 49)
+	{
+		if (ft_check_ctrl(&c))
+			ft_move_word(c, minishell->current);
+	}
+	else
+		write(1, "\a", 1);
+}
+
+int	ft_special_keys(int c, t_shell *minishell)
 {
 	if (c == 27)
 	{
 		c = ft_hook_char();
 		if (c == 91)
-		{
-			c = ft_hook_char();
-			if (c == 65 || c == 66)
-				ft_arrow_ud(c, minishell);
-			else if (c == 67 || c == 68)
-				ft_arrow_lr(c, minishell->current);
-			else if (c == 51)
-			{
-				c = ft_hook_char();
-				if (c == 126)
-					ft_process_delete(minishell->current);
-			}
-			else if (c == 72 || c == 70)
-				ft_home_end(c, minishell);
-			else if (c == 49)
-			{
-				if (ft_check_ctrl(&c))
-					ft_move_word(c, minishell->current);
-			}
-			else
-				write(1, "\a", 1);
-		}
+			special_keys2(c);
 	}
 	else if (c == 4)
 	{
 		if (!minishell->current->row[0])
 			ft_exit(minishell);
 	}
-	else if(c == 127 || c == 8)
+	else if (c == 127 || c == 8)
 		ft_process_backspace(minishell->current);
 	else if (c == 9)
 		write(1, "\a", 1);
-	else if(c == 21)
+	else if (c == 21)
 	{
-		int i = 0;
-		while(i < (int)ft_strlen(minishell->current->row))
-			minishell->current->row[i] = 0;
+		ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
 		write(1, "\r\033[2K", 5);
 		write (1, minishell->prompt, ft_strlen(minishell->prompt));
 		minishell->current->index = 0;
@@ -56,8 +57,8 @@ int	ft_hook_char(void)
 {
 	char			c;
 	int				ret;
-	struct termios before;
-	struct termios after;
+	struct termios	before;
+	struct termios	after;
 
 	tcgetattr (0, &before);
 	ft_memcpy(&after, &before, sizeof(struct termios));
@@ -72,12 +73,33 @@ int	ft_hook_char(void)
 	return (c);
 }
 
+void	fill_row2(char c, int i)
+{
+	char	temp;
+
+	temp = minishell->current->row[i];
+	minishell->current->row[i] = c;
+	write(1, &c, 1);
+	while (minishell->current->row[i])
+	{
+		c = minishell->current->row[i + 1];
+		minishell->current->row[i + 1] = temp;
+		temp = c;
+		write(1, &minishell->current->row[i + 1], 1);
+		i++;
+	}
+	i = -1;
+	while (++i < (int)ft_strlen(minishell->current->row) - minishell->current->index)
+		write(1, "\b", 1);
+	minishell->current->index++;
+}
+
 void	ft_fill_row(t_history *curr, char c)
 {
 	size_t	len;
 	int		i;
 	char	*tmp;
-	char	temp;
+	//char	temp;
 
 	len = 0;
 	if ((*curr).row)
@@ -93,33 +115,19 @@ void	ft_fill_row(t_history *curr, char c)
 	i = curr->index;
 	if (curr->index < (int)ft_strlen(curr->row))
 	{
-		temp = curr->row[i];
-		curr->row[i] = c;
-		write(1, &c, 1);
-		while (curr->row[i])
-		{
-			c = curr->row[i + 1];
-			curr->row[i + 1] = temp;
-			temp = c;
-			write(1, &curr->row[i + 1], 1);
-			i++;
-		}
-		i = -1;
-		while (++i < (int)ft_strlen(curr->row) - curr->index)
-			write(1, "\b", 1);
-		curr->index++;
+		fill_row2(c, i);
 	}
 	else
-		{
-			i = curr->index;
-			curr->row[i] = c;
-			curr->index++;
-	 	}
+	{
+		i = curr->index;
+		curr->row[i] = c;
+		curr->index++;
+	}
 }
 
 void	ft_new_history(t_history **curr)
 {
-	t_history *new;
+	t_history	*new;
 
 	new = ft_calloc(1, sizeof(t_history));
 	ft_memset(new, 0, sizeof(t_history));
@@ -142,18 +150,8 @@ void	hook_line(t_shell *minishell)
 	while (1)
 	{
 		c = (char)ft_hook_char();
-		/*
-		if (minishell->abort_dred)
-		{
-			minishell->current->row[0] = c;
-			minishell->current->index = 1;
-			ft_fill_row(minishell->current, c);
-			return ;
-		}
-		*/
 		if (c == '\n')
 			break ;
-		//printf("%i\n", c);
 		if (ft_special_keys(c, minishell) && ft_isprint(c))
 		{
 			ft_fill_row(minishell->current, c);
@@ -163,9 +161,11 @@ void	hook_line(t_shell *minishell)
 	if (minishell->n_up && !minishell->abort)
 	{
 		ft_bzero(minishell->tmp->row, ft_strlen(minishell->tmp->row));
-		ft_strlcpy(minishell->tmp->row, minishell->current->row, ft_strlen(minishell->current->row) + 1);
+		ft_strlcpy(minishell->tmp->row, minishell->current->row,
+			ft_strlen(minishell->current->row) + 1);
 		ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
-		ft_strlcpy(minishell->current->row, minishell->current->old, ft_strlen(minishell->current->old) + 1);
+		ft_strlcpy(minishell->current->row, minishell->current->old,
+			ft_strlen(minishell->current->old) + 1);
 		free (minishell->current->old);
 		minishell->current->old = NULL;
 		minishell->tmp->index = (int)ft_strlen(minishell->tmp->row);
@@ -176,38 +176,3 @@ void	hook_line(t_shell *minishell)
 	minishell->n_up = 0;
 	write(1, "\n", 1);
 }
-
-/*
-**	\0NNN	the character whose ASCII code is NNN (octal)
-**	\\		backslash
-**	\a		alert
-**	\b		backspace
-**	\c		produce no further output
-**	\f		form feed
-**	\n		new line
-**	\r		carriage return
-**	\t		horizontal tab
-**	\v		vertical tab
-**
-**	Clear line2K mixed to carriage return to clear the line rewriting the PROMPT
-**		printf("%c%c[2K", '\r', 27);
-**
-**	Clear line from cursor posix to the beginning
-**		printf("%c[1K", 27);
-**
-**	Clear line regardless cursor posix
-**		printf("%c[2K", 27);
-*/
-
-
-/*
-**TODO:	check	special:
-**						backspace = 127
-**						delete = 27, 91, 51, 126
-**						ctrl + u = 21 (clean line)
-**		check	arrows:
-**						up = 27, 91, 65
-**						down = 27, 91, 66
-**						right = 27, 91, 67
-**						left = 27, 91, 68
-*/

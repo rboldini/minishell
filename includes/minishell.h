@@ -96,6 +96,7 @@ t_cmd	**start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 void	run_command(int code, t_cmd *cmd, t_env *env);
+void	ctrl_c(void);
 
 /*
 ** ENV - EXPORT
