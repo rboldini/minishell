@@ -46,7 +46,7 @@ char	*is_exec(t_env *env, int ac, char **av)
 	{
 		join = elab_joined(av, paths);
 		if (join != NULL)
-			return(join);
+			return (join);
 		ft_error(errno, av[0], 1);
 	}
 	ft_free_matrix(paths);
@@ -96,7 +96,7 @@ int	check_for_cmd(char *cmd)
 		return (CMD_RUN);
 }
 
-void forker(t_cmd *cmd, t_env *env, int cmd_code)
+/*void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 {
 	int		fd[2];
 	int		fd_double[2];
@@ -198,7 +198,7 @@ void forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	dup2(saved_stdout, STDOUT_FILENO);
 	dup2(saved_stdin, STDIN_FILENO);
-}
+}*/
 
 void	ft_executor(t_cmd *cmd, t_env *env)
 {
