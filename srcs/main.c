@@ -83,7 +83,7 @@ int main(int n, char **arg, char **envp)
 			arr_i++;
 		}
 		free(cmd_arr);
-		if (ft_strlen(minishell->current->row) && !minishell->abort_dred && !minishell->abort)
+		if (ft_strlen(minishell->current->row) && !minishell->abort_dred)
 			ft_new_history(&minishell->current);
 	}
 	return (0);
