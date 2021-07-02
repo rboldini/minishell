@@ -66,45 +66,6 @@ void	ft_export_env(t_env *env, char *str)
 	free(str_tmp);
 }
 
-void	ft_export(t_env *env, int ac, char **av)
-{
-	t_env	*tmp;
-	int		i;
-
-	i = 1;
-	tmp = env;
-	if (ac < 2)
-	{
-		while (tmp)
-		{
-			if (tmp->exp == 1 || tmp->exp == 2)
-			{
-				ft_printf_fd(1, "declare -x ");
-				ft_printf_fd(1, "%s", tmp->env_name);
-				if (tmp->exp == 1)
-					ft_printf_fd(1, "=");
-				ft_printf_fd(1, "%s", tmp->env_value);
-				ft_printf_fd(1, "\n");
-			}
-			tmp = tmp->next_env;
-		}
-	}
-	else
-	{
-		while (i < ac)
-		{
-			if (av[i][0] == '=')
-			{
-				ft_printf_fd(2, "Conchiglia: export: ");
-				ft_printf_fd(2, "'=': not a valid identifier\n");
-				i++;
-			}
-			else
-				ft_export_env(env, av[i++]);
-		}
-	}
-}
-
 char	**exported_env_matrix(t_env *env)
 {
 	int		len;

@@ -63,6 +63,8 @@ t_env	*init_env(char **env)
 	return (enva);
 }
 
+
+
 int	check_and_add(t_env *env, char *str)
 {
 	int		i;
@@ -73,7 +75,7 @@ int	check_and_add(t_env *env, char *str)
 	str_tmp = ft_strdup(str);
 	while (1)
 	{
-		if(str_tmp[0] == '=')
+		if (str_tmp[0] == '=')
 		{
 			printf("Conchiglia: env: invalid argument\n");
 			errno = 1;
