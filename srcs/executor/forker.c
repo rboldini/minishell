@@ -102,10 +102,8 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 	if (forker->err == -1)
 		return ;
 	if (cmd->has_dred)
-	{
 		if (!init_double_readirect(forker, cmd))
 			return ;
-	}
 	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
 		cmd->file_out = forker->fd[1];
