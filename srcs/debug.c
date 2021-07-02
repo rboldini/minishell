@@ -1,8 +1,8 @@
 #include "../includes/minishell.h"
 
-void ft_print_env(t_env *env)
+void	ft_print_env(t_env *env)
 {
-	while(env)
+	while (env)
 	{
 		printf("%s", env->env_name);
 		printf("=");
