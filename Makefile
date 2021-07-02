@@ -45,7 +45,8 @@ FILES =			main.c			\
 				keyhook_utils.c	\
 				special_keys_utils.c	\
 				ft_exit.c		\
-				forker.c			
+				forker.c		\
+				ft_cd_relative_and_absolute_paths.c		
 
 LIBFT_DIR =		libft
 

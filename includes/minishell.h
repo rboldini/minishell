@@ -168,6 +168,9 @@ char	*d_redirect(char *eof);
 */
 
 void	ft_cd(int ac, char **av, t_env **env);
+void	ft_absolute_path(t_env **env, char *absolute_path);
+void	ft_relative_path(t_env **env, char *relative_path);
+
 
 /*
 ** PDW
