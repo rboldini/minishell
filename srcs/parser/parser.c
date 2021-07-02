@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/01 20:18:00 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/02 13:53:05 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 		cv->comm->has_dred = 1;
 	if (cv->isb > 2)
 		cv->stage = cv->isb;
-	if (cv->isb >= 2 && cv->isb != 7)
-		cv->comm->has_dred = 0;
 	if (cv->isb == 4 || cv->isb == 7)
 		(*i)++;
 	if (*(cmd + *i) != 0)
