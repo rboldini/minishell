@@ -8,6 +8,14 @@ ctrl+\ --> chiude il processo
 BUG --> ctrl+C crea due prompt uno davanti all'altro sulla stessa linea quando si esce da un processo in attesa
 
 
+
+BUG -> IN CASO DI ERRORE NON CHIUDIAMO GLI FD.
+
+
+FT_FILL_ROW NON FUNZIONA CON IL SANITIZER
+
+
+
 QUOTING CHARACTERS and ESCAPE --> found some bugs
 
 example:
