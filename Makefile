@@ -48,7 +48,8 @@ FILES =			main.c			\
 				forker.c		\
 				ft_cd_relative_and_absolute_paths.c	\
 				env_utils2.c	\
-				ft_export.c
+				ft_export.c		\
+				ft_env2.c		
 
 LIBFT_DIR =		libft
 

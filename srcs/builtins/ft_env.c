@@ -1,75 +1,38 @@
 #include "../../includes/minishell.h"
 
-char	**duplicate_env(char **env)
+int	edit_or_create_env(t_env *env, char *str, char *str_tmp, int i)
 {
-	char	**dup;
-	int		i;
+	t_env	*same_element;
 
-	i = 0;
-	while (env[i])
-		i++;
-	dup = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (env[i])
+	if (!str_tmp[i])
 	{
-		dup[i] = ft_strdup(env[i]);
-		i++;
+		printf("Conchiglia: %s: No such file or directory\n", str_tmp);
+		errno = 127;
+		free(str_tmp);
+		return (-1);
 	}
-	dup[i] = 0;
-	return (dup);
-}
-
-t_env	*ft_parse_env(char **env)
-{
-	char	**tmp;
-	int		i;
-	int		k;
-	t_env	*parsed_env;
-	t_env	*tempo;
-
-	tempo = malloc(sizeof(t_env));
-	parsed_env = tempo;
-	tmp = duplicate_env(env);
-	k = 0;
-	while (tmp[k])
+	str_tmp[i] = 0;
+	same_element = check_existing_env(env, str_tmp);
+	if (same_element != 0)
 	{
-		i = 0;
-		while (tmp[k][i] != '=' && tmp[k][i])
-			i++;
-		tmp[k][i] = 0;
-		parsed_env->env_name = ft_strdup(tmp[k]);
-		parsed_env->env_value = ft_strdup(tmp[k] + i + 1);
-		parsed_env->exp = 1;
-		k++;
-		if (tmp[k])
-		{
-			parsed_env->next_env = malloc(sizeof(t_env));
-			parsed_env = parsed_env->next_env;
-		}
-		else
-		{
-			parsed_env->next_env = NULL;
-		}
+		edit_env(&env, same_element->env_name, str_tmp + i + 1);
+		unset_env(&env, same_element->env_name);
+		free(str_tmp);
+		return (0);
 	}
-	ft_free_matrix(tmp);
-	return (tempo);
+	else
+	{
+		create_new_env(&env, str, 0);
+		free(str_tmp);
+		return (0);
+	}
+	return (1);
 }
-
-t_env	*init_env(char **env)
-{
-	t_env	*enva;
-
-	enva = ft_parse_env(env);
-	return (enva);
-}
-
-
 
 int	check_and_add(t_env *env, char *str)
 {
 	int		i;
 	char	*str_tmp;
-	t_env	*same_element;
 
 	i = 0;
 	str_tmp = ft_strdup(str);
@@ -84,33 +47,30 @@ int	check_and_add(t_env *env, char *str)
 		}
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
-			if (!str_tmp[i])
-			{
-				printf("Conchiglia: %s: No such file or directory\n", str_tmp);
-				errno = 127;
-				free(str_tmp);
+			if (!edit_or_create_env(env, str, str_tmp, i))
+				return (0);
+			else if (edit_or_create_env(env, str, str_tmp, i) == -1)
 				return (-1);
-			}
-			str_tmp[i] = 0;
-			same_element = check_existing_env(env, str_tmp);
-			if (same_element != 0)
-			{
-				edit_env(&env, same_element->env_name, str_tmp + i + 1);
-				unset_env(&env, same_element->env_name);
-				free(str_tmp);
-				return (0);
-			}
-			else
-			{
-				create_new_env(&env, str, 0);
-				free(str_tmp);
-				return (0);
-			}
 		}
 		i++;
 	}
 	free(str_tmp);
 	return (0);
+}
+
+void	ft_print_env_list(t_env *tmp)
+{
+	while (tmp)
+	{
+		if (tmp->exp == 1)
+		{
+			ft_printf_fd(1, "%s", tmp->env_name);
+			ft_printf_fd(1, "=");
+			ft_printf_fd(1, "%s", tmp->env_value);
+			ft_printf_fd(1, "\n");
+		}
+		tmp = tmp->next_env;
+	}
 }
 
 void	ft_env(t_env *env, int ac, char **av)
@@ -122,19 +82,7 @@ void	ft_env(t_env *env, int ac, char **av)
 	i = 1;
 	tmp = env;
 	if (ac < 2)
-	{
-		while (tmp)
-		{
-			if (tmp->exp == 1)
-			{
-				ft_printf_fd(1, "%s", tmp->env_name);
-				ft_printf_fd(1, "=");
-				ft_printf_fd(1, "%s", tmp->env_value);
-				ft_printf_fd(1, "\n");
-			}
-			tmp = tmp->next_env;
-		}
-	}
+		ft_print_env_list(tmp);
 	else
 	{
 		while (i <= ac - 1)
