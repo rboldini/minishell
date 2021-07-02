@@ -2,15 +2,15 @@
 
 void	set_prompt(char *str)
 {
-	if (minishell->prompt)
-		free(minishell->prompt);
-	minishell->prompt = malloc(ft_strlen(str) + 1);
-	strcpy(minishell->prompt, str);
+	if (g_shell->prompt)
+		free(g_shell->prompt);
+	g_shell->prompt = malloc(ft_strlen(str) + 1);
+	strcpy(g_shell->prompt, str);
 }
 
 void	get_prompt(void)
 {
-	write(1, minishell->prompt, ft_strlen(minishell->prompt));
+	write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
 }
 
 void	run_command(int code, t_cmd *cmd, t_env *env)

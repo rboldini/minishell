@@ -4,27 +4,27 @@ void	special_keys2(int c)
 {
 	c = ft_hook_char();
 	if (c == 65 || c == 66)
-		ft_arrow_ud(c, minishell);
+		ft_arrow_ud(c, g_shell);
 	else if (c == 67 || c == 68)
-		ft_arrow_lr(c, minishell->current);
+		ft_arrow_lr(c, g_shell->current);
 	else if (c == 51)
 	{
 		c = ft_hook_char();
 		if (c == 126)
-			ft_process_delete(minishell->current);
+			ft_process_delete(g_shell->current);
 	}
 	else if (c == 72 || c == 70)
-		ft_home_end(c, minishell);
+		ft_home_end(c, g_shell);
 	else if (c == 49)
 	{
 		if (ft_check_ctrl(&c))
-			ft_move_word(c, minishell->current);
+			ft_move_word(c, g_shell->current);
 	}
 	else
 		write(1, "\a", 1);
 }
 
-int	ft_special_keys(int c, t_shell *minishell)
+int	ft_special_keys(int c, t_shell *g_shell)
 {
 	if (c == 27)
 	{
@@ -34,19 +34,19 @@ int	ft_special_keys(int c, t_shell *minishell)
 	}
 	else if (c == 4)
 	{
-		if (!minishell->current->row[0])
-			ft_exit(minishell);
+		if (!g_shell->current->row[0])
+			ft_exit(g_shell);
 	}
 	else if (c == 127 || c == 8)
-		ft_process_backspace(minishell->current);
+		ft_process_backspace(g_shell->current);
 	else if (c == 9)
 		write(1, "\a", 1);
 	else if (c == 21)
 	{
-		ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
+		ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
 		write(1, "\r\033[2K", 5);
-		write (1, minishell->prompt, ft_strlen(minishell->prompt));
-		minishell->current->index = 0;
+		write (1, g_shell->prompt, ft_strlen(g_shell->prompt));
+		g_shell->current->index = 0;
 	}
 	else
 		return (c);
@@ -57,22 +57,22 @@ void	fill_row2(char c, int i)
 {
 	char	temp;
 
-	temp = minishell->current->row[i];
-	minishell->current->row[i] = c;
+	temp = g_shell->current->row[i];
+	g_shell->current->row[i] = c;
 	write(1, &c, 1);
-	while (minishell->current->row[i])
+	while (g_shell->current->row[i])
 	{
-		c = minishell->current->row[i + 1];
-		minishell->current->row[i + 1] = temp;
+		c = g_shell->current->row[i + 1];
+		g_shell->current->row[i + 1] = temp;
 		temp = c;
-		write(1, &minishell->current->row[i + 1], 1);
+		write(1, &g_shell->current->row[i + 1], 1);
 		i++;
 	}
 	i = -1;
-	while (++i < (int)ft_strlen(minishell->current->row)
-		- minishell->current->index)
+	while (++i < (int)ft_strlen(g_shell->current->row)
+		- g_shell->current->index)
 		write(1, "\b", 1);
-	minishell->current->index++;
+	g_shell->current->index++;
 }
 
 void	ft_fill_row(t_history *curr, char c)
@@ -103,26 +103,26 @@ void	ft_fill_row(t_history *curr, char c)
 	}
 }
 
-void	hook_line(t_shell *minishell)
+void	hook_line(t_shell *g_shell)
 {
 	char	c;
 
-	free (minishell->current->row);
-	minishell->current->row = ft_calloc(1024, sizeof(char));
+	free (g_shell->current->row);
+	g_shell->current->row = ft_calloc(1024, sizeof(char));
 	while (1)
 	{
 		c = (char)ft_hook_char();
 		if (c == '\n')
 			break ;
-		if (ft_special_keys(c, minishell) && ft_isprint(c))
+		if (ft_special_keys(c, g_shell) && ft_isprint(c))
 		{
-			ft_fill_row(minishell->current, c);
+			ft_fill_row(g_shell->current, c);
 			write(1, &c, 1);
 		}
 	}
-	if (minishell->n_up && !minishell->abort)
+	if (g_shell->n_up && !g_shell->abort)
 		finalize_history();
-	minishell->current->index = (int)ft_strlen(minishell->current->row);
-	minishell->n_up = 0;
+	g_shell->current->index = (int)ft_strlen(g_shell->current->row);
+	g_shell->n_up = 0;
 	write(1, "\n", 1);
 }

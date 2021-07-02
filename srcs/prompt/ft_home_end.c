@@ -1,22 +1,22 @@
 #include "../../includes/minishell.h"
 
-void	ft_home_end(int c, t_shell *minishell)
+void	ft_home_end(int c, t_shell *g_shell)
 {
 	if (c == 72)
 	{
-		while (minishell->current->index > 0)
+		while (g_shell->current->index > 0)
 		{
 			write(1, "\b", 1);
-			minishell->current->index--;
+			g_shell->current->index--;
 		}
 	}
 	else
 	{
-		while (minishell->current->index
-			< (int)ft_strlen(minishell->current->row))
+		while (g_shell->current->index
+			< (int)ft_strlen(g_shell->current->row))
 		{
 			write(1, "\033[C", 3);
-			minishell->current->index++;
+			g_shell->current->index++;
 		}
 	}
 }

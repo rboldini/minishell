@@ -87,7 +87,7 @@ int	check_for_cmd(char *cmd)
 		return (ENV_DECLA);
 	else if (!ft_strcmp(cmd, "exit"))
 	{
-		ft_exit(minishell);
+		ft_exit(g_shell);
 		return (0);
 	}
 	else
@@ -106,7 +106,7 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		cmd_code = check_for_cmd(tmp->arr[0]);
 		forker(tmp, env, cmd_code);
 		tmp = tmp->next;
-		if (minishell->abort)
+		if (g_shell->abort)
 			break ;
 	}
 	while (cmd)

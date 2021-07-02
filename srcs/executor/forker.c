@@ -27,12 +27,12 @@ int	init_double_readirect(t_forker *forker, t_cmd *cmd)
 		ft_printf_fd(2, "Conchiglia: syntax error near unexpected token\n");
 		dup2(forker->saved_stdout, STDOUT_FILENO);
 		dup2(forker->saved_stdin, STDIN_FILENO);
-		minishell->abort = 1;
+		g_shell->abort = 1;
 		errno = 258;
 		return (0);
 	}
 	forker->inp = d_redirect(cmd->eof);
-	if (minishell->abort_dred)
+	if (g_shell->abort_dred)
 		return (0);
 	cmd->file_in = forker->fd_double[0];
 	write(forker->fd_double[1], forker->inp, ft_strlen(forker->inp));
@@ -45,8 +45,8 @@ void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 {
 	if (forker->path)
 	{	
-		minishell->pid = fork();
-		if (!minishell->pid)
+		g_shell->pid = fork();
+		if (!g_shell->pid)
 		{
 			dup2(cmd->file_in, STDIN_FILENO);
 			dup2(cmd->file_out, STDOUT_FILENO);
@@ -60,7 +60,7 @@ void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 		}
 		else
 		{
-			waitpid(minishell->pid, &forker->status, WUNTRACED | WCONTINUED);
+			waitpid(g_shell->pid, &forker->status, WUNTRACED | WCONTINUED);
 			if (cmd->file_out != 1)
 				close(cmd->file_out);
 			if (cmd->file_in != 0)

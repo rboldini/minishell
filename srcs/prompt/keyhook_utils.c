@@ -62,15 +62,15 @@ int	ft_hook_char(void)
 
 void	finalize_history(void)
 {
-	ft_bzero(minishell->tmp->row, ft_strlen(minishell->tmp->row));
-	ft_strlcpy(minishell->tmp->row, minishell->current->row,
-		ft_strlen(minishell->current->row) + 1);
-	ft_bzero(minishell->current->row, ft_strlen(minishell->current->row));
-	ft_strlcpy(minishell->current->row, minishell->current->old,
-		ft_strlen(minishell->current->old) + 1);
-	free (minishell->current->old);
-	minishell->current->old = NULL;
-	minishell->tmp->index = (int)ft_strlen(minishell->tmp->row);
-	minishell->current = minishell->tmp;
-	free_old(minishell->current);
+	ft_bzero(g_shell->tmp->row, ft_strlen(g_shell->tmp->row));
+	ft_strlcpy(g_shell->tmp->row, g_shell->current->row,
+		ft_strlen(g_shell->current->row) + 1);
+	ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
+	ft_strlcpy(g_shell->current->row, g_shell->current->old,
+		ft_strlen(g_shell->current->old) + 1);
+	free (g_shell->current->old);
+	g_shell->current->old = NULL;
+	g_shell->tmp->index = (int)ft_strlen(g_shell->tmp->row);
+	g_shell->current = g_shell->tmp;
+	free_old(g_shell->current);
 }

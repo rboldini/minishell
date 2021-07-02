@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/01 18:58:14 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/02 18:06:03 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*append_env(const char *src, int *i, char **var_name, char *dst)
 		*var_name = app_char(src, i, *var_name);
 		c = *(src + *i);
 	}
-	var_value = ft_getenv(minishell->env, *var_name);
+	var_value = ft_getenv(g_shell->env, *var_name);
 	if (var_value)
 	{
 		tmp = ft_strjoin(dst, var_value);

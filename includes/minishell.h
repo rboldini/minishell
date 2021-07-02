@@ -114,7 +114,7 @@ typedef struct s_cv
 ** Parser
 */
 
-void	hook_line(t_shell *minishell);
+void	hook_line(t_shell *g_shell);
 t_cmd	**start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
@@ -152,7 +152,7 @@ char	*ft_getenv(t_env *env, char *name);
 void	ft_unset(t_env **env, int ac, char **av);
 void	edit_env(t_env **env, char *name, char *new_value);
 t_env	*check_existing_env(t_env *env, char *name);
-void	ft_home_end(int c, t_shell *minishell);
+void	ft_home_end(int c, t_shell *g_shell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
@@ -189,14 +189,14 @@ void	get_prompt(void);
 
 void	ft_echo(int ac, char **av);
 int		ft_hook_char(void);
-void	ft_arrow_ud(int x, t_shell *minishell);
+void	ft_arrow_ud(int x, t_shell *g_shell);
 void	ft_arrow_lr(int x, t_history *curr);
 int		ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
 void	free_old(t_history *curr);
 void	ft_fill_row(t_history *curr, char c);
-void	ft_exit(t_shell *minishell);
+void	ft_exit(t_shell *g_shell);
 
 /*
 ** EXECUTOR

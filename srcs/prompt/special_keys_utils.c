@@ -2,48 +2,48 @@
 
 void	ft_arrow_down(void)
 {
-	if (minishell->current->next)
+	if (g_shell->current->next)
 	{
-		minishell->n_up--;
+		g_shell->n_up--;
 		write(1, "\r\033[2K", 5);
-		write(1, minishell->prompt, ft_strlen(minishell->prompt));
-		minishell->current->index = ft_strlen(minishell->current->row);
-		minishell->current = minishell->current->next;
-		minishell->current->index = ft_strlen(minishell->current->row);
-		write(1, minishell->current->row,
-			  ft_strlen(minishell->current->row));
+		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
+		g_shell->current->index = ft_strlen(g_shell->current->row);
+		g_shell->current = g_shell->current->next;
+		g_shell->current->index = ft_strlen(g_shell->current->row);
+		write(1, g_shell->current->row,
+			  ft_strlen(g_shell->current->row));
 	}
-	else if (minishell->tmp && ft_strlen(minishell->tmp->row))
+	else if (g_shell->tmp && ft_strlen(g_shell->tmp->row))
 	{
-		minishell->current = minishell->tmp;
+		g_shell->current = g_shell->tmp;
 		write(1, "\r\033[2K", 5);
-		write(1, minishell->prompt, ft_strlen(minishell->prompt));
-		write(1, minishell->current->row,
-			  minishell->current->index);
+		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
+		write(1, g_shell->current->row,
+			  g_shell->current->index);
 	}
 }
 
 void	ft_arrow_up(void)
 {
-	if (minishell->n_up == 0)
-		minishell->tmp = minishell->current;
-	minishell->current->index = ft_strlen(minishell->current->row);
-	minishell->current = minishell->current->prev;
-	minishell->current->index = ft_strlen(minishell->current->row);
+	if (g_shell->n_up == 0)
+		g_shell->tmp = g_shell->current;
+	g_shell->current->index = ft_strlen(g_shell->current->row);
+	g_shell->current = g_shell->current->prev;
+	g_shell->current->index = ft_strlen(g_shell->current->row);
 	write(1, "\r\033[2K", 5);
 	get_prompt();
-	if (!minishell->current->old)
-		minishell->current->old = ft_strdup(minishell->current->row);
-	write(1, minishell->current->row,
-		  ft_strlen(minishell->current->row));
-	minishell->n_up++;
+	if (!g_shell->current->old)
+		g_shell->current->old = ft_strdup(g_shell->current->row);
+	write(1, g_shell->current->row,
+		  ft_strlen(g_shell->current->row));
+	g_shell->n_up++;
 }
 
-void	ft_arrow_ud(int x, t_shell *minishell)
+void	ft_arrow_ud(int x, t_shell *g_shell)
 {
 	if (x == 65)
 	{
-		if (minishell->current->prev)
+		if (g_shell->current->prev)
 			ft_arrow_up();
 	}
 	else
