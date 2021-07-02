@@ -19,25 +19,17 @@ char	**duplicate_env(char **env)
 	return (dup);
 }
 
-void	fill_env_node(t_env *parsed_env, char **tmp, int *k)
+void	fill_env_node(t_env *parsed_env, char **tmp, int k)
 {
 	int	i;
 
 	i = 0;
-	while (tmp[*k][i] != '=' && tmp[*k][i])
+	while (tmp[k][i] != '=' && tmp[k][i])
 		i++;
-	tmp[*k][i] = 0;
-	parsed_env->env_name = ft_strdup(tmp[*k]);
-	parsed_env->env_value = ft_strdup(tmp[*k] + i + 1);
+	tmp[k][i] = 0;
+	parsed_env->env_name = ft_strdup(tmp[k]);
+	parsed_env->env_value = ft_strdup(tmp[k] + i + 1);
 	parsed_env->exp = 1;
-	(*k)++;
-	if (tmp[*k])
-	{
-		parsed_env->next_env = malloc(sizeof(t_env));
-		parsed_env = parsed_env->next_env;
-	}
-	else
-		parsed_env->next_env = NULL;
 }
 
 t_env	*ft_parse_env(char **env)
@@ -52,7 +44,17 @@ t_env	*ft_parse_env(char **env)
 	tmp = duplicate_env(env);
 	k = 0;
 	while (tmp[k])
-		fill_env_node(parsed_env, tmp, &k);
+	{
+		fill_env_node(parsed_env, tmp, k);
+		k++;
+		if (tmp[k])
+		{
+			parsed_env->next_env = malloc(sizeof(t_env));
+			parsed_env = parsed_env->next_env;
+		}
+		else
+			parsed_env->next_env = NULL;
+	}
 	ft_free_matrix(tmp);
 	return (tempo);
 }
