@@ -1,5 +1,5 @@
-#ifndef MINISHELL_MINISHELL_H
-#define MINISHELL_MINISHELL_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 /*
  *	; should separate commands like bash
@@ -8,10 +8,10 @@
  *	| redirect output
  */
 
-#include <stdlib.h>
-#include "../libft/libft.h"
-#include "../ft_printf_fd/ft_printf.h"
-#include "color.h"
+# include <stdlib.h>
+# include "../libft/libft.h"
+# include "../ft_printf_fd/ft_printf.h"
+# include "color.h"
 # include <curses.h>
 # include <ncurses.h>
 # include <dirent.h>
@@ -42,22 +42,22 @@ enum e_cmd
 
 typedef struct s_history
 {
-	char	*row;
-	char	*old;
-	int		index;
-	struct	s_history *prev;
-	struct	s_history *next;
+	char				*row;
+	char				*old;
+	int					index;
+	struct s_history	*prev;
+	struct s_history	*next;
 }				t_history;
 
 typedef struct s_env
 {
-	char	*env_name;
-	char	*env_value;
-	int		exp; // 0 = not_exported 	1 = exported	2 = semi-exported
-	struct	s_env *next_env;
+	char			*env_name;
+	char			*env_value;
+	int				exp;
+	struct s_env	*next_env;
 }				t_env;
 
-typedef struct	s_shell
+typedef struct s_shell
 {
 	char		*prompt;
 	t_history	*current;
@@ -66,13 +66,13 @@ typedef struct	s_shell
 	int			n_up;
 	int			abort;
 	int			abort_dred;
-	int 		pid;
+	int			pid;
 	t_env		*env;
 }				t_shell;
 
-t_shell *minishell;
+t_shell	*g_shell;
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			**arr;
 	char			*eof;
@@ -80,10 +80,9 @@ typedef struct	s_cmd
 	int				len;
 	struct s_cmd	*next;
 	int				has_previous;
-	//int				out_append;
-	int				file_in;	//0
-	int				file_out;	//1
-	int				err_out;	//2
+	int				file_in;
+	int				file_out;
+	int				err_out;
 	int				is_append;
 }				t_cmd;
 
@@ -147,18 +146,18 @@ void	create_new_env(t_env **env, char *raw_env, int export);
 void	ft_env(t_env *env, int ac, char **av);
 void	ft_export_env(t_env *env, char *str);
 void	ft_export(t_env *env, int ac, char **av);
-void	unset_env(t_env **env, char* name);
-void	set_env(t_env **env, char* name);
+void	unset_env(t_env **env, char *name);
+void	set_env(t_env **env, char *name);
 char	*ft_getenv(t_env *env, char *name);
 void	ft_unset(t_env **env, int ac, char **av);
-void	edit_env(t_env **env,char *name, char *new_value);
+void	edit_env(t_env **env, char *name, char *new_value);
 t_env	*check_existing_env(t_env *env, char *name);
 void	ft_home_end(int c, t_shell *minishell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, char **av, char *path);
-void 	forker(t_cmd *cmd, t_env *env, int cmd_code);
+void	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);
 char	*d_redirect(char *eof);
@@ -171,19 +170,18 @@ void	ft_cd(int ac, char **av, t_env **env);
 void	ft_absolute_path(t_env **env, char *absolute_path);
 void	ft_relative_path(t_env **env, char *relative_path);
 
-
 /*
 ** PDW
 */
 
-void	ft_pwd();
+void	ft_pwd(void);
 
 /*
 ** PROMPT
 */
 
-void set_prompt(char *str);
-void get_prompt();
+void	set_prompt(char *str);
+void	get_prompt(void);
 
 /*
 ** CMD
@@ -193,7 +191,7 @@ void	ft_echo(int ac, char **av);
 int		ft_hook_char(void);
 void	ft_arrow_ud(int x, t_shell *minishell);
 void	ft_arrow_lr(int x, t_history *curr);
-int 	ft_process_backspace(t_history *curr);
+int		ft_process_backspace(t_history *curr);
 void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
 void	free_old(t_history *curr);
@@ -210,11 +208,10 @@ int		ft_isdir(char *path);
 int		ft_isfile(char *path);
 char	*is_exec(t_env *env, int ac, char **av);
 
-
 /*
 ** DEBUG
 */
 
 void	ft_print_env(t_env *env);
 
-#endif //MINISHELL_MINISHELL_H
+#endif
