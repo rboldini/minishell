@@ -89,7 +89,7 @@ void	ft_fill_row(t_history *curr, char c)
 		tmp = ft_strdup(curr->row);
 		free(curr->row);
 		curr->row = ft_calloc(len + 1024, sizeof(char));
-		ft_strlcpy(curr->row, tmp, len);
+		ft_strlcpy(curr->row, tmp, len + 1);
 		free(tmp);
 	}
 	i = curr->index;

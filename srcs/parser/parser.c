@@ -90,8 +90,10 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 t_cmd	**start_parsing(const char *cmd)
 {
 	t_cv	*cv;
+	t_cmd	**res;
 	int		i;
 
+	printf("cmd: %s<\n", cmd);
 	cv = ft_calloc(1, sizeof(t_cv));
 	i = 0;
 	while (1)
@@ -113,5 +115,7 @@ t_cmd	**start_parsing(const char *cmd)
 		if (!*(cmd + i))
 			break ;
 	}
-	return (cv->cmd_arr);
+	res = cv->cmd_arr;
+	free(cv);
+	return (res);
 }

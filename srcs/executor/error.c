@@ -6,6 +6,7 @@ void	ft_error(int errnum, char *str, int cmd_flag)
 	{
 		ft_printf_fd(2, "Conchiglia: %s: command not found\n", str);
 		errno = 127;
+		g_shell->abort = 1;
 	}
 	else if (str)
 		ft_printf_fd(2, "Conchiglia: %s: %s\n", str, strerror(errnum));
