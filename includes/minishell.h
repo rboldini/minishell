@@ -161,6 +161,7 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	ft_hook_signal(void);
 void	free_history(t_history *curr);
 char	*d_redirect(char *eof);
+void	restore_fd(t_forker *forker);
 
 /*
 ** CD

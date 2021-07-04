@@ -93,10 +93,9 @@ t_cmd	**start_parsing(const char *cmd)
 	t_cmd	**res;
 	int		i;
 
-	printf("cmd: %s<\n", cmd);
 	cv = ft_calloc(1, sizeof(t_cv));
 	i = 0;
-	while (1)
+	while (*(cmd + i) || !i)
 	{
 		cv->comm = malloc(sizeof(t_cmd));
 		cv->cmd_arr = add_tcmd(cv->cmd_arr, cv->comm, cv);
@@ -112,8 +111,6 @@ t_cmd	**start_parsing(const char *cmd)
 				break ;
 		}
 		cv->comm->arr = cv->arr;
-		if (!*(cmd + i))
-			break ;
 	}
 	res = cv->cmd_arr;
 	free(cv);

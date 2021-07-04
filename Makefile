@@ -46,6 +46,7 @@ FILES =			main.c			\
 				special_keys_utils.c	\
 				ft_exit.c		\
 				forker.c		\
+				forker_utils.c		\
 				ft_cd_relative_and_absolute_paths.c	\
 				env_utils2.c	\
 				ft_export.c		\

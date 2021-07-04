@@ -10,10 +10,7 @@ void	init_forker(t_forker *forker)
 	if (forker->err == -1)
 	{
 		ft_error(errno, "pipe", 0);
-		dup2(forker->saved_stdout, STDOUT_FILENO);
-		dup2(forker->saved_stdin, STDIN_FILENO);
-		close(forker->saved_stdout);
-		close(forker->saved_stdin);
+		restore_fd(forker);
 		return ;
 	}
 }
@@ -27,10 +24,7 @@ int	init_double_readirect(t_forker *forker, t_cmd *cmd)
 	if (!ft_strlen(cmd->eof))
 	{
 		ft_printf_fd(2, "Conchiglia: syntax error near unexpected token\n");
-		dup2(forker->saved_stdout, STDOUT_FILENO);
-		dup2(forker->saved_stdin, STDIN_FILENO);
-		close(forker->saved_stdout);
-		close(forker->saved_stdin);
+		restore_fd(forker);
 		g_shell->abort = 1;
 		errno = 258;
 		return (0);
@@ -114,9 +108,6 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	else
 		is_builtin(env, forker, cmd, cmd_code);
-	dup2(forker->saved_stdout, STDOUT_FILENO);
-	dup2(forker->saved_stdin, STDIN_FILENO);
-	close(forker->saved_stdout);
-	close(forker->saved_stdin);
+	restore_fd(forker);
 	free(forker);
 }

@@ -33,7 +33,7 @@ void	process_backspace2(t_history *curr, int i)
 	curr->index--;
 }
 
-int 	ft_process_backspace(t_history *curr)
+int	ft_process_backspace(t_history *curr)
 {
 	int	i;
 
