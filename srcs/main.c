@@ -50,7 +50,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 	ft_hook_signal();
 	if (!g_shell->abort_dred)
 	{
-	init_abort();
+		init_abort();
 		hook_line(g_shell);
 	}
 	init_abort();
