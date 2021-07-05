@@ -34,14 +34,14 @@ void	edit_env(t_env **env, char *name, char *new_value)
 	}
 }
 
-char	*ft_getenv(t_env *env, char *name)
+char	*ft_get_allowed_env(t_env *env, char *name)
 {
 	t_env	*tmp;
 
 	tmp = env;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->env_name, name))
+		if (!ft_strcmp(tmp->env_name, name) && tmp->exp != 3)
 			return (tmp->env_value);
 		tmp = tmp->next_env;
 	}
