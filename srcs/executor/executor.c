@@ -115,16 +115,4 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		if (g_shell->abort)
 			break ;
 	}
-	while (cmd)
-	{
-		ft_free_matrix(cmd->arr);
-		if (cmd->file_in != 0)
-			close(cmd->file_in);
-		if (cmd->file_out != 1)
-			close(cmd->file_out);
-		free(cmd->eof);
-		tmp = cmd;
-		cmd = cmd->next;
-		free(tmp);
-	}
 }

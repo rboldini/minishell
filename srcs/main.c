@@ -43,6 +43,8 @@ void	init_g_shell(char **envp)
 
 void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 {
+	t_cmd	*tmp;
+
 	g_shell->pid = 0;
 	set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
 	if (!g_shell->abort_dred)
@@ -58,12 +60,24 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 	{
 		cmd_arr = start_parsing(g_shell->current->row);
 		arr_i = 0;
-		while (*(cmd_arr + arr_i))
+		while (*(cmd_arr + arr_i) && !g_shell->abort)
 		{
 			cmd = *(cmd_arr + arr_i);
 			if (cmd->len)
 				ft_executor(cmd, g_shell->env);
 			arr_i++;
+		}
+		while (cmd)
+		{
+			ft_free_matrix(cmd->arr);
+			if (cmd->file_in != 0)
+				close(cmd->file_in);
+			if (cmd->file_out != 1)
+				close(cmd->file_out);
+			free(cmd->eof);
+			tmp = cmd;
+			cmd = cmd->next;
+			free(tmp);
 		}
 		free(cmd_arr);
 	}

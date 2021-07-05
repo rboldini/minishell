@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 19:01:35 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/05 20:21:06 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	elab_pipe(t_cv *cv, int *i)
 {
-
-	if (!cv->arr || !cv->arr[0])
-		printf("questo è un errore pipe\n");
+	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
+	{
+		ft_error(errno, "syntax error near unexpected token pipe", 0);
+		errno = 258;
+		g_shell->abort = 1;
+		return (1);
+	}
 	cv->tmp_comm = malloc(sizeof(t_cmd));
 	cv->comm->next = cv->tmp_comm;
 	cv->comm->arr = cv->arr;
@@ -74,10 +78,36 @@ void	check_stage(t_cv *cv)
 
 int	check_isb(t_cv *cv, const char *cmd, int *i)
 {
+	if (cv->stage && cv->isb > 1)
+	{
+		ft_error(errno, "syntax error near unexpected token speriamo", 0);
+		g_shell->abort = 1;
+		errno = 258;
+		return (1);
+	}
 	if (cv->isb == 7)
 		cv->comm->has_dred = 1;
+	if (cv->isb >= 2)
+	{
+		if (cv->stage >= 2)
+		{
+			ft_error(errno, "syntax error near unexpected token boh", 0);
+			g_shell->abort = 1;
+			errno = 258;
+			return (1);
+		}
+	}
 	if (cv->isb > 2)
+	{
+		if (cv->stage > 2)
+		{
+			ft_error(errno, "syntax error near unexpected token isb", 0);
+			g_shell->abort = 1;
+			errno = 258;
+			return (1);
+		}
 		cv->stage = cv->isb;
+	}
 	if (cv->isb == 4 || cv->isb == 7)
 		(*i)++;
 	if (*(cmd + *i) != 0)
@@ -98,21 +128,36 @@ t_cmd	**start_parsing(const char *cmd)
 
 	cv = ft_calloc(1, sizeof(t_cv));
 	i = 0;
-	while (*(cmd + i) || !i)
+	while ((*(cmd + i) || !i) && !g_shell->abort)
 	{
 		cv = set_cv(cv);
-		while (*(cmd + i))
+		while (*(cmd + i) && !g_shell->abort)
 		{
 			cv->buff = next_token(cmd, &i, &cv->isb);
 			if (!cv->stage && ft_strlen(cv->buff))
 				cv->arr = append_to_arr(cv->buff, &cv->comm->len, cv->arr);
 			if (cv->isb == 2 && elab_pipe(cv, &i))
+			{
+				if (cv->stage)
+				{
+					ft_error(errno, "syntax error near unexpected token stage", 0);
+					g_shell->abort = 1;
+					errno = 258;
+					break ;
+				}
 				continue ;
+			}
 			check_stage(cv);
 			if (check_isb(cv, cmd, &i))
 				break ;
 		}
 		cv->comm->arr = cv->arr;
+		if (!g_shell->abort && (cv->stage || !cv->arr || !cv->arr[0]))
+		{
+			ft_error(errno, "syntax error near unexpected token stage out", 0);
+			g_shell->abort = 1;
+			errno = 258;
+		}
 	}
 	res = cv->cmd_arr;
 	free(cv);
