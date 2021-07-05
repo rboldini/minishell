@@ -8,6 +8,8 @@ void	ft_absolute_path(t_env **env, char *absolute_path)
 	}
 	else
 	{
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", absolute_path);
 	}
@@ -30,6 +32,8 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	}
 	else
 	{
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "OLDPWD", curr_path);
 		edit_env(env, "PWD", next_path);
 	}

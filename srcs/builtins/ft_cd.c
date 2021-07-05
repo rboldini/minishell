@@ -11,6 +11,8 @@ void	ft_goback(t_env **env)
 	else
 	{
 		tmp = ft_strdup(ft_getenv(*env, "PWD"));
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "PWD", ft_getenv(*env, "OLDPWD"));
 		edit_env(env, "OLDPWD", tmp);
 		free(tmp);
@@ -25,6 +27,8 @@ void	ft_gohome(t_env **env)
 	}
 	else
 	{
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", ft_getenv(*env, "HOME"));
 	}
@@ -53,6 +57,8 @@ void	ft_goup(t_env **env, char *curr_path)
 		ft_error(errno, 0, 0);
 	else
 	{
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "OLDPWD", curr_path);
 		edit_env(env, "PWD", prev_path);
 	}
@@ -67,6 +73,8 @@ void	ft_goroot(t_env **env)
 	}
 	else
 	{
+		set_env(env, "PWD");
+		set_env(env, "OLDPWD");
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", "/");
 	}
