@@ -63,6 +63,11 @@ int	ft_hook_char(void)
 void	finalize_history(void)
 {
 	ft_bzero(g_shell->tmp->row, ft_strlen(g_shell->tmp->row));
+	if (ft_strlen(g_shell->current->row) > 1023)
+	{
+		free(g_shell->tmp->row);
+		g_shell->tmp->row = ft_calloc(ft_strlen(g_shell->current->row) + 1, sizeof(char));
+	}
 	ft_strlcpy(g_shell->tmp->row, g_shell->current->row,
 		ft_strlen(g_shell->current->row) + 1);
 	ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
