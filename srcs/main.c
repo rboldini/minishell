@@ -20,6 +20,13 @@ void	watermark(void)
 CC_WHT " & " CC_CYN "nessuno" CC_RESET "\n");
 }
 
+void	init_abort(void)
+{
+	g_shell->abort = 0;
+	g_shell->abort_dred = 0;
+	g_shell->in_dred = 0;
+}
+
 void	init_g_shell(char **envp)
 {
 	g_shell = ft_calloc(1, sizeof(t_shell));
@@ -30,6 +37,7 @@ void	init_g_shell(char **envp)
 	(g_shell)->n_up = 0;
 	g_shell->prompt = calloc(0, 1);
 	g_shell->env = init_env(envp);
+	init_abort();
 	edit_env(&g_shell->env, "OLDPWD", ft_getenv(g_shell->env, "PWD"));
 }
 
@@ -42,23 +50,23 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 	ft_hook_signal();
 	if (!g_shell->abort_dred)
 	{
-		g_shell->abort = 0;
-		g_shell->in_dred = 0;
+	init_abort();
 		hook_line(g_shell);
 	}
-	g_shell->abort = 0;
-	g_shell->abort_dred = 0;
-	g_shell->in_dred = 0;
-	cmd_arr = start_parsing(g_shell->current->row);
-	arr_i = 0;
-	while (*(cmd_arr + arr_i))
+	init_abort();
+	if (ft_strlen(g_shell->current->row))
 	{
-		cmd = *(cmd_arr + arr_i);
-		if (cmd->len)
-			ft_executor(cmd, g_shell->env);
-		arr_i++;
+		cmd_arr = start_parsing(g_shell->current->row);
+		arr_i = 0;
+		while (*(cmd_arr + arr_i))
+		{
+			cmd = *(cmd_arr + arr_i);
+			if (cmd->len)
+				ft_executor(cmd, g_shell->env);
+			arr_i++;
+		}
+		free(cmd_arr);
 	}
-	free(cmd_arr);
 }
 
 int	main(int n, char **arg, char **envp)
