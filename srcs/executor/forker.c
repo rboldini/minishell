@@ -42,7 +42,7 @@ int	init_double_readirect(t_forker *forker, t_cmd *cmd)
 void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 {
 	if (forker->path)
-	{	
+	{
 		g_shell->pid = fork();
 		if (!g_shell->pid)
 		{

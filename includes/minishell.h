@@ -202,6 +202,12 @@ void	ft_fill_row(t_history *curr, char c);
 void	ft_exit(t_shell *g_shell);
 
 /*
+**	SIGNAL
+*/
+
+void	ft_hook_fake_signal(void);
+
+/*
 ** EXECUTOR
 */
 

@@ -42,6 +42,17 @@ void	ft_signal(int sig)
 	}
 }
 
+void	ft_fake_signal(int sig)
+{
+	(void)sig;
+}
+
+void	ft_hook_fake_signal(void)
+{
+	signal(2, ft_fake_signal);
+	signal(3, ft_fake_signal);
+}
+
 void	ft_hook_signal(void)
 {
 	signal(2, ft_signal);
