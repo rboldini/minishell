@@ -34,6 +34,11 @@ char	*is_exec(t_env *env, int ac, char **av)
 	if (!av[0])
 		return (0);
 	tmp = ft_getenv(env, "PATH");
+	if (!tmp)
+	{
+		ft_error(errno, av[0], 1);
+		return (NULL);
+	}
 	paths = ft_split(tmp, ':');
 	if (ft_isdir(av[0]))
 	{
@@ -100,7 +105,6 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 	int		cmd_code;
 
 	tmp = cmd;
-	cmd_code = -1;
 	while (tmp)
 	{
 		cmd_code = check_for_cmd(tmp->arr[0]);

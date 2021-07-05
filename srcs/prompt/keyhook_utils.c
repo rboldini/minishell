@@ -66,7 +66,8 @@ void	finalize_history(void)
 	if (ft_strlen(g_shell->current->row) > 1023)
 	{
 		free(g_shell->tmp->row);
-		g_shell->tmp->row = ft_calloc(ft_strlen(g_shell->current->row) + 1, sizeof(char));
+		g_shell->tmp->row = ft_calloc(ft_strlen(g_shell->current->row) + 1,
+				sizeof(char));
 	}
 	ft_strlcpy(g_shell->tmp->row, g_shell->current->row,
 		ft_strlen(g_shell->current->row) + 1);

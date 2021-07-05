@@ -97,8 +97,7 @@ t_cmd	**start_parsing(const char *cmd)
 	i = 0;
 	while (*(cmd + i) || !i)
 	{
-		cv->comm = malloc(sizeof(t_cmd));
-		cv->cmd_arr = add_tcmd(cv->cmd_arr, cv->comm, cv);
+		cv = set_cv(cv);
 		while (*(cmd + i))
 		{
 			cv->buff = next_token(cmd, &i, &cv->isb);

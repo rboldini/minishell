@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/01 17:00:54 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/05 15:56:09 by rboldini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,11 @@ char	*escape_slash(const char *src, int *i, char *dst)
 		dst = app_char(src, i, dst);
 	}
 	return (dst);
+}
+
+t_cv	*set_cv(t_cv *cv)
+{
+	cv->comm = malloc(sizeof(t_cmd));
+	cv->cmd_arr = add_tcmd(cv->cmd_arr, cv->comm, cv);
+	return (cv);
 }

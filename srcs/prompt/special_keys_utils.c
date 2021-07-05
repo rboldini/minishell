@@ -1,11 +1,26 @@
 #include "../../includes/minishell.h"
 
+void	ft_delete_multiline(void)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strlen(g_shell->current->row)
+		&& i < (int)(ft_strlen(g_shell->current->row)
+		+ ft_strlen(g_shell->prompt)))
+	{
+		write(1, "\b \b", 3);
+		i++;
+	}
+	write(1, "\n", 1);
+}
+
 void	ft_arrow_down(void)
 {
 	if (g_shell->current->next)
 	{
 		g_shell->n_up--;
-		write(1, "\r\033[2K", 5);
+		ft_delete_multiline();
 		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
 		g_shell->current->index = ft_strlen(g_shell->current->row);
 		g_shell->current = g_shell->current->next;
@@ -15,8 +30,8 @@ void	ft_arrow_down(void)
 	}
 	else if (g_shell->tmp && ft_strlen(g_shell->tmp->row))
 	{
+		ft_delete_multiline();
 		g_shell->current = g_shell->tmp;
-		write(1, "\r\033[2K", 5);
 		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
 		write(1, g_shell->current->row,
 			  g_shell->current->index);
@@ -25,13 +40,20 @@ void	ft_arrow_down(void)
 
 void	ft_arrow_up(void)
 {
+	int	i;
+
+	i = 0;
+	while (ft_strlen(g_shell->current->row)
+		   && i < (int)(ft_strlen(g_shell->current->row)))
+	{
+		write(1, "\b \b", 3);
+		i++;
+	}
 	if (g_shell->n_up == 0)
 		g_shell->tmp = g_shell->current;
 	g_shell->current->index = ft_strlen(g_shell->current->row);
 	g_shell->current = g_shell->current->prev;
 	g_shell->current->index = ft_strlen(g_shell->current->row);
-	write(1, "\r\033[2K", 5);
-	get_prompt();
 	if (!g_shell->current->old)
 		g_shell->current->old = ft_strdup(g_shell->current->row);
 	write(1, g_shell->current->row,
