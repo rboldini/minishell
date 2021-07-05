@@ -12,7 +12,6 @@ void	ft_delete_multiline(void)
 		write(1, "\b \b", 3);
 		i++;
 	}
-	write(1, "\n", 1);
 }
 
 void	ft_arrow_down(void)
@@ -21,6 +20,7 @@ void	ft_arrow_down(void)
 	{
 		g_shell->n_up--;
 		ft_delete_multiline();
+		//write(1, "\n", 1);
 		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
 		g_shell->current->index = ft_strlen(g_shell->current->row);
 		g_shell->current = g_shell->current->next;
