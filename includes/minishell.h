@@ -131,6 +131,7 @@ int		is_break(const char *cmd, int i);
 char	*next_token(const char *cmd, int *i, int *isb);
 void	init_cmd(t_cmd *comm);
 t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv);
+t_cv	*set_cv(t_cv *cv);
 
 void	finalize_history(void);
 void	ft_arrow_down(void);
