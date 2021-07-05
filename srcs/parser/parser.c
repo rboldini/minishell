@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 18:55:45 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/05 19:01:35 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	elab_pipe(t_cv *cv, int *i)
 {
+
+	if (!cv->arr || !cv->arr[0])
+		printf("questo è un errore pipe\n");
 	cv->tmp_comm = malloc(sizeof(t_cmd));
 	cv->comm->next = cv->tmp_comm;
 	cv->comm->arr = cv->arr;
