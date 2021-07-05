@@ -44,13 +44,13 @@ void	ft_remove_env_node(t_env *env, char *name)
 
 int	check_env_to_unset(t_env *element)
 {
-	if(!ft_strcmp(element->env_name, "PWD")
+	if (!ft_strcmp(element->env_name, "PWD")
 		|| !ft_strcmp(element->env_name, "OLDPWD"))
 	{
 		element->exp = 3;
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 void	ft_unset(t_env **env, int ac, char **av)
@@ -65,8 +65,8 @@ void	ft_unset(t_env **env, int ac, char **av)
 		tmp = check_existing_env(*env, av[i]);
 		if (tmp)
 		{
-			if(check_env_to_unset(tmp))
-			;
+			if (check_env_to_unset(tmp))
+				;
 			else
 				ft_remove_env_node(*env, tmp->env_name);
 		}
