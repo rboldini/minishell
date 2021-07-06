@@ -6,7 +6,7 @@
 /*   By: vbuonvin <vbuonvin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/17 11:06:45 by vbuonvin          #+#    #+#             */
-/*   Updated: 2021/07/01 17:07:55 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/06 19:22:17 by vbuonvin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int				handle_negative(t_option *lista, int nblen);
 char			*ft_exa_converter(unsigned int n, char c);
 char			*ft_unsigned_itoa(unsigned int n);
 char			*ft_address_converter(size_t n);
-void			setup_struct (t_option *lista);
+void			setup_struct(t_option *lista);
 void			ft_control_flag(const char *str, int i, t_option *lista);
 void			ft_control_w(const char *str,
 					int i, t_option *lista, va_list argptr);
