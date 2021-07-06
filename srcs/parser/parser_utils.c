@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:10:43 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:19:51 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ char	*escape_slash(const char *src, int *i, char *dst)
 
 t_cv	*set_cv(t_cv *cv)
 {
-	free(cv->comm);
 	cv->comm = malloc(sizeof(t_cmd));
 	cv->cmd_arr = add_tcmd(cv->cmd_arr, cv->comm, cv);
 	return (cv);
