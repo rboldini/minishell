@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:24:26 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:27:06 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,10 @@ t_cmd	**start_parsing(const char *cmd)
 		}
 	}
 	printf("aborto %d\n", g_shell->abort);
-	
 	if (g_shell->abort)
 	{
 		printf("FREEEEEEEEEEEEEEEEEEE\n");
 		free(cv->comm);
-		
 		i = 0;
 		while (*(cv->arr + i))
 		{
@@ -154,9 +152,7 @@ t_cmd	**start_parsing(const char *cmd)
 			i++;
 		}
 		free(cv->arr);
-		
 	}
-	
 	res = cv->cmd_arr;
 	free(cv);
 	return (res);

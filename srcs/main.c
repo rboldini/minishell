@@ -44,7 +44,9 @@ void	init_g_shell(char **envp)
 void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 {
 	t_cmd	*tmp;
+	t_cmd	*orig;
 
+	orig = cmd;
 	g_shell->pid = 0;
 	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	if (!g_shell->abort_dred)
@@ -67,16 +69,16 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 				ft_executor(cmd, g_shell->env);
 			arr_i++;
 		}
-		while (cmd)
+		while (orig)
 		{
-			ft_free_matrix(cmd->arr);
-			if (cmd->file_in != 0)
-				close(cmd->file_in);
-			if (cmd->file_out != 1)
-				close(cmd->file_out);
-			free(cmd->eof);
-			tmp = cmd;
-			cmd = cmd->next;
+			ft_free_matrix(orig->arr);
+			if (orig->file_in != 0)
+				close(orig->file_in);
+			if (orig->file_out != 1)
+				close(orig->file_out);
+			free(orig->eof);
+			tmp = orig;
+			orig = orig->next;
 			free(tmp);
 		}
 		free(cmd_arr);
