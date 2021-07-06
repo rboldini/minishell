@@ -1,25 +1,6 @@
 #include <stdio.h>
 #include "../includes/minishell.h"
 
-void	watermark(void)
-{
-	printf("\n" CC_BHYEL
-		   "██████╗ ███████╗██████╗ ██████╗ ███████╗██████╗ ███████╗"
-		"          _.---._		\n"
-		   "██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔════╝"
-		"      .\'\"\".\'/|\\`.\"\"\'.\n"
-		   "██████╔╝█████╗  ██████╔╝██████╔╝█████╗  ██████╔╝█████╗  "
-		"     :  .' / | \\ `.  :	\n"
-		   "██╔═══╝ ██╔══╝  ██╔═══╝ ██╔═══╝ ██╔══╝  ██╔══██╗██╔══╝  "
-		"     '.'  /  |  \\  `.'	\n"
-		   "██║     ███████╗██║     ██║     ███████╗██║  ██║███████╗"
-		"      `. /   |   \\ .'	\n"
-		   "╚═╝     ╚══════╝╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝"
-		"        `-.__|__.-'		\n"
-		   CC_WHT "\t\t\t\t\t   Fatto da " CC_CYN "tutti"\
-CC_WHT " & " CC_CYN "nessuno" CC_RESET "\n");
-}
-
 void	init_abort(void)
 {
 	g_shell->abort = 0;
@@ -41,10 +22,34 @@ void	init_g_shell(char **envp)
 	edit_env(&g_shell->env, "OLDPWD", ft_getenv(g_shell->env, "PWD"));
 }
 
-void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
+void	garbage_collect(t_cmd **cmd_arr, t_cmd *cmd)
 {
+	int		arr_i;
 	t_cmd	*tmp;
 
+	arr_i = 0;
+	while (*(cmd_arr + arr_i))
+	{
+		cmd = *(cmd_arr + arr_i);
+		while (cmd)
+		{
+			ft_free_matrix(cmd->arr);
+			if (cmd->file_in != 0)
+				close(cmd->file_in);
+			if (cmd->file_out != 1)
+				close(cmd->file_out);
+			free(cmd->eof);
+			tmp = cmd;
+			cmd = cmd->next;
+			free(tmp);
+		}
+		arr_i++;
+	}
+	free(cmd_arr);
+}
+
+void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
+{
 	g_shell->pid = 0;
 	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	if (!g_shell->abort_dred)
@@ -67,25 +72,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 				ft_executor(cmd, g_shell->env);
 			arr_i++;
 		}
-		arr_i = 0;
-		while (*(cmd_arr + arr_i))
-		{
-			cmd = *(cmd_arr + arr_i);
-			while (cmd)
-			{
-				ft_free_matrix(cmd->arr);
-				if (cmd->file_in != 0)
-					close(cmd->file_in);
-				if (cmd->file_out != 1)
-					close(cmd->file_out);
-				free(cmd->eof);
-				tmp = cmd;
-				cmd = cmd->next;
-				free(tmp);
-			}
-			arr_i++;
-		}
-		free(cmd_arr);
+		garbage_collect(cmd_arr, cmd);
 	}
 }
 

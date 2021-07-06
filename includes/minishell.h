@@ -221,6 +221,7 @@ int		ft_isfile(char *path);
 char	*is_exec(t_env *env, int ac, char **av);
 char	*return_exec(char *tmp, char **av, char	**paths);
 char	*elab_joined(char **av, char **paths);
+void	watermark(void);
 
 /*
 ** DEBUG
