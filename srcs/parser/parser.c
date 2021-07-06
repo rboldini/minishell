@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 18:51:11 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 19:15:04 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,13 @@ t_cmd	**start_parsing(const char *cmd)
 	t_cmd	**res;
 	int		i;
 
-	cv = ft_calloc(1, sizeof(t_cv));
-	i = 0;
+	cv = alloc_cv(&i);
 	while ((*(cmd + i) || !i) && !g_shell->abort)
 	{
 		cv = set_cv(cv);
 		while (*(cmd + i) && !g_shell->abort)
 		{
-			cv->buff = next_token(cmd, &i, &cv->isb);
-			if (!cv->stage && ft_strlen(cv->buff))
-				cv->arr = append_to_arr(cv->buff, &cv->comm->len, cv->arr);
+			new_buff(cv, cmd, &i);
 			if (cv->isb == 2 && elab_pipe(cv, &i))
 			{
 				if (cv->stage)
@@ -124,11 +121,8 @@ t_cmd	**start_parsing(const char *cmd)
 			if (check_isb(cv, cmd, &i))
 				break ;
 		}
-		cv->comm->arr = cv->arr;
-		if (!g_shell->abort && (cv->stage || !cv->arr || !cv->arr[0]))
-			ft_error(errno, 0, 258);
+		move_arr(cv);
 	}
-	res = cv->cmd_arr;
-	free(cv);
+	res = get_res(cv);
 	return (res);
 }

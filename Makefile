@@ -21,6 +21,7 @@ FILES =			main.c			\
 				keyhook.c		\
 				parser.c		\
 				parser_utils.c	\
+				parser_utils2.c	\
 				parser_cmd.c	\
 				parser_dollar.c	\
 				parser_quote.c	\

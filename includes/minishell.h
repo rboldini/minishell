@@ -131,6 +131,12 @@ void	init_cmd(t_cmd *comm);
 t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv);
 t_cv	*set_cv(t_cv *cv);
 
+void	new_buff(t_cv *cv, const char *cmd, int *i);
+void	move_arr(t_cv *cv);
+t_cv	*alloc_cv(int *i);
+t_cmd	**get_res(t_cv *cv);
+void	fill_cv(t_cv *cv);
+
 /*
 ** ENV - EXPORT
 */
