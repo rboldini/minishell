@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:48:02 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:50:49 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,6 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 	}
 	if (cv->isb == 7)
 		cv->comm->has_dred = 1;
-	/*
-	if (cv->isb >= 2)
-	{
-		if (cv->stage >= 2)
-		{
-			ft_error(errno, "syntax error near unexpected token boh", 0);
-			g_shell->abort = 1;
-			errno = 258;
-			return (1);
-		}
-	}
-	*/
 	if (cv->isb > 2)
 	{
 		if (cv->stage > 2)
