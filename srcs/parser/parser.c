@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 16:43:26 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 16:45:55 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ t_cmd	**start_parsing(const char *cmd)
 				}
 				continue ;
 			}
+			if (g_shell->abort)
+				break ;
 			check_stage(cv);
 			if (check_isb(cv, cmd, &i))
 				break ;
