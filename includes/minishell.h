@@ -1,13 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*
- *	; should separate commands like bash
- *	< infile
- *	> outfile
- *	| redirect output
- */
-
 # include <stdlib.h>
 # include "../libft/libft.h"
 # include "../ft_printf_fd/ft_printf.h"
@@ -106,6 +99,7 @@ typedef struct s_cv
 	t_cmd	*tmp_comm;
 	char	**arr;
 	char	*buff;
+	char	last_b;
 	int		stage;
 	int		isb;
 }				t_cv;
