@@ -11,8 +11,7 @@ void	ft_goback(t_env **env)
 	else
 	{
 		tmp = ft_strdup(ft_getenv(*env, "PWD"));
-		set_env(env, "PWD");
-		set_env(env, "OLDPWD");
+		set_pwd_oldpwd(env);
 		edit_env(env, "PWD", ft_getenv(*env, "OLDPWD"));
 		edit_env(env, "OLDPWD", tmp);
 		free(tmp);
@@ -27,42 +26,10 @@ void	ft_gohome(t_env **env)
 	}
 	else
 	{
-		set_env(env, "PWD");
-		set_env(env, "OLDPWD");
+		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", ft_getenv(*env, "HOME"));
 	}
-}
-
-void	ft_goup(t_env **env, char *curr_path)
-{
-	int		i;
-	char	*prev_path;
-	int		k;
-
-	k = 0;
-	i = ft_strlen(curr_path);
-	while (curr_path[i] != '/')
-		i--;
-	if (i == 0)
-		i = 1;
-	prev_path = malloc(sizeof(char) * i + 1);
-	while (k < i)
-	{
-		prev_path[k] = curr_path[k];
-		k++;
-	}
-	prev_path[k] = 0;
-	if (chdir(prev_path) == -1)
-		ft_error(errno, 0, 0);
-	else
-	{
-		set_env(env, "PWD");
-		set_env(env, "OLDPWD");
-		edit_env(env, "OLDPWD", curr_path);
-		edit_env(env, "PWD", prev_path);
-	}
-	free(prev_path);
 }
 
 void	ft_goroot(t_env **env)
@@ -73,8 +40,7 @@ void	ft_goroot(t_env **env)
 	}
 	else
 	{
-		set_env(env, "PWD");
-		set_env(env, "OLDPWD");
+		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", "/");
 	}
