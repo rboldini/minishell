@@ -43,9 +43,10 @@ int	ft_special_keys(int c, t_shell *g_shell)
 		write(1, "\a", 1);
 	else if (c == 21)
 	{
+		ft_delete_multiline();
 		ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
 		write(1, "\r\033[2K", 5);
-		write (1, g_shell->prompt, ft_strlen(g_shell->prompt));
+		get_prompt();
 		g_shell->current->index = 0;
 	}
 	else
