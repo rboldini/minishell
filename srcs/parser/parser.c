@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:07:29 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:09:26 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,11 @@ t_cmd	**start_parsing(const char *cmd)
 	int		i;
 
 	cv = ft_calloc(1, sizeof(t_cv));
+	cv->comm = malloc(sizeof(t_cmd));
 	i = 0;
 	while ((*(cmd + i) || !i) && !g_shell->abort)
 	{
+		free(cv->comm);
 		cv = set_cv(cv);
 		while (*(cmd + i) && !g_shell->abort)
 		{
