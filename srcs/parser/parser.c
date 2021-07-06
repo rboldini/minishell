@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 16:58:05 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 16:59:36 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	elab_pipe(t_cv *cv, int *i)
 {
 	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
 	{
+		free(cv->buff);
 		ft_error(errno, "syntax error pipe", 258);
 		return (1);
 	}
