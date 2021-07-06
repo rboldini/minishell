@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 16:45:55 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 16:58:05 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	elab_pipe(t_cv *cv, int *i)
 {
+	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
+	{
+		ft_error(errno, "syntax error pipe", 258);
+		return (1);
+	}
 	cv->tmp_comm = malloc(sizeof(t_cmd));
 	cv->comm->next = cv->tmp_comm;
 	cv->comm->arr = cv->arr;
@@ -26,11 +31,6 @@ int	elab_pipe(t_cv *cv, int *i)
 	*cv->arr = NULL;
 	cv->stage = 0;
 	free(cv->buff);
-	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
-	{
-		ft_error(errno, "syntax error pipe", 258);
-		return (1);
-	}
 	return (1);
 }
 
@@ -146,7 +146,7 @@ t_cmd	**start_parsing(const char *cmd)
 		printf("FREEEEEEEEEEEEEEEEEEE\n");
 		free(cv->comm->eof);
 		free(cv->comm);
-		//free(cv->tmp_comm);
+		//free(cv->buff);
 		i = 0;
 		while (*(cv->arr + i))
 		{
