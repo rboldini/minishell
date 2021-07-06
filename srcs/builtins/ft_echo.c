@@ -1,14 +1,7 @@
 #include "../../includes/minishell.h"
 
-int	analyse_flag(char **av)
+int	loop_flag(int i, int k, char **av, int flag)
 {
-	int	i;
-	int	k;
-	int	flag;
-
-	flag = 1;
-	k = 0;
-	i = 1;
 	while (av[i])
 	{
 		k = 0;
@@ -29,6 +22,19 @@ int	analyse_flag(char **av)
 		flag += 1;
 		i++;
 	}
+	return (flag);
+}
+
+int	analyse_flag(char **av)
+{
+	int	i;
+	int	k;
+	int	flag;
+
+	flag = 1;
+	k = 0;
+	i = 1;
+	flag = loop_flag(i, k, av, flag);
 	return (flag);
 }
 
