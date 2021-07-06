@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 20:27:17 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:48:02 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	elab_pipe(t_cv *cv, int *i)
 {
 	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
 	{
+		free(cv->buff);
 		ft_error(errno, "syntax error near unexpected token pipe", 0);
 		errno = 258;
 		g_shell->abort = 1;
