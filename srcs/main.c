@@ -46,7 +46,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 	t_cmd	*tmp;
 
 	g_shell->pid = 0;
-	set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
+	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	if (!g_shell->abort_dred)
 		get_prompt();
 	ft_hook_signal();

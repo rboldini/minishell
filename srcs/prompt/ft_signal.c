@@ -9,7 +9,7 @@ void	ctrl_c(void)
 	free_old(g_shell->current);
 	write(1, "\n", 1);
 	write(1, "\r\033[2K", 5);
-	set_prompt("\e[1;35mCONCHIGLIA -> % \e[0m");
+	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	get_prompt();
 	while (g_shell->current->next)
 		g_shell->current = g_shell->current->next;
