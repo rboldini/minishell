@@ -70,6 +70,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 		arr_i = 0;
 		while (*(cmd_arr + arr_i))
 		{
+			cmd = *(cmd_arr + arr_i);
 			while (cmd)
 			{
 				ft_free_matrix(cmd->arr);
