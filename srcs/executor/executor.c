@@ -40,20 +40,9 @@ char	*is_exec(t_env *env, int ac, char **av)
 		return (NULL);
 	}
 	paths = ft_split(tmp, ':');
-	if (ft_isdir(av[0]))
-	{
-		ft_free_matrix(paths);
-		return (ft_strdup(av[0]));
-	}
-	else
-	{
-		join = elab_joined(av, paths);
-		if (join != NULL)
-			return (join);
-		ft_error(errno, av[0], 1);
-	}
+	join = return_exec(tmp, av, paths);
 	ft_free_matrix(paths);
-	return (NULL);
+	return (join);
 }
 
 int	valid_env_decla(char *raw)

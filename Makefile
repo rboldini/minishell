@@ -32,6 +32,7 @@ FILES =			main.c			\
 				ft_env.c		\
 				env_utils.c		\
 				executor.c		\
+				executor_utils.c\
 				export_env.c	\
 				special_keys.c	\
 				ft_unset.c		\

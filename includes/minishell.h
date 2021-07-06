@@ -219,6 +219,8 @@ void	ft_error(int errnum, char *str, int cmd_flag);
 int		ft_isdir(char *path);
 int		ft_isfile(char *path);
 char	*is_exec(t_env *env, int ac, char **av);
+char	*return_exec(char *tmp, char **av, char	**paths);
+char	*elab_joined(char **av, char **paths);
 
 /*
 ** DEBUG
