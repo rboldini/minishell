@@ -67,6 +67,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 				ft_executor(cmd, g_shell->env);
 			arr_i++;
 		}
+		arr_i = 0;
 		while (*(cmd_arr + arr_i))
 		{
 			while (cmd)
