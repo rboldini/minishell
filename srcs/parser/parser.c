@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 16:28:30 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 16:34:02 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	elab_pipe(t_cv *cv, int *i)
 {
 	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
 	{
-		free(cv->comm);
 		ft_error(errno, "syntax error pipe", 258);
 		return (1);
 	}
@@ -115,7 +114,6 @@ t_cmd	**start_parsing(const char *cmd)
 				cv->arr = append_to_arr(cv->buff, &cv->comm->len, cv->arr);
 			if (cv->stage && cv->isb > 1)
 			{
-				free(cv->comm);
 				ft_error(errno, "syntax error one", 258);
 				break ;
 			}
@@ -123,7 +121,6 @@ t_cmd	**start_parsing(const char *cmd)
 			{
 				if (cv->stage)
 				{
-					free(cv->comm);
 					ft_error(errno, "syntax error two", 258);
 					break ;
 				}
@@ -136,12 +133,11 @@ t_cmd	**start_parsing(const char *cmd)
 		cv->comm->arr = cv->arr;
 		if (!g_shell->abort && (cv->stage || !cv->arr || !cv->arr[0]))
 		{
-			free(cv->comm);
 			ft_error(errno, "syntax error three", 258);
 			break ;
 		}
 	}
-	if (g_shell->abort&& 0)
+	if (g_shell->abort)
 	{
 		printf("FREEEEEEEEEEEEEEEEEEE\n");
 		free(cv->comm->eof);
