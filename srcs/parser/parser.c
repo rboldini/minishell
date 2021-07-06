@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:50:49 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 18:51:11 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int	elab_pipe(t_cv *cv, int *i)
 	if (!cv->arr || !cv->arr[0] || !*cv->arr[0])
 	{
 		free(cv->buff);
-		ft_error(errno, "syntax error near unexpected token pipe", 0);
-		errno = 258;
-		g_shell->abort = 1;
+		ft_error(errno, 0, 258);
 		return (1);
 	}
 	cv->tmp_comm = malloc(sizeof(t_cmd));
@@ -81,24 +79,13 @@ int	check_isb(t_cv *cv, const char *cmd, int *i)
 {
 	if (cv->stage && cv->isb > 1)
 	{
-		ft_error(errno, "syntax error near unexpected token speriamo", 0);
-		g_shell->abort = 1;
-		errno = 258;
+		ft_error(errno, 0, 258);
 		return (1);
 	}
 	if (cv->isb == 7)
 		cv->comm->has_dred = 1;
 	if (cv->isb > 2)
-	{
-		if (cv->stage > 2)
-		{
-			ft_error(errno, "syntax error near unexpected token isb", 0);
-			g_shell->abort = 1;
-			errno = 258;
-			return (1);
-		}
 		cv->stage = cv->isb;
-	}
 	if (cv->isb == 4 || cv->isb == 7)
 		(*i)++;
 	if (*(cmd + *i) != 0)
@@ -130,12 +117,7 @@ t_cmd	**start_parsing(const char *cmd)
 			if (cv->isb == 2 && elab_pipe(cv, &i))
 			{
 				if (cv->stage)
-				{
-					ft_error(errno, "syntax error near unexpected token stage", 0);
-					g_shell->abort = 1;
-					errno = 258;
-					break ;
-				}
+					ft_error(errno, 0, 258);
 				continue ;
 			}
 			check_stage(cv);
@@ -144,11 +126,7 @@ t_cmd	**start_parsing(const char *cmd)
 		}
 		cv->comm->arr = cv->arr;
 		if (!g_shell->abort && (cv->stage || !cv->arr || !cv->arr[0]))
-		{
-			ft_error(errno, "syntax error near unexpected token stage out", 0);
-			g_shell->abort = 1;
-			errno = 258;
-		}
+			ft_error(errno, 0, 258);
 	}
 	res = cv->cmd_arr;
 	free(cv);
