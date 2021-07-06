@@ -45,7 +45,6 @@ int	ft_special_keys(int c, t_shell *g_shell)
 	{
 		ft_delete_multiline();
 		ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
-		write(1, "\r\033[2K", 5);
 		get_prompt();
 		g_shell->current->index = 0;
 	}
