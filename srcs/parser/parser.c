@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 17:22:31 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 17:23:55 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ t_cmd	**start_parsing(const char *cmd)
 	{
 		printf("FREEEEEEEEEEEEEEEEEEE\n");
 		free(cv->comm);
-		/*
 		free(cv->comm->eof);
+		/*
 		i = 0;
 		while (*(cv->arr + i))
 		{
