@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 19:31:40 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/06 19:19:22 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv)
 	cmd_arr = tmp_cmd_arr;
 	init_cmd(comm);
 	cmd_arr[arr_len - 1] = comm;
-	cv->arr = malloc(sizeof(char *));
-	cv->arr[0] = 0;
-	cv->stage = 0;
-	cv->isb = 0;
+	fill_cv(cv);
 	return (cmd_arr);
 }
