@@ -8,6 +8,7 @@ void	ctrl_c(void)
 	g_shell->current->index = ft_strlen(g_shell->current->row);
 	free_old(g_shell->current);
 	write(1, "\n", 1);
+	ft_delete_multiline();
 	write(1, "\r\033[2K", 5);
 	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	get_prompt();

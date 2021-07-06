@@ -114,12 +114,10 @@ typedef struct s_cv
 ** Parser
 */
 
-void	hook_line(t_shell *g_shell);
 t_cmd	**start_parsing(const char *cmd);
 t_env	*init_env(char **env);
 void	ft_free_matrix(char **matrix);
 void	run_command(int code, t_cmd *cmd, t_env *env);
-void	ctrl_c(void);
 char	*app_char(const char *cmd, int *i, char *buff);
 char	*elab_dollar(const char *src, int *i, char *dst);
 char	*escape_slash(const char *src, int *i, char *dst);
@@ -132,10 +130,6 @@ char	*next_token(const char *cmd, int *i, int *isb);
 void	init_cmd(t_cmd *comm);
 t_cmd	**add_tcmd(t_cmd **cmd_arr, t_cmd *comm, t_cv *cv);
 t_cv	*set_cv(t_cv *cv);
-
-void	finalize_history(void);
-void	ft_arrow_down(void);
-void	ft_process_delete(t_history *curr);
 
 /*
 ** ENV - EXPORT
@@ -153,15 +147,9 @@ char	*ft_getenv(t_env *env, char *name);
 void	ft_unset(t_env **env, int ac, char **av);
 void	edit_env(t_env **env, char *name, char *new_value);
 t_env	*check_existing_env(t_env *env, char *name);
-void	ft_home_end(int c, t_shell *g_shell);
-void	ft_move_word(int c, t_history *curr);
-int		ft_check_ctrl(int *c);
 char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, char **av, char *path);
 void	forker(t_cmd *cmd, t_env *env, int cmd_code);
-void	ft_hook_signal(void);
-void	free_history(t_history *curr);
-char	*d_redirect(char *eof);
 void	restore_fd(t_forker *forker);
 
 /*
@@ -173,11 +161,6 @@ void	ft_absolute_path(t_env **env, char *absolute_path);
 void	ft_relative_path(t_env **env, char *relative_path);
 char	*ft_get_allowed_env(t_env *env, char *name);
 
-/*
-** PDW
-*/
-
-void	ft_pwd(void);
 
 /*
 ** PROMPT
@@ -185,12 +168,7 @@ void	ft_pwd(void);
 
 void	set_prompt(char *str);
 void	get_prompt(void);
-
-/*
-** CMD
-*/
-
-void	ft_echo(int ac, char **av);
+void	ft_delete_multiline(void);
 int		ft_hook_char(void);
 void	ft_arrow_ud(int x, t_shell *g_shell);
 void	ft_arrow_lr(int x, t_history *curr);
@@ -199,13 +177,31 @@ void	ft_process_delete(t_history *curr);
 void	ft_new_history(t_history **curr);
 void	free_old(t_history *curr);
 void	ft_fill_row(t_history *curr, char c);
+void	free_history(t_history *curr);
+char	*d_redirect(char *eof);
+void	finalize_history(void);
+void	ft_arrow_down(void);
+void	ft_process_delete(t_history *curr);
+void	hook_line(t_shell *g_shell);
+void	ft_home_end(int c, t_shell *g_shell);
+void	ft_move_word(int c, t_history *curr);
+int		ft_check_ctrl(int *c);
+
+/*
+** CMD
+*/
+
+void	ft_echo(int ac, char **av);
 void	ft_exit(t_shell *g_shell);
+void	ft_pwd(void);
 
 /*
 **	SIGNAL
 */
 
 void	ft_hook_fake_signal(void);
+void	ft_hook_signal(void);
+void	ctrl_c(void);
 
 /*
 ** EXECUTOR
