@@ -44,8 +44,10 @@ void	init_g_shell(char **envp)
 void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 {
 	t_cmd	*tmp;
+	t_cmd	*orig;
 
 	g_shell->pid = 0;
+	orig = cmd;
 	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	if (!g_shell->abort_dred)
 		get_prompt();
@@ -67,6 +69,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 				ft_executor(cmd, g_shell->env);
 			arr_i++;
 		}
+		cmd = orig;
 		while (cmd)
 		{
 			ft_free_matrix(cmd->arr);
