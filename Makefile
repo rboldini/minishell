@@ -3,8 +3,10 @@ NAME =			minishell
 
 #Compiler
 CC = 			gcc
-CFLAGS = 		-Wall -Wextra -Werror -g -fsanitize=address
-
+CFLAGS = 		-Wall -Wextra -Werror -g 
+ifeq ($(UNAME_S),Darwin)
+        CCFLAGS += -fsanitize=address
+endif
 #Norm
 NORM =			norminette
 
