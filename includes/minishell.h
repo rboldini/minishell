@@ -84,6 +84,7 @@ typedef struct s_cmd
 	int				file_out;
 	int				err_out;
 	int				is_append;
+	int				ignore;
 }				t_cmd;
 
 typedef struct s_forker

@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 19:15:04 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/07 14:34:39 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	check_stage(t_cv *cv)
 			close(cv->comm->file_in);
 		cv->comm->file_in = open(cv->buff, O_RDONLY);
 		cv->stage = 0;
+		if (cv->comm->file_in == -1)
+		{
+			ft_error(errno, 0, 0);
+			cv->comm->ignore = 1;
+		}
 	}
 	check_stage2(cv);
 }

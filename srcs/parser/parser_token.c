@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 18:55:45 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/07 14:35:01 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ void	init_cmd(t_cmd *comm)
 	comm->eof = malloc(sizeof(char));
 	*comm->eof = 0;
 	comm->has_dred = 0;
+	comm->ignore = 0;
 }
