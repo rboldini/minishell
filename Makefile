@@ -53,6 +53,9 @@ FILES =			main.c			\
 				ft_cd_relative_and_absolute_paths.c	\
 				env_utils2.c	\
 				ft_export.c		\
+				frame.c			\
+				frame2.c		\
+				asciimation.c	\
 				ft_env2.c		
 
 LIBFT_DIR =		libft
@@ -71,6 +74,7 @@ all: $(NAME)
 
 $(NAME): libft printf $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)/libft.a ./ft_printf_fd/ft_printf_fd.a -o $(NAME)
+	@clear -c
 
 libft:
 	@make -s bonus --quiet -C $(LIBFT_DIR)
@@ -92,7 +96,7 @@ fclean: clean
 	@make fclean --quiet -C ./ft_printf_fd
 
 run:
-#	@clear -c
+	@clear -c
 	@./minishell
 
 re: fclean all

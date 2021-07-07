@@ -20,6 +20,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <string.h>
+# include <limits.h>
 # include <term.h>
 # include <unistd.h>
 # include <sys/ioctl.h>
@@ -47,7 +48,7 @@ typedef struct s_history
 	int					index;
 	struct s_history	*prev;
 	struct s_history	*next;
-}				t_history;
+}						t_history;
 
 typedef struct s_env
 {
@@ -55,7 +56,7 @@ typedef struct s_env
 	char			*env_value;
 	int				exp;
 	struct s_env	*next_env;
-}				t_env;
+}					t_env;
 
 typedef struct s_shell
 {
@@ -69,6 +70,7 @@ typedef struct s_shell
 	int			pid;
 	t_env		*env;
 	int			exit_code;
+	int			anim;
 }				t_shell;
 
 t_shell	*g_shell;
@@ -86,7 +88,7 @@ typedef struct s_cmd
 	int				err_out;
 	int				is_append;
 	int				ignore;
-}				t_cmd;
+}					t_cmd;
 
 typedef struct s_forker
 {
@@ -99,7 +101,7 @@ typedef struct s_forker
 	char	*path;
 	char	*inp;
 	int		derr;
-}		t_forker;
+}			t_forker;
 
 typedef struct s_cv
 {
@@ -110,7 +112,7 @@ typedef struct s_cv
 	char	*buff;
 	int		stage;
 	int		isb;
-}				t_cv;
+}			t_cv;
 
 /*
 ** Parser
@@ -226,6 +228,21 @@ char	*is_exec(t_env *env, int ac, char **av);
 char	*return_exec(char *tmp, char **av, char	**paths);
 char	*elab_joined(char **av, char **paths);
 void	watermark(void);
+
+/*
+**	FRAME
+*/
+
+void	frame0(void);
+void	frame1(void);
+void	frame2(void);
+void	frame3(void);
+void	frame4(void);
+void	frame5(void);
+void	frame6(void);
+void	frame7(void);
+void	frame8(void);
+void	asciimation(void);
 
 /*
 ** DEBUG
