@@ -61,11 +61,11 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 		hook_line(g_shell);
 	}
 	init_abort();
-	if (ft_strlen(g_shell->current->row))
+	if (ft_strlen(g_shell->current->row) && !only_spaces(g_shell->current->row))
 	{
 		cmd_arr = start_parsing(g_shell->current->row);
 		arr_i = 0;
-		while (*(cmd_arr + arr_i) && !g_shell->abort)
+		while (*(cmd_arr + arr_i))
 		{
 			cmd = *(cmd_arr + arr_i);
 			if (!cmd->ignore && cmd->len)

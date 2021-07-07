@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	init_forker(t_forker *forker)
+void	init_forker(t_forker *forker, t_cmd *cmd)
 {
 	forker->saved_stdin = dup(STDIN_FILENO);
 	forker->saved_stdout = dup(STDOUT_FILENO);
@@ -10,7 +10,7 @@ void	init_forker(t_forker *forker)
 	if (forker->err == -1)
 	{
 		ft_error(errno, "pipe", 0);
-		restore_fd(forker);
+		restore_fd(forker, cmd);
 		return ;
 	}
 }
@@ -24,7 +24,7 @@ int	init_double_readirect(t_forker *forker, t_cmd *cmd)
 	if (!ft_strlen(cmd->eof))
 	{
 		ft_printf_fd(2, "Conchiglia: syntax error near unexpected token\n");
-		restore_fd(forker);
+		restore_fd(forker, cmd);
 		g_shell->abort = 1;
 		errno = 258;
 		return (0);
@@ -59,10 +59,7 @@ void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 		else
 		{
 			waitpid(g_shell->pid, &forker->status, WUNTRACED | WCONTINUED);
-			if (cmd->file_out != 1)
-				close(cmd->file_out);
-			if (cmd->file_in != 0)
-				close(cmd->file_in);
+			errno = forker->status;
 		}
 		free(forker->path);
 	}
@@ -90,7 +87,7 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 	t_forker	*forker;
 
 	forker = malloc(sizeof(t_forker));
-	init_forker(forker);
+	init_forker(forker, cmd);
 	if (forker->err == -1)
 		return ;
 	if (cmd->has_dred)
@@ -108,6 +105,6 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 	}
 	else
 		is_builtin(env, forker, cmd, cmd_code);
-	restore_fd(forker);
+	restore_fd(forker, cmd);
 	free(forker);
 }

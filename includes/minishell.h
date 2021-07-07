@@ -138,6 +138,7 @@ t_cv	*alloc_cv(int *i);
 t_cmd	**get_res(t_cv *cv);
 void	fill_cv(t_cv *cv);
 int		check_isb(t_cv *cv, const char *cmd, int *i);
+int		only_spaces(char *str);
 
 /*
 ** ENV - EXPORT
@@ -158,7 +159,7 @@ t_env	*check_existing_env(t_env *env, char *name);
 char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, char **av, char *path);
 void	forker(t_cmd *cmd, t_env *env, int cmd_code);
-void	restore_fd(t_forker *forker);
+void	restore_fd(t_forker *forker, t_cmd *cmd);
 
 /*
 ** CD
