@@ -13,3 +13,7 @@ void	ft_exit(t_shell *g_shell)
 		exit(0);
 	}
 }
+
+/*
+**	era l'ultimo leak pare...
+*/
