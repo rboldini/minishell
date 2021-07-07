@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/07 15:01:51 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/07 18:49:18 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	file_in(t_cv *cv)
 	{
 		ft_error(errno, 0, 0);
 		cv->comm->ignore = 1;
+		g_shell->exit_code = 1;
 	}
 }
 

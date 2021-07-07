@@ -59,7 +59,15 @@ void	not_builtin(t_env *env, t_forker *forker, t_cmd *cmd)
 		else
 		{
 			waitpid(g_shell->pid, &forker->status, WUNTRACED | WCONTINUED);
-			errno = forker->status;
+			g_shell->exit_code = forker->status;
+			if (!(g_shell->exit_code & 127))
+				g_shell->exit_code = g_shell->exit_code >> 8;
+			if (g_shell->exit_code == 11 || g_shell->abort == 1)
+			{
+				g_shell->exit_code += 128;
+				if (g_shell->exit_code == 139)
+					ft_printf_fd(2, "Segmentation fault: 11\n");
+			}
 		}
 		free(forker->path);
 	}
@@ -80,6 +88,7 @@ void	is_builtin(t_env *env, t_forker *forker, t_cmd *cmd, int cmd_code)
 		close(cmd->file_out);
 	if (cmd->file_in != 0)
 		close(cmd->file_in);
+	g_shell->exit_code = 0;
 }
 
 void	forker(t_cmd *cmd, t_env *env, int cmd_code)

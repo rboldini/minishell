@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/07 16:44:06 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/07 18:25:07 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ char	*elab_errno(int *i, char *dst, char *var_name)
 	char	*tmp;
 
 	(*i)++;
-	var_value = ft_itoa((*__error()));
-	if (var_value)
+	//var_value = ft_itoa((*__error()));
+	var_value = ft_itoa(g_shell->exit_code);
+	if (var_value || 1)
 	{
 		tmp = ft_strjoin(dst, var_value);
 		free(dst);

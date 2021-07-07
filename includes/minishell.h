@@ -68,6 +68,7 @@ typedef struct s_shell
 	int			abort_dred;
 	int			pid;
 	t_env		*env;
+	int			exit_code;
 }				t_shell;
 
 t_shell	*g_shell;

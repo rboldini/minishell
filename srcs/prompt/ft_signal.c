@@ -2,6 +2,7 @@
 
 void	ctrl_c(void)
 {
+	g_shell->abort = 1;
 	ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
 	ft_strlcpy(g_shell->current->row, g_shell->current->old,
 		ft_strlen(g_shell->current->old) + 1);
@@ -17,7 +18,6 @@ void	ctrl_c(void)
 	g_shell->current->index = 0;
 	if (g_shell->in_dred)
 		g_shell->abort_dred = 1;
-	g_shell->abort = 1;
 }
 
 void	ft_signal(int sig)
@@ -29,6 +29,7 @@ void	ft_signal(int sig)
 		else
 		{
 			write(1, "\n", 1);
+			g_shell->abort = 1;
 		}
 	}
 	if (sig == 3)
