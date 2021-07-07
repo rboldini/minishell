@@ -6,11 +6,34 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/05 15:56:09 by rboldini         ###   ########.fr       */
+/*   Updated: 2021/07/07 15:00:16 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	check_isb(t_cv *cv, const char *cmd, int *i)
+{
+	if (cv->stage && cv->isb > 1)
+	{
+		ft_error(errno, 0, 258);
+		return (1);
+	}
+	if (cv->isb == 7)
+		cv->comm->has_dred = 1;
+	if (cv->isb > 2)
+		cv->stage = cv->isb;
+	if (cv->isb == 4 || cv->isb == 7)
+		(*i)++;
+	if (*(cmd + *i) != 0)
+		(*i)++;
+	if (cv->isb == 6)
+	{
+		cv->stage = 0;
+		return (1);
+	}
+	return (0);
+}
 
 char	**append_to_arr(const char *str, int *len, char **arr)
 {

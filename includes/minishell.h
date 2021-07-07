@@ -137,6 +137,7 @@ void	move_arr(t_cv *cv);
 t_cv	*alloc_cv(int *i);
 t_cmd	**get_res(t_cv *cv);
 void	fill_cv(t_cv *cv);
+int		check_isb(t_cv *cv, const char *cmd, int *i);
 
 /*
 ** ENV - EXPORT

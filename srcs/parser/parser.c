@@ -6,7 +6,7 @@
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:53:17 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/07 14:34:39 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/07 15:01:51 by scilla           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ void	check_stage2(t_cv *cv)
 		free(cv->buff);
 }
 
+void	file_in(t_cv *cv)
+{
+	if (cv->comm->file_in != 0)
+		close(cv->comm->file_in);
+	cv->comm->file_in = open(cv->buff, O_RDONLY);
+	cv->stage = 0;
+	if (cv->comm->file_in == -1)
+	{
+		ft_error(errno, 0, 0);
+		cv->comm->ignore = 1;
+	}
+}
+
 void	check_stage(t_cv *cv)
 {
 	if ((cv->stage == 3 || cv->stage == 4) && ft_strlen(cv->buff))
@@ -67,40 +80,9 @@ void	check_stage(t_cv *cv)
 	}
 	else if (cv->stage == 5 && ft_strlen(cv->buff))
 	{
-		if (cv->comm->file_in != 0)
-			close(cv->comm->file_in);
-		cv->comm->file_in = open(cv->buff, O_RDONLY);
-		cv->stage = 0;
-		if (cv->comm->file_in == -1)
-		{
-			ft_error(errno, 0, 0);
-			cv->comm->ignore = 1;
-		}
+		file_in(cv);
 	}
 	check_stage2(cv);
-}
-
-int	check_isb(t_cv *cv, const char *cmd, int *i)
-{
-	if (cv->stage && cv->isb > 1)
-	{
-		ft_error(errno, 0, 258);
-		return (1);
-	}
-	if (cv->isb == 7)
-		cv->comm->has_dred = 1;
-	if (cv->isb > 2)
-		cv->stage = cv->isb;
-	if (cv->isb == 4 || cv->isb == 7)
-		(*i)++;
-	if (*(cmd + *i) != 0)
-		(*i)++;
-	if (cv->isb == 6)
-	{
-		cv->stage = 0;
-		return (1);
-	}
-	return (0);
 }
 
 t_cmd	**start_parsing(const char *cmd)

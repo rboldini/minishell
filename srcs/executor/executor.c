@@ -14,7 +14,7 @@ char	*elab_joined(char **av, char **paths)
 		if (ft_isfile(join))
 		{
 			free(slash);
-			ft_free_matrix(paths);
+			//ft_free_matrix(paths);
 			return (join);
 		}
 		free(slash);
