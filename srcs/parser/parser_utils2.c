@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rboldini <rboldini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 16:58:19 by scilla            #+#    #+#             */
-/*   Updated: 2021/07/06 19:19:19 by scilla           ###   ########.fr       */
+/*   Updated: 2021/07/07 12:31:36 by rboldini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	move_arr(t_cv *cv)
 {
 	cv->comm->arr = cv->arr;
 	if (!g_shell->abort && (cv->stage || !cv->arr || !cv->arr[0]))
+	{
 		ft_error(errno, 0, 258);
+		g_shell->abort = 1;
+		return ;
+	}
 }
 
 t_cv	*alloc_cv(int *i)

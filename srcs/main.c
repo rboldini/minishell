@@ -16,7 +16,7 @@ void	init_g_shell(char **envp)
 	ft_new_history(&(g_shell)->current);
 	(g_shell)->current->index = 0;
 	(g_shell)->n_up = 0;
-	g_shell->prompt = calloc(0, 1);
+	g_shell->prompt = ft_calloc(0, 1);
 	g_shell->env = init_env(envp);
 	init_abort();
 	edit_env(&g_shell->env, "OLDPWD", ft_getenv(g_shell->env, "PWD"));
@@ -65,7 +65,7 @@ void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 	{
 		cmd_arr = start_parsing(g_shell->current->row);
 		arr_i = 0;
-		while (*(cmd_arr + arr_i))
+		while (*(cmd_arr + arr_i) && !g_shell->abort)
 		{
 			cmd = *(cmd_arr + arr_i);
 			if (cmd->len)
