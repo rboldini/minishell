@@ -14,7 +14,33 @@ char	*ft_getenv(t_env *env, char *name)
 	return (NULL);
 }
 
-void	ft_remove_env_node(t_env *env, char *name)
+void	ft_remove_env_node(t_env *node, char *name)
+{
+	t_env	*tmp;
+	int 	first;
+
+	first = 1;
+	tmp = node;
+	while (node)
+	{
+		if (!ft_strcmp(node->env_name, name))
+		{
+			free(node->env_name);
+			free(node->env_value);
+			if (first)
+				g_shell->env = node->next_env;
+			else
+				tmp->next_env = node->next_env;
+			free(node);
+			return ;
+		}
+		first = 0;
+		tmp = node;
+		node = node->next_env;
+	}
+}
+
+void	ft_remove_env_node_(t_env *env, char *name)
 {
 	t_env	*tmp;
 	t_env	*prev;

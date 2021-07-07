@@ -38,3 +38,11 @@ CONCHIGLIA -> % echo "\\"
 \\ (should print one \)
 
 do we need to check exit status?
+
+
+
+########### BUGs
+
+ms: declare -x ciao="ecco" "ciao"
+sh: declare -x ciao="\"ecco\" \"ciao\""
+

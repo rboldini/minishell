@@ -7,6 +7,7 @@ void	ft_exit(t_shell *g_shell)
 	else
 	{
 		ft_free_env(g_shell->env);
+		free_old(g_shell->current);
 		free_history(g_shell->current);
 		printf("exit\n");
 		exit(0);

@@ -88,7 +88,7 @@ int	main(int n, char **arg, char **envp)
 	cmd_arr = 0;
 	cmd = 0;
 	init_g_shell(envp);
-	watermark();
+	//watermark();
 	write(1, "\r\033[2K", 5);
 	while (1)
 	{
