@@ -37,7 +37,7 @@ void	print_exp_envs(t_env *tmp)
 			if (tmp->exp == 1)
 				ft_printf_fd(1, "=");
 			str_esc = escape_dq(tmp->env_value);
-			if(tmp->exp == 1)
+			if (tmp->exp == 1)
 				ft_printf_fd(1, "%s", str_esc);
 			free(str_esc);
 			ft_printf_fd(1, "\n");
