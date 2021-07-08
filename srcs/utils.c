@@ -14,11 +14,19 @@ void	ft_hook_anim(void)
 
 void	watermark(void)
 {
+	int	i;
+
 	g_shell->anim = 0;
 	write(1, "\r\033[2K", 5);
 	while (!g_shell->anim)
 	{
-		ft_hook_anim();
-		asciimation();
+		i = 0;
+		while (i < 9 && !g_shell->anim)
+		{
+			ft_hook_anim();
+			asciimation(i);
+			clean_sleep();
+			i++;
+		}
 	}
 }

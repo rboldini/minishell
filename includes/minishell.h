@@ -60,18 +60,19 @@ typedef struct s_env
 
 typedef struct s_shell
 {
-	char		*prompt;
-	t_history	*current;
-	t_history	*tmp;
-	int			in_dred;
-	int			n_up;
-	int			abort;
-	int			abort_dred;
-	int			pid;
-	t_env		*env;
-	int			exit_code;
-	int			anim;
-}				t_shell;
+	char			*prompt;
+	t_history		*current;
+	t_history		*tmp;
+	int				in_dred;
+	int				n_up;
+	int				abort;
+	int				abort_dred;
+	int				pid;
+	t_env			*env;
+	int				exit_code;
+	int				anim;
+	struct winsize	w;
+}					t_shell;
 
 t_shell	*g_shell;
 
@@ -227,7 +228,7 @@ int		ft_isfile(char *path);
 char	*is_exec(t_env *env, int ac, char **av);
 char	*return_exec(char *tmp, char **av, char	**paths);
 char	*elab_joined(char **av, char **paths);
-void	watermark(void);
+void	manage_error(void);
 
 /*
 **	FRAME
@@ -242,7 +243,10 @@ void	frame5(void);
 void	frame6(void);
 void	frame7(void);
 void	frame8(void);
-void	asciimation(void);
+void	asciimation(int n);
+void	clean_sleep(void);
+void	ft_sleep(int n);
+void	watermark(void);
 
 /*
 ** DEBUG

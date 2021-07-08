@@ -2,13 +2,16 @@
 
 void	ft_delete_multiline(void)
 {
-	int	i;
+	int				i;
+	struct winsize	w;
 
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	i = 0;
 	while (ft_strlen(g_shell->current->row)
-		&& i < (int)(ft_strlen(g_shell->current->row)
-		+ ft_strlen(g_shell->prompt)))
+		&& i < (int)((ft_strlen(g_shell->current->row)
+			+ ft_strlen(g_shell->prompt)) / w.ws_col))
 	{
+		write(1, "\r\033[2K", 5);
 		write(1, "\b \b", 3);
 		i++;
 	}
@@ -40,12 +43,16 @@ void	ft_arrow_down(void)
 
 void	ft_arrow_up(void)
 {
-	int	i;
+	int				i;
+	struct winsize	w;
 
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	i = 0;
 	while (ft_strlen(g_shell->current->row)
-		   && i < (int)(ft_strlen(g_shell->current->row)))
+		   && i < (int)((ft_strlen(g_shell->current->row)
+			+ ft_strlen(g_shell->prompt)) / w.ws_col))
 	{
+		write(1, "\r\033[2K", 5);
 		write(1, "\b \b", 3);
 		i++;
 	}

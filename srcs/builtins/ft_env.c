@@ -7,7 +7,7 @@ int	edit_or_create_env(t_env *env, char *str, char *str_tmp, int i)
 	if (!str_tmp[i])
 	{
 		printf("Conchiglia: %s: No such file or directory\n", str_tmp);
-		errno = 127;
+		g_shell->exit_code = 127;
 		free(str_tmp);
 		return (-1);
 	}
@@ -41,7 +41,7 @@ int	check_and_add(t_env *env, char *str)
 		if (str_tmp[0] == '=')
 		{
 			printf("Conchiglia: env: invalid argument\n");
-			errno = 1;
+			g_shell->exit_code = 1;
 			free(str_tmp);
 			return (-1);
 		}

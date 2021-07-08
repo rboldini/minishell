@@ -18,7 +18,6 @@ char	*elab_errno(int *i, char *dst, char *var_name)
 	char	*tmp;
 
 	(*i)++;
-	//var_value = ft_itoa((*__error()));
 	var_value = ft_itoa(g_shell->exit_code);
 	if (var_value || 1)
 	{

@@ -6,18 +6,18 @@ void	ft_error(int errnum, char *str, int cmd_flag)
 	{
 		g_shell->abort = 1;
 		ft_printf_fd(2, "Conchiglia: syntax error\n");
-		errno = 258;
+		g_shell->exit_code = 258;
 	}
 	else if (cmd_flag == 139)
 	{
 		g_shell->abort = 1;
 		ft_printf_fd(2, "Segmentation fault: 11\n");
-		errno = 139;
+		g_shell->exit_code = 139;
 	}
 	else if (cmd_flag > 0)
 	{
 		ft_printf_fd(2, "Conchiglia: %s: command not found\n", str);
-		errno = 127;
+		g_shell->exit_code = 127;
 		g_shell->abort = 1;
 	}
 	else if (str)

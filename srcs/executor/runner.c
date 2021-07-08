@@ -1,5 +1,17 @@
 #include "../../includes/minishell.h"
 
+void	manage_error(void)
+{
+	if (!(g_shell->exit_code & 127))
+		g_shell->exit_code = g_shell->exit_code >> 8;
+	if (g_shell->exit_code == 11 || g_shell->abort == 1)
+	{
+		g_shell->exit_code += 128;
+		if (g_shell->exit_code == 139)
+			ft_printf_fd(2, "Segmentation fault: 11\n");
+	}
+}
+
 int	ft_isdir(char *path)
 {
 	int		res;

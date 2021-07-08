@@ -1,11 +1,11 @@
 #include "../../includes/minishell.h"
 
-void	ft_sleep(void)
+void	ft_sleep(int n)
 {
 	int	s;
 
 	s = 0;
-	while (s++ < INT_MAX / 6)
+	while (s++ < INT_MAX / n)
 		;
 }
 
@@ -14,7 +14,6 @@ void	clean_frame(void)
 	int	x;
 
 	x = 0;
-	write(1, "\b \b", 3);
 	while (x < 9)
 	{
 		write(1, "\r\033[2K", 5);
@@ -25,28 +24,28 @@ void	clean_frame(void)
 
 void	clean_sleep(void)
 {
-	ft_sleep();
+	ft_sleep(6);
 	clean_frame();
 }
 
-void	asciimation(void)
+void	asciimation(int n)
 {
-	frame0();
-	clean_sleep();
-	frame1();
-	clean_sleep();
-	frame2();
-	clean_sleep();
-	frame3();
-	clean_sleep();
-	frame4();
-	clean_sleep();
-	frame5();
-	clean_sleep();
-	frame6();
-	clean_sleep();
-	frame7();
-	clean_sleep();
-	frame8();
-	clean_sleep();
+	if (n == 0)
+		frame0();
+	else if (n == 1)
+		frame1();
+	else if (n == 2)
+		frame2();
+	else if (n == 3)
+		frame3();
+	else if (n == 4)
+		frame4();
+	else if (n == 5)
+		frame5();
+	else if (n == 6)
+		frame6();
+	else if (n == 7)
+		frame7();
+	else if (n == 8)
+		frame8();
 }

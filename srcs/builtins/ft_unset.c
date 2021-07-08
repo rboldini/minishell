@@ -17,7 +17,7 @@ char	*ft_getenv(t_env *env, char *name)
 void	ft_remove_env_node(t_env *node, char *name)
 {
 	t_env	*tmp;
-	int 	first;
+	int		first;
 
 	first = 1;
 	tmp = node;

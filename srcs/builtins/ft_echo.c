@@ -59,5 +59,5 @@ void	ft_echo(int ac, char **av)
 	}
 	if (n_flag < 2)
 		ft_printf_fd(1, "\n");
-	errno = 0;
+	g_shell->exit_code = 0;
 }

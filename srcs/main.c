@@ -19,6 +19,7 @@ void	init_g_shell(char **envp)
 	g_shell->prompt = ft_calloc(0, 1);
 	g_shell->env = init_env(envp);
 	init_abort();
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &g_shell->w);
 	edit_env(&g_shell->env, "OLDPWD", ft_getenv(g_shell->env, "PWD"));
 }
 
@@ -51,9 +52,10 @@ void	garbage_collect(t_cmd **cmd_arr, t_cmd *cmd)
 void	shell(t_cmd **cmd_arr, t_cmd *cmd, int arr_i)
 {
 	g_shell->pid = 0;
-	set_prompt("\e\033[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &g_shell->w);
+	set_prompt("\e[0;32mCON\033[0;37mCHIG\033[0;31mLIA -> \e[0m🤌  ");
 	if (!g_shell->abort_dred)
-			get_prompt();
+		get_prompt();
 	ft_hook_signal();
 	if (!g_shell->abort_dred)
 	{
@@ -88,7 +90,7 @@ int	main(int n, char **arg, char **envp)
 	cmd_arr = 0;
 	cmd = 0;
 	init_g_shell(envp);
-	//watermark();
+	watermark();
 	write(1, "\r\033[2K", 5);
 	while (1)
 	{
