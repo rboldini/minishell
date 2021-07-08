@@ -79,7 +79,6 @@ void	ft_env(t_env *env, int ac, char **av)
 	t_env	*tmp;
 	int		i;
 	int		flag;
-	int 	res;
 
 	i = 1;
 	tmp = env;
