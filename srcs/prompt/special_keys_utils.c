@@ -34,10 +34,12 @@ void	ft_arrow_down(void)
 	else if (g_shell->tmp && ft_strlen(g_shell->tmp->row))
 	{
 		ft_delete_multiline();
+		write(1, "\r\033[2K", 5);
 		g_shell->current = g_shell->tmp;
 		write(1, g_shell->prompt, ft_strlen(g_shell->prompt));
 		write(1, g_shell->current->row,
 			  g_shell->current->index);
+		g_shell->tmp = NULL;
 	}
 }
 
