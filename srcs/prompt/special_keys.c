@@ -52,3 +52,12 @@ int	ft_process_backspace(t_history *curr)
 		write(1, "\a", 1);
 	return (1);
 }
+
+void	ctrl_u(void)
+{
+	ft_delete_multiline();
+	write(1, "\r\033[2K", 5);
+	ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
+	get_prompt();
+	g_shell->current->index = 0;
+}

@@ -200,6 +200,7 @@ void	hook_line(t_shell *g_shell);
 void	ft_home_end(int c, t_shell *g_shell);
 void	ft_move_word(int c, t_history *curr);
 int		ft_check_ctrl(int *c);
+void	ctrl_u(void);
 
 /*
 ** CMD

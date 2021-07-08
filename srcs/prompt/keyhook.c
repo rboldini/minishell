@@ -42,12 +42,7 @@ int	ft_special_keys(int c, t_shell *g_shell)
 	else if (c == 9)
 		write(1, "\a", 1);
 	else if (c == 21)
-	{
-		ft_delete_multiline();
-		ft_bzero(g_shell->current->row, ft_strlen(g_shell->current->row));
-		get_prompt();
-		g_shell->current->index = 0;
-	}
+		ctrl_u();
 	else
 		return (c);
 	return (0);
