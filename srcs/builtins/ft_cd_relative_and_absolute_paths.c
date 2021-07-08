@@ -11,6 +11,7 @@ void	ft_absolute_path(t_env **env, char *absolute_path)
 	if (chdir(absolute_path) == -1)
 	{
 		ft_error(errno, 0, 0);
+		g_shell->exit_code = 1;
 	}
 	else
 	{
@@ -34,6 +35,7 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	if (chdir(next_path) == -1)
 	{
 		ft_error(errno, 0, 0);
+		g_shell->exit_code = 1;
 	}
 	else
 	{
@@ -48,7 +50,10 @@ void	ft_relative_path(t_env **env, char *relative_path)
 void	go_in_dir(t_env **env, char *curr_path, char *prev_path)
 {
 	if (chdir(prev_path) == -1)
+	{
 		ft_error(errno, 0, 0);
+		g_shell->exit_code = 1;
+	}
 	else
 	{
 		set_pwd_oldpwd(env);

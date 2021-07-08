@@ -70,6 +70,7 @@ void	is_builtin(t_env *env, t_forker *forker, t_cmd *cmd, int cmd_code)
 {
 	dup2(cmd->file_in, 0);
 	dup2(cmd->file_out, 1);
+	g_shell->exit_code = 0;
 	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
 	{
 		forker->err = pipe(forker->fd);
@@ -81,7 +82,6 @@ void	is_builtin(t_env *env, t_forker *forker, t_cmd *cmd, int cmd_code)
 		close(cmd->file_out);
 	if (cmd->file_in != 0)
 		close(cmd->file_in);
-	g_shell->exit_code = 0;
 }
 
 void	forker(t_cmd *cmd, t_env *env, int cmd_code)
