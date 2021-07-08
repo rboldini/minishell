@@ -47,9 +47,10 @@ int	check_and_add(t_env *env, char *str)
 		}
 		if (str_tmp[i] == '=' || str_tmp[i] == 0)
 		{
-			if (!edit_or_create_env(env, str, str_tmp, i))
+			i = edit_or_create_env(env, str, str_tmp, i);
+			if (!i)
 				return (0);
-			else if (edit_or_create_env(env, str, str_tmp, i) == -1)
+			else if (i == -1)
 				return (-1);
 		}
 		i++;
@@ -78,6 +79,7 @@ void	ft_env(t_env *env, int ac, char **av)
 	t_env	*tmp;
 	int		i;
 	int		flag;
+	int 	res;
 
 	i = 1;
 	tmp = env;
