@@ -71,11 +71,14 @@ void	is_builtin(t_env *env, t_forker *forker, t_cmd *cmd, int cmd_code)
 	dup2(cmd->file_in, 0);
 	dup2(cmd->file_out, 1);
 	g_shell->exit_code = 0;
-	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
+	if (cmd->next && cmd->file_out == 1)
 	{
 		forker->err = pipe(forker->fd);
 		cmd->file_out = forker->fd[1];
-		cmd->next->file_in = forker->fd[0];
+		if (cmd->next->file_in == 0)
+			cmd->next->file_in = forker->fd[0];
+		else
+			close(forker->fd[0]);
 	}
 	run_command(cmd_code, cmd, env);
 	if (cmd->file_out != 1)
@@ -90,15 +93,16 @@ void	forker(t_cmd *cmd, t_env *env, int cmd_code)
 
 	forker = malloc(sizeof(t_forker));
 	init_forker(forker, cmd);
-	if (forker->err == -1)
-		return ;
 	if (cmd->has_dred)
 		if (!init_double_readirect(forker, cmd))
 			return ;
-	if (cmd->next && cmd->file_out == 1 && cmd->next->file_in == 0)
+	if (cmd->next && cmd->file_out == 1)
 	{
 		cmd->file_out = forker->fd[1];
-		cmd->next->file_in = forker->fd[0];
+		if (cmd->next->file_in == 0)
+			cmd->next->file_in = forker->fd[0];
+		else
+			close(forker->fd[0]);
 	}
 	if (cmd_code == CMD_RUN)
 	{

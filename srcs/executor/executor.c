@@ -98,7 +98,8 @@ void	ft_executor(t_cmd *cmd, t_env *env)
 		cmd_code = check_for_cmd(tmp->arr[0]);
 		if (!ft_strcmp(tmp->arr[0], "./minishell"))
 			ft_hook_fake_signal();
-		forker(tmp, env, cmd_code);
+		if (!tmp->ignore)
+			forker(tmp, env, cmd_code);
 		tmp = tmp->next;
 		if (g_shell->abort)
 			break ;

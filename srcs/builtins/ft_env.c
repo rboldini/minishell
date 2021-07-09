@@ -34,9 +34,9 @@ int	check_and_add(t_env *env, char *str)
 	int		i;
 	char	*str_tmp;
 
-	i = 0;
+	i = -1;
 	str_tmp = ft_strdup(str);
-	while (1)
+	while (++i || 1)
 	{
 		if (str_tmp[0] == '=')
 		{
@@ -53,7 +53,6 @@ int	check_and_add(t_env *env, char *str)
 			else if (i == -1)
 				return (-1);
 		}
-		i++;
 	}
 	free(str_tmp);
 	return (0);
