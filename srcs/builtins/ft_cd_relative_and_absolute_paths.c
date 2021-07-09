@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd_relative_and_absolute_paths.c                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vbuonvin <vbuonvin@student.42.fr>        +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/09 15:59:24 by scilla            #+#    #+#             */
+/*   Updated: 2021/07/09 15:59:24 by scilla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	set_pwd_oldpwd(t_env **env)

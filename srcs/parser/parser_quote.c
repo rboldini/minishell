@@ -4,7 +4,7 @@
 /*   parser_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: vbuonvin <vbuonvin@student.42.fr>        +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/01 17:48:40 by scilla            #+#    #+#             */
 /*   Updated: 2021/07/01 17:49:13 by scilla           ###   ########.fr       */
 /*                                                                            */

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_env.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vbuonvin <vbuonvin@student.42.fr>        +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/09 15:59:22 by scilla            #+#    #+#             */
+/*   Updated: 2021/07/09 15:59:22 by scilla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 void	equal_notequal(t_env *env, char *str_tmp, int i, char *str)

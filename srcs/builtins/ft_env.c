@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: scilla <scilla@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vbuonvin <vbuonvin@student.42.fr>        +#+#+#+#+#+   +#+           */
+/*   Created: 2021/07/09 15:59:32 by scilla            #+#    #+#             */
+/*   Updated: 2021/07/09 15:59:33 by scilla           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	edit_or_create_env(t_env *env, char *str, char *str_tmp, int i)
