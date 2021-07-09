@@ -63,6 +63,7 @@ void	ft_export(t_env *env, int ac, char **av)
 			{
 				ft_printf_fd(2, "Conchiglia: export: ");
 				ft_printf_fd(2, "'=': not a valid identifier\n");
+				g_shell->exit_code = 1;
 				i++;
 			}
 			else
