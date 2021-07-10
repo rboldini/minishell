@@ -1,11 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	set_pwd_oldpwd(t_env **env)
-{
-	set_env(env, "PWD");
-	set_env(env, "OLDPWD");
-}
-
 void	ft_absolute_path(t_env **env, char *absolute_path)
 {
 	if (chdir(absolute_path) == -1)
@@ -15,7 +9,6 @@ void	ft_absolute_path(t_env **env, char *absolute_path)
 	}
 	else
 	{
-		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", absolute_path);
 	}
@@ -39,7 +32,6 @@ void	ft_relative_path(t_env **env, char *relative_path)
 	}
 	else
 	{
-		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", curr_path);
 		edit_env(env, "PWD", next_path);
 	}
@@ -56,7 +48,6 @@ void	go_in_dir(t_env **env, char *curr_path, char *prev_path)
 	}
 	else
 	{
-		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", curr_path);
 		edit_env(env, "PWD", prev_path);
 	}

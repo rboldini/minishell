@@ -12,6 +12,22 @@ void	ft_hook_anim(void)
 	signal(3, close_anim);
 }
 
+void	ft_update_shlvl(t_env *env)
+{
+	char	*lvl;
+	int		nb_lvl;
+	char	*new_lvl;
+
+	lvl = ft_getenv(env, "SHLVL");
+	if (lvl)
+	{
+		nb_lvl = ft_atoi(lvl);
+		nb_lvl++;
+		new_lvl = ft_itoa(nb_lvl);
+		edit_env(&env, "SHLVL", new_lvl);
+	}
+}
+
 void	watermark(void)
 {
 	int	i;

@@ -21,6 +21,7 @@ void	init_g_shell(char **envp)
 	init_abort();
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &g_shell->w);
 	edit_env(&g_shell->env, "OLDPWD", ft_getenv(g_shell->env, "PWD"));
+	ft_update_shlvl(g_shell->env);
 }
 
 void	garbage_collect(t_cmd **cmd_arr, t_cmd *cmd)

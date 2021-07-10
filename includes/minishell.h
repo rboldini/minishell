@@ -164,6 +164,7 @@ char	**exported_env_matrix(t_env *env);
 void	ft_runner(t_env *env, char **av, char *path);
 void	forker(t_cmd *cmd, t_env *env, int cmd_code);
 void	restore_fd(t_forker *forker, t_cmd *cmd);
+void	ft_update_shlvl(t_env *env);
 
 /*
 ** CD
@@ -173,7 +174,6 @@ void	ft_cd(int ac, char **av, t_env **env);
 void	ft_absolute_path(t_env **env, char *absolute_path);
 void	ft_relative_path(t_env **env, char *relative_path);
 char	*ft_get_allowed_env(t_env *env, char *name);
-void	set_pwd_oldpwd(t_env **env);
 void	ft_goup(t_env **env, char *curr_path);
 
 /*

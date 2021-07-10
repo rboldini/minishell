@@ -11,7 +11,6 @@ void	ft_goback(t_env **env)
 	else
 	{
 		tmp = ft_strdup(ft_getenv(*env, "PWD"));
-		set_pwd_oldpwd(env);
 		edit_env(env, "PWD", ft_getenv(*env, "OLDPWD"));
 		edit_env(env, "OLDPWD", tmp);
 		free(tmp);
@@ -26,7 +25,6 @@ void	ft_gohome(t_env **env)
 	}
 	else
 	{
-		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", ft_getenv(*env, "HOME"));
 	}
@@ -40,7 +38,6 @@ void	ft_goroot(t_env **env)
 	}
 	else
 	{
-		set_pwd_oldpwd(env);
 		edit_env(env, "OLDPWD", ft_getenv(*env, "PWD"));
 		edit_env(env, "PWD", "/");
 	}
